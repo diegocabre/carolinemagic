@@ -23,7 +23,7 @@ const config: Config = {
         "on-surface": "#ebdef0",
       },
       fontFamily: {
-        serif: ["var(--font-playfair)", "serif"],
+        serif: ["var(--font-pacifico)", "cursive"],
         sans: ["var(--font-plus-jakarta)", "sans-serif"],
       },
       boxShadow: {

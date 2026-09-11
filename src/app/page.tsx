@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, ArrowRight, Compass, Flame, Feather, HeartHandshake } from "lucide-react";
 import DailyCard from "@/components/DailyCard";
 import ServiceCard from "@/components/ServiceCard";
@@ -10,13 +11,27 @@ export default function HomePage() {
   return (
     <div className="space-y-24 md:space-y-36 pb-16">
       {/* 1. HERO SECTION */}
-      <section className="relative pt-16 md:pt-28 px-6 max-w-7xl mx-auto text-center flex flex-col items-center">
+      <section className="relative pt-12 md:pt-24 px-6 max-w-7xl mx-auto text-center flex flex-col items-center">
+        {/* Emblema Mandala del Logo */}
+        <div className="relative mb-6 group">
+          <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-primary/40 shadow-mystic-glow group-hover:scale-105 group-hover:border-primary transition-all duration-500">
+            <Image
+              src="/images/logo.jpg"
+              alt="Caroline Magic Mandala"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+          <div className="absolute -inset-2 rounded-full border border-dashed border-primary/30 animate-spin-slow pointer-events-none -z-10" />
+        </div>
+
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs tracking-widest uppercase mb-6 font-semibold animate-pulse">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Portal de Transformación & Sabiduría Arquetípica</span>
         </div>
 
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-on-surface max-w-4xl leading-[1.15] mb-6">
+        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-on-surface max-w-4xl leading-[1.2] mb-6">
           El Arte de Revelar <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent-rose to-primary">
             lo Invisible

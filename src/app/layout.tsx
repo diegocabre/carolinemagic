@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Pacifico, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const playfair = Playfair_Display({
+const pacifico = Pacifico({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-pacifico",
   display: "swap",
 });
 
@@ -36,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${playfair.variable} ${plusJakarta.variable}`}>
+    <html lang="es" className={`${pacifico.variable} ${plusJakarta.variable}`}>
       <body className="min-h-screen bg-background text-on-surface antialiased flex flex-col selection:bg-primary selection:text-white font-sans">
         {/* Halos de luz mística ambiental */}
         <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">

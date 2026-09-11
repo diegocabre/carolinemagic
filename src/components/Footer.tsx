@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, Send } from "lucide-react";
 
 export default function Footer() {
@@ -7,9 +8,16 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         {/* Marca y Biografía Breve */}
         <div className="md:col-span-1 space-y-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <span className="font-serif text-xl font-bold tracking-wider text-on-surface">
+          <div className="flex items-center gap-3">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden border border-primary/50 shadow-mystic-glow shrink-0">
+              <Image
+                src="/images/logo.jpg"
+                alt="Caroline Magic"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <span className="font-serif text-2xl font-bold tracking-normal text-on-surface leading-tight">
               Caroline Magic
             </span>
           </div>
