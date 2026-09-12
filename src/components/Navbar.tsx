@@ -20,7 +20,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-[#FBF7F4]/85 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-[rgba(98,67,127,0.08)] bg-[#FAEAEE]/85 backdrop-blur-md transition-all">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logotipo Oficial Único */}
         <Link href="/" className="flex items-center gap-3.5 group">
@@ -54,7 +54,7 @@ export default function Navbar() {
                 className={cn(
                   "relative px-4 py-1.5 rounded-full text-sm transition-all tracking-wide",
                   isActive
-                    ? "text-[#9A2E65] font-semibold bg-[#F8E6EE]"
+                    ? "text-[#9A2E65] font-semibold bg-[#F5D9E7]"
                     : "text-[#685876] hover:text-[#9A2E65]"
                 )}
                 aria-current={isActive ? "page" : undefined}
@@ -92,7 +92,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-black/5 bg-[#FBF7F4] px-6 py-6 space-y-3"
+            className="md:hidden border-b border-[rgba(98,67,127,0.1)] bg-[#FAEAEE] px-6 py-6 space-y-3"
           >
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -104,8 +104,8 @@ export default function Navbar() {
                   className={cn(
                     "flex items-center justify-between text-base py-3 px-4 rounded-xl transition-all",
                     isActive
-                      ? "bg-[#F8E6EE] text-[#9A2E65] font-semibold"
-                      : "text-[#685876] hover:text-[#9A2E65] hover:bg-[#F5EFF7]"
+                      ? "bg-[#F5D9E7] text-[#9A2E65] font-semibold"
+                      : "text-[#685876] hover:text-[#9A2E65] hover:bg-[#F5D9E7]/40"
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >

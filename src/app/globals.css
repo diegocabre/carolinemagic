@@ -2,14 +2,14 @@
 @config "../../tailwind.config.ts";
 
 @theme {
-  --color-background: #FBF7F4;
+  --color-background: #FAEAEE;
   --color-surface: #FFFFFF;
-  --color-surface-soft: #F5EFF7;
-  --color-surface-container: #EFE6F0;
+  --color-surface-soft: #F6ECF4;
+  --color-surface-container: #EFE2EC;
 
   --color-primary: #9A2E65;
   --color-primary-hover: #7D2251;
-  --color-primary-soft: #F8E6EE;
+  --color-primary-soft: #F5D9E7;
 
   --color-secondary: #523B68;
   --color-secondary-accent: #8B6F9E;
@@ -39,7 +39,7 @@ html {
 }
 
 body {
-  background-color: #FBF7F4;
+  background-color: #FAEAEE;
   color: #281D33;
   font-family: var(--font-plus-jakarta), sans-serif;
   overflow-x: hidden;

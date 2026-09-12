@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Clock, CheckCircle2, ArrowUpRight } from "lucide-react";
 import { Service } from "@/data/services";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 
 interface ServiceCardProps {
   service: Service;
@@ -51,13 +51,16 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <span className="text-[10px] uppercase tracking-wider text-[#8C7C99] block">Inversión</span>
           <span className="text-2xl font-bold font-serif text-[#281D33]">{service.price}</span>
         </div>
-        <Link
-          href={`/lecturas#${service.id}`}
-          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold bg-[#F5EFF7] hover:bg-[#9A2E65] hover:text-white text-[#523B68] border border-[#523B68]/20 transition-all group/btn"
+        <a
+          href={getWhatsAppUrl(WHATSAPP_MESSAGES.service(service.title))}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold bg-[#F5EFF7] hover:bg-[#9A2E65] hover:text-white text-[#523B68] border border-[#523B68]/20 transition-all group/btn shadow-xs hover:shadow-md"
+          aria-label={`Agendar ${service.title} por WhatsApp (abre en nueva pestaña)`}
         >
           <span>Agendar</span>
           <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 text-[#9A2E65] group-hover/btn:text-white" />
-        </Link>
+        </a>
       </div>
     </div>
   );

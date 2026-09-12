@@ -4,7 +4,7 @@ import { Send } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-[rgba(98,67,127,0.1)] bg-[#F5EFF7] text-[#685876] pt-16 pb-12 mt-24">
+    <footer className="w-full border-t border-[rgba(98,67,127,0.12)] bg-[#F5E6ED] text-[#685876] pt-16 pb-12 mt-24">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         {/* Marca y Biografía Breve */}
         <div className="md:col-span-1 space-y-4">

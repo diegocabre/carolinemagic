@@ -99,7 +99,7 @@ export default function DailyCard() {
             </div>
 
             <div className="flex flex-col items-center justify-center my-auto text-center space-y-4">
-              <div className="w-24 h-24 rounded-full border border-[#9A2E65]/25 bg-[#F8E6EE]/40 flex items-center justify-center relative">
+              <div className="w-24 h-24 rounded-full border border-[#9A2E65]/25 bg-[#F5D9E7]/60 flex items-center justify-center relative">
                 <div className="absolute inset-2 rounded-full border border-dashed border-[#9A2E65]/30 animate-spin-slow" />
                 <Sparkles className="w-10 h-10 text-[#9A2E65] animate-pulse" />
               </div>
@@ -118,7 +118,7 @@ export default function DailyCard() {
           </div>
 
           {/* REVERSO DE LA CARTA (ARCANO REVELADO) */}
-          <div className="absolute inset-0 w-full h-full rounded-2xl bg-[#F5EFF7] border-2 border-[#9A2E65]/35 p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-lg">
+          <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-b from-[#FDF5F9] to-[#F5D9E7] border-2 border-[#9A2E65]/35 p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-lg">
             <div className="flex justify-between items-center border-b border-[rgba(98,67,127,0.12)] pb-3">
               <span className="font-serif text-base tracking-widest text-[#9A2E65] font-bold">
                 {currentCard.number}

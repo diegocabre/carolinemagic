@@ -1,12 +1,13 @@
 import { products } from "@/data/products";
 import { ShoppingBag, Sparkles, Package, ShieldCheck } from "lucide-react";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 
 export default function GaleriaTiendaPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 space-y-16 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.06),transparent_50%)]">
+    <div className="max-w-7xl mx-auto px-6 py-16 space-y-16 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.14),transparent_55%)]">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4 pt-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] text-xs uppercase tracking-widest font-semibold border border-[#9A2E65]/20 shadow-xs">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs uppercase tracking-widest font-semibold border border-[#9A2E65]/25 shadow-xs">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Atelier de Arte Místico</span>
         </div>
@@ -71,13 +72,16 @@ export default function GaleriaTiendaPage() {
 
             <div className="pt-5 border-t border-[rgba(98,67,127,0.1)] flex items-center justify-between">
               <span className="text-2xl font-bold font-serif text-[#281D33]">{product.price}</span>
-              <button
-                type="button"
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold bg-[#F5EFF7] hover:bg-[#9A2E65] hover:text-white text-[#523B68] border border-[#523B68]/15 transition-all active:scale-95 group/btn"
+              <a
+                href={getWhatsAppUrl(WHATSAPP_MESSAGES.product(product.name))}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Consultar disponibilidad para adquirir ${product.name} por WhatsApp`}
+                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold bg-[#F5EFF7] hover:bg-[#9A2E65] hover:text-white text-[#523B68] border border-[#523B68]/15 transition-all active:scale-95 group/btn shadow-xs hover:shadow-md"
               >
                 <ShoppingBag className="w-3.5 h-3.5 text-[#9A2E65] group-hover/btn:text-white" />
                 <span>Adquirir</span>
-              </button>
+              </a>
             </div>
           </div>
         ))}

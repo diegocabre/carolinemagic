@@ -9,17 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#FBF7F4", // Lienzo principal: Marfil místico / Lino cálido
+        background: "#FAEAEE", // Lienzo principal: Cuarzo Rosa Místico / Blush etéreo cálido
         surface: {
-          DEFAULT: "#FFFFFF", // Blanco puro para tarjetas principales
-          soft: "#F5EFF7", // Lavanda muy sutil
-          container: "#EFE6F0", // Amatista translúcido para inputs y fondos suaves
-          glass: "rgba(255, 255, 255, 0.75)",
+          DEFAULT: "#FFFFFF", // Blanco puro para tarjetas principales con contraste
+          soft: "#F6ECF4", // Lavanda-rosa sutil
+          container: "#EFE2EC", // Amatista-rosa suave para inputs
+          glass: "rgba(255, 255, 255, 0.8)",
         },
         primary: {
-          DEFAULT: "#9A2E65", // Magenta / Berry profundo elegante para CTAs
+          DEFAULT: "#9A2E65", // Berry profundo elegante para CTAs
           hover: "#7D2251",
-          soft: "#F8E6EE", // Rosa cuarzo suave para pills y fondos activos
+          soft: "#F5D9E7", // Rosa cuarzo acentuado para pills y fondos activos
         },
         secondary: {
           DEFAULT: "#523B68", // Amatista real profundo para títulos

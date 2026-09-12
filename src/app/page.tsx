@@ -3,16 +3,17 @@ import { Sparkles, ArrowRight, Compass, Flame, Feather, HeartHandshake } from "l
 import DailyCard from "@/components/DailyCard";
 import ServiceCard from "@/components/ServiceCard";
 import { services } from "@/data/services";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 
 export default function HomePage() {
   const featuredServices = services.slice(0, 3);
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.08),transparent_50%)]">
+    <div className="space-y-24 md:space-y-36 pb-20 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.14),transparent_55%)]">
       {/* 1. HERO SECTION (Sin logo redundante; foco directo en el mensaje y CTA) */}
       <section className="relative pt-12 sm:pt-20 md:pt-28 px-6 max-w-7xl mx-auto text-center flex flex-col items-center">
         {/* Badge superior de contexto */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] text-xs font-medium uppercase tracking-widest border border-[#9A2E65]/20 mb-6 shadow-xs">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs font-medium uppercase tracking-widest border border-[#9A2E65]/25 mb-6 shadow-xs">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Magia que se aprende. Magia que se vive.</span>
         </div>
@@ -200,7 +201,7 @@ export default function HomePage() {
 
       {/* 5. MANIFIESTO: MÁS QUE UNA MARCA */}
       <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] text-xs tracking-widest uppercase font-medium border border-[#9A2E65]/20">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs tracking-widest uppercase font-medium border border-[#9A2E65]/25 shadow-xs">
           <Sparkles className="w-3.5 h-3.5 text-[#9A2E65]" />
           <span>Filosofía Viva</span>
         </div>
@@ -217,7 +218,7 @@ export default function HomePage() {
           <span className="text-[#9A2E65]">✦</span>
           <span className="px-4 py-1.5 rounded-full bg-white border border-[rgba(98,67,127,0.15)] shadow-xs">Se encarna</span>
           <span className="text-[#9A2E65]">✦</span>
-          <span className="px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] border border-[#9A2E65]/30 shadow-xs font-bold">Se vive</span>
+          <span className="px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] border border-[#9A2E65]/35 shadow-xs font-bold">Se vive</span>
         </div>
       </section>
 
@@ -250,7 +251,7 @@ export default function HomePage() {
 
       {/* 7. CALL TO ACTION FINAL */}
       <section className="max-w-5xl mx-auto px-6 text-center">
-        <div className="rounded-3xl bg-gradient-to-br from-[#F5EFF7] to-[#F8E6EE] p-10 md:p-16 border border-[#9A2E65]/25 relative overflow-hidden shadow-sm">
+        <div className="rounded-3xl bg-gradient-to-br from-[#F6ECF4] to-[#F5D9E7] p-10 md:p-16 border border-[#9A2E65]/30 relative overflow-hidden shadow-sm">
           <div className="relative z-10 space-y-6">
             <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[#281D33]">
               ¿Listo para mirar dentro del espejo sagrado?
@@ -258,12 +259,21 @@ export default function HomePage() {
             <p className="text-sm sm:text-base text-[#685876] max-w-xl mx-auto font-normal leading-relaxed">
               Los momentos de incertidumbre son los umbrales de tu mayor metamorfosis. Reserva tu espacio y descubre lo que tu alma ya tiene listo para manifestar.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={getWhatsAppUrl(WHATSAPP_MESSAGES.booking)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9A2E65] hover:bg-[#7D2251] text-white px-10 py-4 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+              >
+                <span>Agendar Mi Lectura Ahora</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
               <Link
                 href="/lecturas"
-                className="inline-block bg-[#9A2E65] hover:bg-[#7D2251] text-white px-10 py-4 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-[#F5EFF7] text-[#523B68] border border-[#523B68]/20 px-8 py-4 rounded-full text-xs uppercase tracking-wider font-semibold shadow-xs transition-all"
               >
-                Agendar Mi Lectura Ahora
+                Explorar Más Sesiones
               </Link>
             </div>
           </div>

@@ -4,10 +4,10 @@ import { Sparkles, Shield, Video, FileText } from "lucide-react";
 
 export default function LecturasPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 space-y-16 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.06),transparent_50%)]">
+    <div className="max-w-7xl mx-auto px-6 py-16 space-y-16 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.14),transparent_55%)]">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4 pt-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] text-xs uppercase tracking-widest font-semibold border border-[#9A2E65]/20 shadow-xs">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs uppercase tracking-widest font-semibold border border-[#9A2E65]/25 shadow-xs">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Consultas & Cartografía Álmica</span>
         </div>

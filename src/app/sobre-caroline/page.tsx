@@ -12,7 +12,9 @@ import {
   Activity,
   History,
   MousePointerClick,
+  ArrowUpRight,
 } from "lucide-react";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 
 export default function SobreCarolinePage() {
   const pilares = [
@@ -58,10 +60,10 @@ export default function SobreCarolinePage() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 space-y-24 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.06),transparent_50%)]">
+    <div className="max-w-5xl mx-auto px-6 py-16 space-y-24 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.14),transparent_55%)]">
       {/* 1. HERO & MANIFIESTO (Sin logo repetido: comienza directo con el badge y H1) */}
       <section className="text-center space-y-6 flex flex-col items-center pt-8 sm:pt-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] text-xs font-medium uppercase tracking-widest border border-[#9A2E65]/20 shadow-xs">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs font-medium uppercase tracking-widest border border-[#9A2E65]/25 shadow-xs">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Magia que se aprende. Magia que se vive.</span>
         </div>
@@ -100,7 +102,7 @@ export default function SobreCarolinePage() {
           </div>
 
           {/* Cita Destacada de Revelación */}
-          <div className="rounded-2xl bg-[#F8E6EE]/50 border-l-4 border-[#9A2E65] p-6 sm:p-8 my-6 space-y-2 shadow-xs">
+          <div className="rounded-2xl bg-[#F5D9E7]/60 border-l-4 border-[#9A2E65] p-6 sm:p-8 my-6 space-y-2 shadow-xs">
             <span className="text-xs uppercase tracking-widest text-[#9A2E65] font-bold block">
               El Punto de Inflexión
             </span>
@@ -119,8 +121,8 @@ export default function SobreCarolinePage() {
           </div>
 
           {/* Declaración de Propósito Soberano */}
-          <div className="rounded-2xl bg-[#F5EFF7] border border-[rgba(98,67,127,0.1)] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <div className="w-12 h-12 rounded-full bg-[#F8E6EE] border border-[#9A2E65]/30 flex items-center justify-center text-[#9A2E65] shrink-0">
+          <div className="rounded-2xl bg-white/95 border border-[rgba(98,67,127,0.1)] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            <div className="w-12 h-12 rounded-full bg-[#F5D9E7] border border-[#9A2E65]/30 flex items-center justify-center text-[#9A2E65] shrink-0">
               <Heart className="w-6 h-6" />
             </div>
             <div className="space-y-1">
@@ -136,7 +138,7 @@ export default function SobreCarolinePage() {
       </section>
 
       {/* 3. NUESTRA MISIÓN */}
-      <section className="rounded-3xl bg-gradient-to-br from-[#F5EFF7] to-[#F8E6EE] p-8 sm:p-12 border border-[#9A2E65]/20 text-center space-y-6 shadow-sm">
+      <section className="rounded-3xl bg-gradient-to-br from-[#F6ECF4] to-[#F5D9E7] p-8 sm:p-12 border border-[#9A2E65]/20 text-center space-y-6 shadow-sm">
         <span className="text-xs uppercase tracking-widest text-[#9A2E65] font-bold">
           Propósito en Acción
         </span>
@@ -237,14 +239,51 @@ export default function SobreCarolinePage() {
             <span className="text-[#9A2E65]">✦</span>
             <span className="px-4 py-1.5 rounded-full bg-white border border-[rgba(98,67,127,0.15)] shadow-xs">Se encarna</span>
             <span className="text-[#9A2E65]">✦</span>
-            <span className="px-4 py-1.5 rounded-full bg-[#F8E6EE] text-[#9A2E65] border border-[#9A2E65]/30 font-bold shadow-xs">Se vive</span>
+            <span className="px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] border border-[#9A2E65]/35 font-bold shadow-xs">Se vive</span>
           </div>
         </div>
       </section>
 
-      {/* 6. CTA FINAL */}
+      {/* 6. ATELIER PRIVÉ & ATENCIÓN DIRECTA */}
+      <section id="atelier" className="rounded-3xl bg-gradient-to-br from-white/95 to-[#F5D9E7]/40 border border-[rgba(98,67,127,0.15)] p-8 sm:p-14 shadow-sm relative overflow-hidden">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs uppercase tracking-widest font-semibold border border-[#9A2E65]/25 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Atelier Privé & Mentoría</span>
+          </div>
+
+          <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#281D33]">
+            Atención Directa con Caroline
+          </h3>
+
+          <p className="text-sm sm:text-base text-[#685876] leading-relaxed max-w-xl mx-auto font-normal">
+            Para procesos de transformación personalizados, mentorías arquetípicas profundas o encargos artísticos consagrados. Comunícate de forma confidencial y directa.
+          </p>
+
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={getWhatsAppUrl(WHATSAPP_MESSAGES.carolineDirect)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9A2E65] hover:bg-[#7D2251] text-white px-8 py-3.5 rounded-full text-xs uppercase tracking-wider font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+              aria-label="Solicitar atención directa con Caroline por WhatsApp (abre en nueva pestaña)"
+            >
+              <span>Atención Directa con Caroline</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <Link
+              href="/lecturas"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-[#F5EFF7] text-[#523B68] border border-[#523B68]/20 px-8 py-3.5 rounded-full text-xs uppercase tracking-wider font-semibold shadow-xs transition-all"
+            >
+              Ver Todas las Lecturas
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CTA FINAL DE EXPLORACIÓN */}
       <section className="text-center space-y-6 pt-4">
-        <h3 className="font-serif text-3xl sm:text-5xl font-bold text-[#281D33]">
+        <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#281D33]">
           Comienza Tu Proceso de Transformación
         </h3>
         <p className="text-sm sm:text-base text-[#685876] max-w-lg mx-auto leading-relaxed">
