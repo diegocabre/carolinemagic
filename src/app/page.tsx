@@ -26,9 +26,9 @@ export default function HomePage() {
           <div className="absolute -inset-2 rounded-full border border-dashed border-primary/30 animate-spin-slow pointer-events-none -z-10" />
         </div>
 
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs tracking-widest uppercase mb-6 font-semibold animate-pulse">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs tracking-widest uppercase mb-4 font-semibold animate-pulse">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Portal de Transformación & Sabiduría Arquetípica</span>
+          <span>Magia que se aprende. Magia que se vive.</span>
         </div>
 
         <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-on-surface max-w-4xl leading-[1.2] mb-6">
@@ -38,8 +38,8 @@ export default function HomePage() {
           </span>
         </h1>
 
-        <p className="text-base sm:text-lg md:text-xl text-on-surface/80 max-w-2xl font-light leading-relaxed mb-10">
-          Despierta tu soberanía espiritual. Fusionamos el rigor del tarot evolutivo con la potencia alquímica del arte canalizado para brindarte claridad absoluta.
+        <p className="text-base sm:text-lg md:text-xl text-on-surface/85 max-w-2xl font-light leading-relaxed mb-10">
+          Arte, Tarot, consciencia, energía, trabajo sistémico y rituales. Acompañamos procesos reales de transformación para que recuerdes tu propia capacidad de percibir, elegir, crear y transformar tu realidad.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
@@ -92,38 +92,47 @@ export default function HomePage() {
           {[
             {
               title: "Claridad",
+              subtitle: "Ver lo que antes no podías ver",
               icon: Compass,
-              desc: "La brújula arquetípica para despejar la niebla mental y tomar decisiones trascendentales con convicción.",
+              desc: "Desarrollar percepción, intuición y consciencia para comprender dónde estás y hacia dónde quieres ir.",
             },
             {
               title: "Origen",
+              subtitle: "Volver a las raíces",
               icon: Feather,
-              desc: "Reconexión con tu linaje, memoria del alma y causas iniciales que configuraron tus patrones presentes.",
+              desc: "Observar el sistema familiar, los patrones heredados y las historias que siguen actuando silenciosamente en nuestra vida.",
             },
             {
               title: "Medicina",
+              subtitle: "Reconocer tus dones y recursos",
               icon: HeartHandshake,
-              desc: "Transmutación de heridas arquetípicas y liberación de contratos energéticos que ya cumplieron su propósito.",
+              desc: "Integrar las herramientas, dones y recursos que acompañan nuestros procesos de transformación, conexión y equilibrio.",
             },
             {
               title: "Expansión",
+              subtitle: "Elegir y manifestar",
               icon: Flame,
-              desc: "Manifestación deliberada, integración del poder personal y alineación de tu propósito a tu realidad material.",
+              desc: "Dejar de vivir únicamente desde lo aprendido para comenzar a elegir, crear, manifestar y construir una vida más alineada con quien eres hoy.",
             },
           ].map((pillar, index) => (
             <div
               key={index}
-              className="rounded-card glass-panel p-6 border border-accent-rose/10 hover:border-primary/40 hover:shadow-mystic-glow transition-all group"
+              className="rounded-card glass-panel p-6 border border-accent-rose/10 hover:border-primary/40 hover:shadow-mystic-glow transition-all group flex flex-col justify-between"
             >
-              <div className="w-12 h-12 rounded-full bg-surface-low flex items-center justify-center mb-4 text-primary group-hover:scale-110 transition-transform">
-                <pillar.icon className="w-6 h-6" />
+              <div>
+                <div className="w-12 h-12 rounded-full bg-surface-low flex items-center justify-center mb-4 text-primary group-hover:scale-110 transition-transform">
+                  <pillar.icon className="w-6 h-6" />
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-on-surface mb-1 group-hover:text-primary transition-colors">
+                  {pillar.title}
+                </h3>
+                <h4 className="text-[11px] uppercase tracking-wider text-accent-rose font-medium mb-3">
+                  {pillar.subtitle}
+                </h4>
+                <p className="text-xs text-on-surface/80 leading-relaxed font-light">
+                  {pillar.desc}
+                </p>
               </div>
-              <h3 className="font-serif text-xl font-bold text-on-surface mb-2 group-hover:text-primary transition-colors">
-                {pillar.title}
-              </h3>
-              <p className="text-xs text-on-surface/75 leading-relaxed">
-                {pillar.desc}
-              </p>
             </div>
           ))}
         </div>
@@ -202,7 +211,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. SESIONES DESTACADAS */}
+      {/* 5. MANIFIESTO: MÁS QUE UNA MARCA */}
+      <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-rose/20 bg-surface-container text-accent-rose text-xs tracking-widest uppercase font-semibold">
+          <Sparkles className="w-3.5 h-3.5 text-primary" />
+          <span>Filosofía Viva</span>
+        </div>
+        <h2 className="font-serif text-3xl sm:text-5xl font-bold text-on-surface">
+          Más que una marca
+        </h2>
+        <p className="font-serif text-lg sm:text-2xl text-accent-rose max-w-2xl mx-auto leading-relaxed italic">
+          &ldquo;Para nosotros, magia no significa escapar de la realidad. Significa aprender a relacionarnos con ella de otra manera.&rdquo;
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs uppercase tracking-widest text-on-surface/90 pt-2 font-medium">
+          <span className="px-3.5 py-1 rounded-full bg-surface-low border border-accent-rose/15">Se practica</span>
+          <span className="text-primary">✦</span>
+          <span className="px-3.5 py-1 rounded-full bg-surface-low border border-accent-rose/15">Se experimenta</span>
+          <span className="text-primary">✦</span>
+          <span className="px-3.5 py-1 rounded-full bg-surface-low border border-accent-rose/15">Se encarna</span>
+          <span className="text-primary">✦</span>
+          <span className="px-3.5 py-1 rounded-full bg-primary/20 text-primary border border-primary/40 shadow-mystic-glow">Se vive</span>
+        </div>
+      </section>
+
+      {/* 6. SESIONES DESTACADAS */}
       <section className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
