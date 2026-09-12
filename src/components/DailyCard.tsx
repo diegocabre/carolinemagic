@@ -64,17 +64,19 @@ export default function DailyCard() {
   return (
     <div className="w-full max-w-md mx-auto">
       {/* Indicador de fase lunar */}
-      <div className="flex items-center justify-between mb-4 px-4 py-2 rounded-full bg-surface-low border border-accent-rose/10 text-xs">
-        <div className="flex items-center gap-2 text-accent-rose">
-          <Moon className="w-4 h-4 text-primary animate-pulse" />
-          <span>Fase Actual: <strong className="text-on-surface">Luna Creciente en Cáncer</strong></span>
+      <div className="flex items-center justify-between mb-4 px-4 py-2.5 rounded-full bg-white/95 border border-[rgba(98,67,127,0.12)] text-xs shadow-sm">
+        <div className="flex items-center gap-2 text-[#685876]">
+          <Moon className="w-4 h-4 text-[#9A2E65] animate-pulse" />
+          <span>
+            Fase Actual: <strong className="text-[#281D33] font-semibold">Luna Creciente en Cáncer</strong>
+          </span>
         </div>
         <button
           onClick={handleNextCard}
-          className="flex items-center gap-1 text-on-surface/60 hover:text-primary transition-colors text-[11px]"
+          className="flex items-center gap-1.5 text-[#685876] hover:text-[#9A2E65] transition-colors text-[11px] font-medium"
           title="Revelar otra carta"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
+          <RefreshCw className="w-3.5 h-3.5 text-[#9A2E65]" />
           <span>Cambiar</span>
         </button>
       </div>
@@ -90,61 +92,61 @@ export default function DailyCard() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           {/* FRENTE DE LA CARTA (DORSO MÍSTICO CERRADO) */}
-          <div className="absolute inset-0 w-full h-full rounded-card glass-card p-6 flex flex-col items-center justify-between backface-hidden border-2 border-accent-rose/20 group-hover:border-primary/40 group-hover:shadow-mystic-glow">
-            <div className="w-full flex justify-between items-center text-xs tracking-widest uppercase text-accent-rose/70">
+          <div className="absolute inset-0 w-full h-full rounded-2xl bg-white/95 backdrop-blur-md p-6 flex flex-col items-center justify-between backface-hidden border border-[rgba(98,67,127,0.14)] shadow-md group-hover:border-[#9A2E65]/40 group-hover:shadow-xl transition-all">
+            <div className="w-full flex justify-between items-center text-xs tracking-widest uppercase text-[#8C7C99] font-medium">
               <span>Caroline Magic</span>
               <span>Arcano del Día</span>
             </div>
 
             <div className="flex flex-col items-center justify-center my-auto text-center space-y-4">
-              <div className="w-24 h-24 rounded-full border border-primary/30 flex items-center justify-center relative">
-                <div className="absolute inset-2 rounded-full border border-dashed border-accent-rose/40 animate-spin-slow" />
-                <Sparkles className="w-10 h-10 text-primary animate-pulse" />
+              <div className="w-24 h-24 rounded-full border border-[#9A2E65]/25 bg-[#F8E6EE]/40 flex items-center justify-center relative">
+                <div className="absolute inset-2 rounded-full border border-dashed border-[#9A2E65]/30 animate-spin-slow" />
+                <Sparkles className="w-10 h-10 text-[#9A2E65] animate-pulse" />
               </div>
-              <h4 className="font-serif text-2xl text-on-surface font-semibold tracking-wide">
+              <h4 className="font-serif text-2xl sm:text-3xl text-[#281D33] font-bold tracking-tight">
                 Toca para Revelar
               </h4>
-              <p className="text-xs text-on-surface/70 max-w-xs leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#685876] max-w-xs leading-relaxed font-normal">
                 Toma una respiración profunda, formula tu intención interna y voltea tu sincronicidad para el día de hoy.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-primary font-medium tracking-wider uppercase">
+            <div className="flex items-center gap-2 text-xs text-[#9A2E65] font-semibold tracking-wider uppercase">
               <Eye className="w-4 h-4" />
               <span>Girar Carta</span>
             </div>
           </div>
 
           {/* REVERSO DE LA CARTA (ARCANO REVELADO) */}
-          <div className="absolute inset-0 w-full h-full rounded-card bg-surface-container/95 border-2 border-primary/40 p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-mystic-glow">
-            <div className="flex justify-between items-center border-b border-accent-rose/15 pb-3">
-              <span className="font-serif text-sm tracking-widest text-primary font-bold">
+          <div className="absolute inset-0 w-full h-full rounded-2xl bg-[#F5EFF7] border-2 border-[#9A2E65]/35 p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-lg">
+            <div className="flex justify-between items-center border-b border-[rgba(98,67,127,0.12)] pb-3">
+              <span className="font-serif text-base tracking-widest text-[#9A2E65] font-bold">
                 {currentCard.number}
               </span>
-              <span className="text-xl text-accent-rose">{currentCard.symbol}</span>
+              <span className="text-xl text-[#523B68]">{currentCard.symbol}</span>
             </div>
 
             <div className="text-center py-4 space-y-3">
-              <h3 className="font-serif text-3xl font-bold text-on-surface tracking-wide">
+              <h3 className="font-serif text-3xl font-bold text-[#281D33] tracking-tight">
                 {currentCard.name}
               </h3>
               <div className="flex justify-center flex-wrap gap-1.5">
                 {currentCard.keywords.map((kw) => (
                   <span
                     key={kw}
-                    className="px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider bg-surface-high text-accent-rose border border-accent-rose/20"
+                    className="px-3 py-0.5 rounded-full text-[10px] uppercase tracking-wider bg-white text-[#523B68] border border-[#523B68]/15 font-medium shadow-xs"
                   >
                     {kw}
                   </span>
                 ))}
               </div>
-              <p className="text-sm text-on-surface/90 leading-relaxed italic pt-2">
+              <p className="text-sm text-[#281D33] leading-relaxed italic pt-2 font-normal">
                 &ldquo;{currentCard.message}&rdquo;
               </p>
             </div>
 
-            <div className="text-center pt-3 border-t border-accent-rose/15">
-              <span className="text-[11px] text-accent-rose/70 uppercase tracking-widest">
+            <div className="text-center pt-3 border-t border-[rgba(98,67,127,0.12)]">
+              <span className="text-[11px] text-[#8C7C99] uppercase tracking-widest font-medium">
                 Mensaje canalizado por Caroline
               </span>
             </div>

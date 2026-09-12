@@ -20,11 +20,11 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-accent-rose/10 bg-background/80 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-[#FBF7F4]/85 backdrop-blur-md transition-all">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logo con imagen oficial y tipografía coincidente */}
+        {/* Logotipo Oficial Único */}
         <Link href="/" className="flex items-center gap-3.5 group">
-          <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-primary/50 shadow-mystic-glow group-hover:scale-105 transition-transform duration-300">
+          <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[#9A2E65]/20 shadow-sm group-hover:scale-105 group-hover:border-[#9A2E65]/50 transition-transform duration-300">
             <Image
               src="/images/logo.jpg"
               alt="Caroline Magic"
@@ -34,10 +34,10 @@ export default function Navbar() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-2xl tracking-normal text-on-surface font-semibold group-hover:text-primary transition-colors leading-tight">
+            <span className="font-serif text-xl sm:text-2xl tracking-normal text-[#281D33] font-bold group-hover:text-[#9A2E65] transition-colors leading-tight">
               Caroline Magic
             </span>
-            <span className="text-[10px] tracking-widest uppercase text-accent-rose/70 font-sans">
+            <span className="text-[10px] tracking-widest uppercase text-[#8C7C99] font-sans">
               Atelier & Oráculo
             </span>
           </div>
@@ -52,54 +52,47 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className={cn(
-                  "relative px-4 py-2 rounded-full text-sm transition-all tracking-wide",
+                  "relative px-4 py-1.5 rounded-full text-sm transition-all tracking-wide",
                   isActive
-                    ? "text-primary font-semibold"
-                    : "text-on-surface/75 hover:text-on-surface"
+                    ? "text-[#9A2E65] font-semibold bg-[#F8E6EE]"
+                    : "text-[#685876] hover:text-[#9A2E65]"
                 )}
                 aria-current={isActive ? "page" : undefined}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="activeNavIndicator"
-                    className="absolute inset-0 rounded-full bg-primary/15 border border-primary/40 shadow-mystic-glow -z-10"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
                 <span>{link.name}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* Action Button */}
+        {/* Botón CTA "RESERVAR SESIÓN" */}
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/lecturas"
-            className="px-5 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold bg-primary text-background hover:bg-primary-container hover:text-white transition-all shadow-mystic-glow hover:scale-105 active:scale-95"
+            className="bg-[#9A2E65] hover:bg-[#7D2251] text-white shadow-sm hover:shadow-md px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all hover:scale-105 active:scale-95"
           >
-            Reservar Sesión
+            RESERVAR SESIÓN
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Botón Menú Móvil */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-lg text-on-surface hover:text-primary hover:bg-surface-low transition-colors"
+          className="md:hidden p-2 rounded-lg text-[#281D33] hover:text-[#9A2E65] hover:bg-[#F5EFF7] transition-colors"
           aria-label="Abrir menú"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown con indicador de página activa */}
+      {/* Menú Desplegable Móvil */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b border-accent-rose/10 bg-surface px-6 py-6 space-y-3"
+            className="md:hidden border-b border-black/5 bg-[#FBF7F4] px-6 py-6 space-y-3"
           >
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -109,27 +102,27 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "flex items-center justify-between text-base font-medium py-3 px-4 rounded-xl transition-all",
+                    "flex items-center justify-between text-base py-3 px-4 rounded-xl transition-all",
                     isActive
-                      ? "bg-primary/20 text-primary border border-primary/40 shadow-mystic-glow font-semibold"
-                      : "text-on-surface/85 hover:text-primary hover:bg-surface-low"
+                      ? "bg-[#F8E6EE] text-[#9A2E65] font-semibold"
+                      : "text-[#685876] hover:text-[#9A2E65] hover:bg-[#F5EFF7]"
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
                   <span>{link.name}</span>
                   {isActive && (
-                    <span className="w-2 h-2 rounded-full bg-primary shadow-mystic-glow" />
+                    <span className="w-2 h-2 rounded-full bg-[#9A2E65]" />
                   )}
                 </Link>
               );
             })}
-            <div className="pt-4 border-t border-accent-rose/10">
+            <div className="pt-4 border-t border-black/5">
               <Link
                 href="/lecturas"
                 onClick={() => setIsOpen(false)}
-                className="block text-center w-full py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold bg-primary text-background shadow-mystic-glow"
+                className="block text-center w-full py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#9A2E65] hover:bg-[#7D2251] text-white shadow-sm"
               >
-                Reservar Sesión
+                RESERVAR SESIÓN
               </Link>
             </div>
           </motion.div>

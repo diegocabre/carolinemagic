@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Pacifico, Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const pacifico = Pacifico({
-  weight: "400",
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-pacifico",
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -37,13 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${pacifico.variable} ${plusJakarta.variable}`}>
-      <body className="min-h-screen bg-background text-on-surface antialiased flex flex-col selection:bg-primary selection:text-white font-sans">
-        {/* Halos de luz mística ambiental */}
+    <html lang="es" className={`${playfair.variable} ${plusJakarta.variable}`}>
+      <body className="min-h-screen bg-background text-text-primary antialiased flex flex-col font-sans selection:bg-primary selection:text-white">
+        {/* Halos decorativos de fondo: luz mística cálida y etérea */}
         <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-          <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-secondary/20 rounded-full blur-[140px]" />
-          <div className="absolute top-[40%] right-[-10%] w-[500px] h-[400px] bg-primary/10 rounded-full blur-[130px]" />
-          <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[500px] bg-secondary/15 rounded-full blur-[150px]" />
+          <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-[radial-gradient(circle,_rgba(242,96,145,0.08),transparent_65%)] blur-[80px]" />
+          <div className="absolute top-[35%] right-[-5%] w-[600px] h-[500px] bg-[radial-gradient(circle,_rgba(98,67,127,0.05),transparent_65%)] blur-[90px]" />
+          <div className="absolute bottom-[5%] left-[-5%] w-[650px] h-[550px] bg-[radial-gradient(circle,_rgba(248,230,238,0.8),transparent_70%)] blur-[100px]" />
         </div>
 
         <Navbar />
