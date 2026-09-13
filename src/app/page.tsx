@@ -1,4 +1,5 @@
 import DailyCard from "@/components/DailyCard";
+import ServiceCard from "@/components/ServiceCard";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { services } from "@/data/services";
 import {
@@ -12,55 +13,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-function ServiceCard({ service }: { service: (typeof services)[number] }) {
-  const data = service as typeof service & {
-    title?: string;
-    name?: string;
-    description?: string;
-    price?: string | number;
-    href?: string;
-  };
-  const title = data.title ?? data.name ?? `Lectura ${service.id}`;
-
-  return (
-    <article className="rounded-3xl bg-white/80 border border-border-accent p-6 shadow-sm hover:shadow-md transition-shadow">
-      <div className="space-y-4">
-        <h3 className="font-serif text-2xl font-bold text-text-primary">
-          {title}
-        </h3>
-        {data.description && (
-          <p className="text-sm text-text-secondary leading-relaxed">
-            {data.description}
-          </p>
-        )}
-        <div className="flex items-center justify-between gap-4 pt-2">
-          {data.price !== undefined && (
-            <span className="text-sm font-semibold text-primary">
-              {data.price}
-            </span>
-          )}
-          <Link
-            href={data.href ?? "/lecturas"}
-            className="ml-auto inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover"
-          >
-            Ver detalles
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </article>
-  );
-}
-
 export default function HomePage() {
   const featuredServices = services.slice(0, 3);
 
   return (
     <div className="space-y-24 md:space-y-36 pb-20 bg-mystic-glow">
-      {/* 1. HERO SECTION — ahora en dos columnas: texto + imagen */}
+      {/* 1. HERO SECTION */}
       <section className="relative pt-12 sm:pt-20 md:pt-28 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Columna de texto — idéntica a la que ya tenías, solo dejó de estar centrada sola */}
+          {/* Columna de texto */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-soft text-primary text-xs font-medium uppercase tracking-widest border border-border-accent mb-6 shadow-xs">
               <Sparkles className="w-3.5 h-3.5" />
@@ -95,19 +56,18 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Columna de imagen — nueva, usando og-cover.jpeg */}
-          <div className="relative order-first lg:order-last">
-            {/* Halo decorativo detrás de la imagen, coherente con la estética mística */}
+          {/* Columna de imagen */}
+          <div className="relative order-last">
             <div className="absolute -inset-4 bg-primary-soft/60 rounded-[2.5rem] blur-2xl -z-10" />
 
-            <div className="relative aspect-1200/630 lg:aspect-4/5 rounded-3xl overflow-hidden border border-border-accent shadow-xl">
+            <div className="relative aspect-4/5 max-h-120 lg:max-h-none mx-auto max-w-sm lg:max-w-none rounded-3xl overflow-hidden border border-border-accent shadow-xl">
               <Image
-                src="/images/og-cover.jpeg"
-                alt="Caroline Magic — Tarot Evolutivo, Talleres y Arte Místico"
+                src="/images/hero-caroline.jpeg"
+                alt="Caroline Magic con cartas de tarot y cristal, ambiente místico"
                 fill
                 priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-[center_20%]"
+                sizes="(max-width: 1024px) 90vw, 50vw"
               />
             </div>
           </div>
