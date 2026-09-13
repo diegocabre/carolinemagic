@@ -1,9 +1,9 @@
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import type { Metadata } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -17,18 +17,44 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const SITE_URL = "https://www.carolinemagic.cl"; // ← reemplaza por el dominio real cuando lo tengan
+
 export const metadata: Metadata = {
-  title: "Caroline Magic | Tarot Evolutivo, Consciencia y Arte Místico",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Caroline Magic | Tarot Evolutivo, Talleres y Arte Místico",
+    template: "%s | Caroline Magic",
+  },
   description:
-    "Espacio sagrado y contemporáneo guiado por Caroline Magic: lecturas de tarot evolutivo, arquetipos de consciencia, sesiones holísticas y obras de arte esotérico.",
+    "Espacio sagrado y contemporáneo guiado por Caroline Magic: lecturas de tarot evolutivo, talleres grupales, ritos y ceremonias, y obras de arte esotérico.",
   keywords: [
     "Tarot Evolutivo",
     "Caroline Magic",
     "Arte Místico",
+    "Talleres de Tarot",
+    "Ritos y Ceremonias",
     "Sesiones Holísticas",
     "Arquetipos",
     "Espiritualidad",
+    "Chile",
   ],
+  openGraph: {
+    type: "website",
+    locale: "es_CL",
+    url: SITE_URL,
+    siteName: "Caroline Magic",
+    title: "Caroline Magic | Tarot Evolutivo, Talleres y Arte Místico",
+    description:
+      "Lecturas de tarot evolutivo, talleres, rituales y arte consagrado.",
+    images: [{ url: "/images/og-cover.jpeg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Caroline Magic",
+    description: "Tarot evolutivo, talleres, rituales y arte místico.",
+    images: ["/images/og-cover.jpeg"],
+  },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({

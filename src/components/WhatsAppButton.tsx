@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
+import { useState } from "react";
 
 export default function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false);
@@ -16,7 +16,7 @@ export default function WhatsAppButton() {
       <div
         id="whatsapp-tooltip"
         role="tooltip"
-        className={`mr-3 px-3.5 py-2 rounded-2xl bg-white/95 backdrop-blur-md border border-[#9A2E65]/20 shadow-xl transition-all duration-300 pointer-events-none flex items-center gap-2.5 ${
+        className={`mr-3 px-3.5 py-2 rounded-2xl bg-white/95 backdrop-blur-md border border-primary/20 shadow-xl transition-all duration-300 pointer-events-none flex items-center gap-2.5 ${
           isHovered
             ? "opacity-100 translate-x-0 scale-100"
             : "opacity-0 translate-x-2 scale-95 pointer-events-none sm:group-hover:opacity-100 sm:group-hover:translate-x-0 sm:group-hover:scale-100"
@@ -27,10 +27,10 @@ export default function WhatsAppButton() {
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
         <div className="flex flex-col">
-          <span className="text-xs font-serif font-bold text-[#281D33] leading-tight">
+          <span className="text-xs font-serif font-bold text-text-primary leading-tight">
             Consulta con Selene
           </span>
-          <span className="text-[10px] text-[#8C7C99] tracking-wide font-sans">
+          <span className="text-[10px] text-text-muted tracking-wide font-sans">
             Guía & Soporte Místico
           </span>
         </div>
@@ -47,7 +47,7 @@ export default function WhatsAppButton() {
         onMouseLeave={() => setIsHovered(false)}
         onFocus={() => setIsHovered(true)}
         onBlur={() => setIsHovered(false)}
-        className="relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 hover:shadow-2xl hover:shadow-[#25D366]/40 border-2 border-white/80 transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#9A2E65]/30"
+        className="relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 hover:shadow-2xl hover:shadow-[#25D366]/40 border-2 border-white/80 transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-4 focus:ring-primary/30"
       >
         {/* Halo de pulso sutil */}
         <span
@@ -57,7 +57,7 @@ export default function WhatsAppButton() {
 
         {/* Pequeña insignia de misticismo */}
         <span
-          className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#9A2E65] text-white flex items-center justify-center text-[10px] font-bold shadow-sm border border-white"
+          className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold shadow-sm border border-white"
           title="Caroline Magic"
           aria-hidden="true"
         >

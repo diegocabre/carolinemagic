@@ -1,62 +1,131 @@
-import Link from "next/link";
-import { Sparkles, ArrowRight, Compass, Flame, Feather, HeartHandshake } from "lucide-react";
 import DailyCard from "@/components/DailyCard";
-import ServiceCard from "@/components/ServiceCard";
-import { services } from "@/data/services";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
+import { services } from "@/data/services";
+import {
+  ArrowRight,
+  Compass,
+  Feather,
+  Flame,
+  HeartHandshake,
+  Sparkles,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+function ServiceCard({ service }: { service: (typeof services)[number] }) {
+  const data = service as typeof service & {
+    title?: string;
+    name?: string;
+    description?: string;
+    price?: string | number;
+    href?: string;
+  };
+  const title = data.title ?? data.name ?? `Lectura ${service.id}`;
+
+  return (
+    <article className="rounded-3xl bg-white/80 border border-border-accent p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div className="space-y-4">
+        <h3 className="font-serif text-2xl font-bold text-text-primary">
+          {title}
+        </h3>
+        {data.description && (
+          <p className="text-sm text-text-secondary leading-relaxed">
+            {data.description}
+          </p>
+        )}
+        <div className="flex items-center justify-between gap-4 pt-2">
+          {data.price !== undefined && (
+            <span className="text-sm font-semibold text-primary">
+              {data.price}
+            </span>
+          )}
+          <Link
+            href={data.href ?? "/lecturas"}
+            className="ml-auto inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover"
+          >
+            Ver detalles
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export default function HomePage() {
   const featuredServices = services.slice(0, 3);
 
   return (
-    <div className="space-y-24 md:space-y-36 pb-20 bg-[radial-gradient(circle_at_top,_rgba(242,96,145,0.14),transparent_55%)]">
-      {/* 1. HERO SECTION (Sin logo redundante; foco directo en el mensaje y CTA) */}
-      <section className="relative pt-12 sm:pt-20 md:pt-28 px-6 max-w-7xl mx-auto text-center flex flex-col items-center">
-        {/* Badge superior de contexto */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs font-medium uppercase tracking-widest border border-[#9A2E65]/25 mb-6 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Magia que se aprende. Magia que se vive.</span>
-        </div>
+    <div className="space-y-24 md:space-y-36 pb-20 bg-mystic-glow">
+      {/* 1. HERO SECTION — ahora en dos columnas: texto + imagen */}
+      <section className="relative pt-12 sm:pt-20 md:pt-28 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Columna de texto — idéntica a la que ya tenías, solo dejó de estar centrada sola */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-soft text-primary text-xs font-medium uppercase tracking-widest border border-border-accent mb-6 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Magia que se aprende. Magia que se vive.</span>
+            </div>
 
-        {/* H1 en Playfair Display con acento berry */}
-        <h1 className="font-serif text-[#281D33] text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight max-w-4xl leading-[1.12] mb-6">
-          El Arte de Revelar <br className="hidden sm:inline" />
-          <span className="italic text-[#9A2E65]">lo Invisible</span>
-        </h1>
+            <h1 className="font-serif text-text-primary text-4xl sm:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.12] mb-6">
+              El Arte de Revelar <br className="hidden sm:inline" />
+              <span className="italic text-primary">lo Invisible</span>
+            </h1>
 
-        {/* Subtítulo lavanda oscuro */}
-        <p className="text-[#685876] text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-normal mb-10">
-          Arte, Tarot, consciencia, energía, trabajo sistémico y rituales. Acompañamos procesos reales de transformación para que recuerdes tu propia capacidad de percibir, elegir, crear y transformar tu realidad.
-        </p>
+            <p className="text-text-secondary text-base sm:text-lg lg:text-base xl:text-lg max-w-xl leading-relaxed font-normal mb-10">
+              Arte, Tarot, consciencia, energía, trabajo sistémico y rituales.
+              Acompañamos procesos reales de transformación para que recuerdes
+              tu propia capacidad de percibir, elegir, crear y transformar tu
+              realidad.
+            </p>
 
-        {/* Botones de acción */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <Link
-            href="/lecturas"
-            className="w-full sm:w-auto bg-[#9A2E65] hover:bg-[#7D2251] text-white px-8 py-3.5 rounded-full text-sm font-semibold shadow-md hover:shadow-lg transition-all text-center hover:scale-105 active:scale-95"
-          >
-            Ver Lecturas Disponibles
-          </Link>
-          <Link
-            href="/galeria-tienda"
-            className="w-full sm:w-auto bg-white/90 hover:bg-white text-[#523B68] border border-[#523B68]/20 px-8 py-3.5 rounded-full text-sm font-semibold shadow-xs hover:shadow-md transition-all text-center"
-          >
-            Explorar Galería de Arte
-          </Link>
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+              <Link
+                href="/lecturas"
+                className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-full text-sm font-semibold shadow-md hover:shadow-lg transition-all text-center hover:scale-105 active:scale-95"
+              >
+                Ver Lecturas Disponibles
+              </Link>
+              <Link
+                href="/galeria-tienda"
+                className="w-full sm:w-auto bg-white/90 hover:bg-white text-secondary border border-secondary/20 px-8 py-3.5 rounded-full text-sm font-semibold shadow-xs hover:shadow-md transition-all text-center"
+              >
+                Explorar Galería de Arte
+              </Link>
+            </div>
+          </div>
+
+          {/* Columna de imagen — nueva, usando og-cover.jpeg */}
+          <div className="relative order-first lg:order-last">
+            {/* Halo decorativo detrás de la imagen, coherente con la estética mística */}
+            <div className="absolute -inset-4 bg-primary-soft/60 rounded-[2.5rem] blur-2xl -z-10" />
+
+            <div className="relative aspect-1200/630 lg:aspect-4/5 rounded-3xl overflow-hidden border border-border-accent shadow-xl">
+              <Image
+                src="/images/og-cover.jpeg"
+                alt="Caroline Magic — Tarot Evolutivo, Talleres y Arte Místico"
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* 2. SINCRONÍA DIARIA (WIDGET DE CARTA VOLTEABLE + FASE LUNAR) */}
       <section className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs uppercase tracking-widest text-[#9A2E65] font-semibold">
+          <span className="text-xs uppercase tracking-widest text-primary font-semibold">
             Sincronicidad Cuántica
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#281D33]">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary">
             Tu Oráculo de Hoy
           </h2>
-          <p className="text-sm sm:text-base text-[#685876]">
-            Conéctate con la frecuencia de este ciclo cósmico e interactúa con el mazo sagrado de Caroline.
+          <p className="text-sm sm:text-base text-text-secondary">
+            Conéctate con la frecuencia de este ciclo cósmico e interactúa con
+            el mazo sagrado de Caroline.
           </p>
         </div>
         <DailyCard />
@@ -65,14 +134,15 @@ export default function HomePage() {
       {/* 3. LOS 4 PILARES */}
       <section className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-2">
-          <span className="text-xs uppercase tracking-widest text-[#9A2E65] font-semibold">
+          <span className="text-xs uppercase tracking-widest text-primary font-semibold">
             El Método Caroline Magic
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#281D33]">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary">
             Los 4 Pilares de la Consciencia
           </h2>
-          <p className="text-sm sm:text-base text-[#685876]">
-            Un marco holístico que no busca adivinar tu futuro, sino entregarte el poder soberano de crearlo.
+          <p className="text-sm sm:text-base text-text-secondary">
+            Un marco holístico que no busca adivinar tu futuro, sino entregarte
+            el poder soberano de crearlo.
           </p>
         </div>
 
@@ -105,19 +175,19 @@ export default function HomePage() {
           ].map((pillar, index) => (
             <div
               key={index}
-              className="rounded-2xl bg-white/90 backdrop-blur-sm p-7 border border-[rgba(98,67,127,0.1)] shadow-sm hover:shadow-xl hover:border-[#9A2E65]/35 transition-all duration-300 group flex flex-col justify-between"
+              className="rounded-2xl bg-white/90 backdrop-blur-sm p-7 border border-border-subtle shadow-sm hover:shadow-xl hover:border-primary/35 transition-all duration-300 group flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-full bg-[#F5EFF7] flex items-center justify-center mb-4 text-[#9A2E65] group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-surface-muted flex items-center justify-center mb-4 text-primary group-hover:scale-110 transition-transform">
                   <pillar.icon className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-[#281D33] mb-1 group-hover:text-[#9A2E65] transition-colors">
+                <h3 className="font-serif text-2xl font-bold text-text-primary mb-1 group-hover:text-primary transition-colors">
                   {pillar.title}
                 </h3>
-                <h4 className="text-[11px] uppercase tracking-wider text-[#8B6F9E] font-medium mb-3">
+                <h4 className="text-[11px] uppercase tracking-wider text-secondary-accent font-medium mb-3">
                   {pillar.subtitle}
                 </h4>
-                <p className="text-xs sm:text-sm text-[#685876] leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-normal">
                   {pillar.desc}
                 </p>
               </div>
@@ -128,41 +198,53 @@ export default function HomePage() {
 
       {/* 4. LAS DOS VERTIENTES (ORÁCULO VS ATELIER DE ARTE) */}
       <section className="max-w-7xl mx-auto px-6">
-        <div className="rounded-3xl border border-[rgba(98,67,127,0.12)] bg-[#F5EFF7]/70 backdrop-blur-xl p-8 md:p-14 overflow-hidden relative shadow-sm">
+        <div className="rounded-3xl border border-border-subtle bg-surface-muted/70 backdrop-blur-xl p-8 md:p-14 overflow-hidden relative shadow-sm">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-            <span className="text-xs uppercase tracking-widest text-[#9A2E65] font-semibold">
+            <span className="text-xs uppercase tracking-widest text-primary font-semibold">
               Dualidad Sagrada
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#281D33]">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary">
               Dos Expresiones, Un Solo Propósito
             </h2>
-            <p className="text-sm sm:text-base text-[#685876]">
-              Caroline habita la confluencia entre la lectura del mapa cósmico y la manifestación tangible del arte místico.
+            <p className="text-sm sm:text-base text-text-secondary">
+              Caroline habita la confluencia entre la lectura del mapa cósmico y
+              la manifestación tangible del arte místico.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Vertiente 1 */}
-            <div className="rounded-2xl bg-white/95 border border-[rgba(98,67,127,0.1)] p-8 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#9A2E65]/30 transition-all">
+            <div className="rounded-2xl bg-white/95 border border-border-subtle p-8 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-primary/30 transition-all">
               <div className="space-y-4 mb-6">
-                <div className="text-xs uppercase tracking-wider text-[#9A2E65] font-bold">
+                <div className="text-xs uppercase tracking-wider text-primary font-bold">
                   Dimensión Introspectiva
                 </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#281D33]">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-text-primary">
                   El Oráculo de la Consciencia
                 </h3>
-                <p className="text-sm text-[#685876] leading-relaxed">
-                  Lecturas terapéuticas y no predictivas. Cada sesión con Caroline es un santuario de revelación donde se analiza la matriz psicológica de los arcanos mayores y menores.
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  Lecturas terapéuticas y no predictivas. Cada sesión con
+                  Caroline es un santuario de revelación donde se analiza la
+                  matriz psicológica de los arcanos mayores y menores.
                 </p>
-                <ul className="text-xs text-[#281D33] space-y-2 pt-2 font-medium">
-                  <li className="flex items-center gap-2"><span className="text-[#9A2E65]">✦</span> Sesiones privadas sincrónicas por videollamada HD</li>
-                  <li className="flex items-center gap-2"><span className="text-[#9A2E65]">✦</span> Grabación de por vida y cartografía en PDF</li>
-                  <li className="flex items-center gap-2"><span className="text-[#9A2E65]">✦</span> Integración somática y arquetípica</li>
+                <ul className="text-xs text-text-primary space-y-2 pt-2 font-medium">
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">✦</span> Sesiones privadas
+                    sincrónicas por videollamada HD
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">✦</span> Grabación de por
+                    vida y cartografía en PDF
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">✦</span> Integración somática
+                    y arquetípica
+                  </li>
                 </ul>
               </div>
               <Link
                 href="/lecturas"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#9A2E65] hover:text-[#7D2251] transition-colors"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover transition-colors"
               >
                 <span>Explorar sesiones disponibles</span>
                 <ArrowRight className="w-4 h-4" />
@@ -170,26 +252,37 @@ export default function HomePage() {
             </div>
 
             {/* Vertiente 2 */}
-            <div className="rounded-2xl bg-white/95 border border-[rgba(98,67,127,0.1)] p-8 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#9A2E65]/30 transition-all">
+            <div className="rounded-2xl bg-white/95 border border-border-subtle p-8 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-primary/30 transition-all">
               <div className="space-y-4 mb-6">
-                <div className="text-xs uppercase tracking-wider text-[#9A2E65] font-bold">
+                <div className="text-xs uppercase tracking-wider text-primary font-bold">
                   Dimensión Plástica & Alquímica
                 </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#281D33]">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-text-primary">
                   El Taller de Arte Místico
                 </h3>
-                <p className="text-sm text-[#685876] leading-relaxed">
-                  Obras pictóricas originales, barajas ilustradas a mano y talismanes consagrados. Arte concebido como tecnología viva para elevar la vibración de tu hogar o altar.
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  Obras pictóricas originales, barajas ilustradas a mano y
+                  talismanes consagrados. Arte concebido como tecnología viva
+                  para elevar la vibración de tu hogar o altar.
                 </p>
-                <ul className="text-xs text-[#281D33] space-y-2 pt-2 font-medium">
-                  <li className="flex items-center gap-2"><span className="text-[#9A2E65]">✦</span> Mazos de autor limitados y numerados</li>
-                  <li className="flex items-center gap-2"><span className="text-[#9A2E65]">✦</span> Cuadros impregnados con minerales y pan de oro</li>
-                  <li className="flex items-center gap-2"><span className="text-[#9A2E65]">✦</span> Envíos internacionales con embalaje ritual</li>
+                <ul className="text-xs text-text-primary space-y-2 pt-2 font-medium">
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">✦</span> Mazos de autor
+                    limitados y numerados
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">✦</span> Cuadros impregnados
+                    con minerales y pan de oro
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-primary">✦</span> Envíos
+                    internacionales con embalaje ritual
+                  </li>
                 </ul>
               </div>
               <Link
                 href="/galeria-tienda"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#9A2E65] hover:text-[#7D2251] transition-colors"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover transition-colors"
               >
                 <span>Ver catálogo del atelier</span>
                 <ArrowRight className="w-4 h-4" />
@@ -201,24 +294,33 @@ export default function HomePage() {
 
       {/* 5. MANIFIESTO: MÁS QUE UNA MARCA */}
       <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] text-xs tracking-widest uppercase font-medium border border-[#9A2E65]/25 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-[#9A2E65]" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-soft text-primary text-xs tracking-widest uppercase font-medium border border-border-accent shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-primary" />
           <span>Filosofía Viva</span>
         </div>
-        <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#281D33]">
+        <h2 className="font-serif text-3xl sm:text-5xl font-bold text-text-primary">
           Más que una marca
         </h2>
-        <p className="font-serif text-xl sm:text-2xl text-[#523B68] max-w-2xl mx-auto leading-relaxed italic font-normal">
-          &ldquo;Para nosotros, magia no significa escapar de la realidad. Significa aprender a relacionarnos con ella de otra manera.&rdquo;
+        <p className="font-serif text-xl sm:text-2xl text-secondary max-w-2xl mx-auto leading-relaxed italic font-normal">
+          &ldquo;Para nosotros, magia no significa escapar de la realidad.
+          Significa aprender a relacionarnos con ella de otra manera.&rdquo;
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 text-xs uppercase tracking-wider text-[#281D33] pt-2 font-semibold">
-          <span className="px-4 py-1.5 rounded-full bg-white border border-[rgba(98,67,127,0.15)] shadow-xs">Se practica</span>
-          <span className="text-[#9A2E65]">✦</span>
-          <span className="px-4 py-1.5 rounded-full bg-white border border-[rgba(98,67,127,0.15)] shadow-xs">Se experimenta</span>
-          <span className="text-[#9A2E65]">✦</span>
-          <span className="px-4 py-1.5 rounded-full bg-white border border-[rgba(98,67,127,0.15)] shadow-xs">Se encarna</span>
-          <span className="text-[#9A2E65]">✦</span>
-          <span className="px-4 py-1.5 rounded-full bg-[#F5D9E7] text-[#9A2E65] border border-[#9A2E65]/35 shadow-xs font-bold">Se vive</span>
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs uppercase tracking-wider text-text-primary pt-2 font-semibold">
+          <span className="px-4 py-1.5 rounded-full bg-white border border-border-subtle shadow-xs">
+            Se practica
+          </span>
+          <span className="text-primary">✦</span>
+          <span className="px-4 py-1.5 rounded-full bg-white border border-border-subtle shadow-xs">
+            Se experimenta
+          </span>
+          <span className="text-primary">✦</span>
+          <span className="px-4 py-1.5 rounded-full bg-white border border-border-subtle shadow-xs">
+            Se encarna
+          </span>
+          <span className="text-primary">✦</span>
+          <span className="px-4 py-1.5 rounded-full bg-primary-soft text-primary border border-primary/35 shadow-xs font-bold">
+            Se vive
+          </span>
         </div>
       </section>
 
@@ -226,19 +328,19 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <span className="text-xs uppercase tracking-widest text-[#9A2E65] font-semibold">
+            <span className="text-xs uppercase tracking-widest text-primary font-semibold">
               Apertura de Portales
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#281D33] mt-1">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mt-1">
               Lecturas más Solicitadas
             </h2>
           </div>
           <Link
             href="/lecturas"
-            className="text-xs uppercase tracking-wider font-semibold text-[#685876] hover:text-[#9A2E65] transition-colors inline-flex items-center gap-2"
+            className="text-xs uppercase tracking-wider font-semibold text-text-secondary hover:text-primary transition-colors inline-flex items-center gap-2"
           >
             <span>Ver Todas las Lecturas</span>
-            <ArrowRight className="w-4 h-4 text-[#9A2E65]" />
+            <ArrowRight className="w-4 h-4 text-primary" />
           </Link>
         </div>
 
@@ -251,27 +353,29 @@ export default function HomePage() {
 
       {/* 7. CALL TO ACTION FINAL */}
       <section className="max-w-5xl mx-auto px-6 text-center">
-        <div className="rounded-3xl bg-gradient-to-br from-[#F6ECF4] to-[#F5D9E7] p-10 md:p-16 border border-[#9A2E65]/30 relative overflow-hidden shadow-sm">
+        <div className="rounded-3xl bg-gradient-to-br from-surface-glow to-primary-soft p-10 md:p-16 border border-primary/30 relative overflow-hidden shadow-sm">
           <div className="relative z-10 space-y-6">
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[#281D33]">
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-text-primary">
               ¿Listo para mirar dentro del espejo sagrado?
             </h2>
-            <p className="text-sm sm:text-base text-[#685876] max-w-xl mx-auto font-normal leading-relaxed">
-              Los momentos de incertidumbre son los umbrales de tu mayor metamorfosis. Reserva tu espacio y descubre lo que tu alma ya tiene listo para manifestar.
+            <p className="text-sm sm:text-base text-text-secondary max-w-xl mx-auto font-normal leading-relaxed">
+              Los momentos de incertidumbre son los umbrales de tu mayor
+              metamorfosis. Reserva tu espacio y descubre lo que tu alma ya
+              tiene listo para manifestar.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href={getWhatsAppUrl(WHATSAPP_MESSAGES.booking)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9A2E65] hover:bg-[#7D2251] text-white px-10 py-4 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
               >
                 <span>Agendar Mi Lectura Ahora</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
               <Link
                 href="/lecturas"
-                className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-[#F5EFF7] text-[#523B68] border border-[#523B68]/20 px-8 py-4 rounded-full text-xs uppercase tracking-wider font-semibold shadow-xs transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-surface-muted text-secondary border border-secondary/20 px-8 py-4 rounded-full text-xs uppercase tracking-wider font-semibold shadow-xs transition-all"
               >
                 Explorar Más Sesiones
               </Link>

@@ -2,21 +2,25 @@
 @config "../../tailwind.config.ts";
 
 @theme {
-  --color-background: #FAEAEE;
-  --color-surface: #FFFFFF;
-  --color-surface-soft: #F6ECF4;
-  --color-surface-container: #EFE2EC;
+  --color-surface-glow: #f6ecf4;
+  --color-border-subtle: rgba(98, 67, 127, 0.12);
+  --color-border-accent: rgba(154, 46, 101, 0.25);
+  --color-surface-muted: #f5eff7;
+  --color-background: #faeaee;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f6ecf4;
+  --color-surface-container: #efe2ec;
 
-  --color-primary: #9A2E65;
-  --color-primary-hover: #7D2251;
-  --color-primary-soft: #F5D9E7;
+  --color-primary: #9a2e65;
+  --color-primary-hover: #7d2251;
+  --color-primary-soft: #f5d9e7;
 
-  --color-secondary: #523B68;
-  --color-secondary-accent: #8B6F9E;
+  --color-secondary: #523b68;
+  --color-secondary-accent: #8b6f9e;
 
-  --color-text-primary: #281D33;
+  --color-text-primary: #281d33;
   --color-text-secondary: #685876;
-  --color-text-muted: #8C7C99;
+  --color-text-muted: #8c7c99;
 
   --font-serif: var(--font-playfair), serif;
   --font-sans: var(--font-plus-jakarta), sans-serif;
@@ -30,6 +34,14 @@
   --radius-modal: 1.5rem;
 }
 
+.bg-mystic-glow {
+  background: radial-gradient(
+    circle at top,
+    rgba(242, 96, 145, 0.14),
+    transparent 55%
+  );
+}
+
 :root {
   color-scheme: light;
 }
@@ -39,15 +51,15 @@ html {
 }
 
 body {
-  background-color: #FAEAEE;
-  color: #281D33;
+  background-color: #faeaee;
+  color: #281d33;
   font-family: var(--font-plus-jakarta), sans-serif;
   overflow-x: hidden;
 }
 
 ::selection {
   background-color: rgba(154, 46, 101, 0.18);
-  color: #281D33;
+  color: #281d33;
 }
 
 /* Luminous Glassmorphism Styles */
