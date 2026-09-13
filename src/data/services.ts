@@ -9,8 +9,9 @@ export interface Service {
     | "Sombra & Arquetipos"
     | "Vínculos"
     | "Mentoría"
-    | "Talleres"
-    | "Ritos & Ceremonias";
+    | "Academia"
+    | "Encuentros Grupales"
+    | "Rituales";
   description: string;
   benefits: string[];
   featured?: boolean;
@@ -64,35 +65,20 @@ export const services: Service[] = [
     ],
   },
 
-  // ── TALLERES (Portal Talleres de Instagram) ──────────────────────────────
+  // ── ENCUENTROS GRUPALES (programas puntuales, sin niveles) ──────────────
   {
     id: "reiki-de-hadas",
     title: "Reiki de Hadas",
     subtitle: "Una experiencia mágica",
     duration: "Por confirmar",
     price: "Consultar",
-    category: "Talleres",
+    category: "Encuentros Grupales",
     description:
-      "Un taller iniciático para conectar con la energía sutil de las hadas y canalizar sanación a través de este linaje de reiki.",
+      "Un encuentro iniciático para conectar con la energía sutil de las hadas y canalizar sanación a través de este linaje de reiki.",
     benefits: [
       "Sintonización/iniciación en Reiki de Hadas",
       "Práctica guiada de canalización energética",
       "Material de apoyo para continuar tu práctica",
-    ],
-  },
-  {
-    id: "formacion-registros-akashicos",
-    title: "Formación en Registros Akáshicos",
-    subtitle: "Nivel 1, 2 y Maestría",
-    duration: "Por confirmar",
-    price: "Consultar",
-    category: "Talleres",
-    description:
-      "Formación espiritual progresiva para aprender a acceder y leer los Registros Akáshicos, desde los fundamentos hasta el nivel de maestría.",
-    benefits: [
-      "Recorrido completo: Nivel 1, Nivel 2 y Maestría",
-      "Herramientas para lecturas propias y de terceros",
-      "Certificación al completar cada nivel",
     ],
   },
   {
@@ -101,28 +87,13 @@ export const services: Service[] = [
     subtitle: "Iniciación y práctica",
     duration: "Por confirmar",
     price: "Consultar",
-    category: "Talleres",
+    category: "Encuentros Grupales",
     description:
-      "Un taller para explorar la técnica de regresión y acceso a vidas pasadas como herramienta de sanación y autoconocimiento.",
+      "Un encuentro para explorar la técnica de regresión y acceso a vidas pasadas como herramienta de sanación y autoconocimiento.",
     benefits: [
       "Fundamentos teóricos y prácticos",
       "Ejercicio guiado de regresión",
       "Espacio grupal de integración",
-    ],
-  },
-  {
-    id: "tarot-y-oraculos-taller",
-    title: "Tarot & Oráculos",
-    subtitle: "Formación grupal",
-    duration: "Por confirmar",
-    price: "Consultar",
-    category: "Talleres",
-    description:
-      "Taller formativo para aprender a interpretar el tarot y otros oráculos, desde los arquetipos hasta la lectura intuitiva propia.",
-    benefits: [
-      "Fundamentos simbólicos de los arcanos",
-      "Práctica de lectura en grupo",
-      "Guía para iniciar tu propia práctica",
     ],
   },
   {
@@ -131,7 +102,7 @@ export const services: Service[] = [
     subtitle: "Desarrollo de percepción sutil",
     duration: "Por confirmar",
     price: "Consultar",
-    category: "Talleres",
+    category: "Encuentros Grupales",
     description:
       "Un espacio para despertar y entrenar la percepción clarividente, ampliando tu capacidad de ver más allá de lo evidente.",
     benefits: [
@@ -143,10 +114,10 @@ export const services: Service[] = [
   {
     id: "limpiezas-energeticas",
     title: "Limpiezas Energéticas",
-    subtitle: "Taller práctico",
+    subtitle: "Encuentro práctico",
     duration: "Por confirmar",
     price: "Consultar",
-    category: "Talleres",
+    category: "Encuentros Grupales",
     description:
       "Aprende técnicas de limpieza energética para espacios y personas, y cómo mantener tu campo energético en equilibrio.",
     benefits: [
@@ -158,16 +129,48 @@ export const services: Service[] = [
   {
     id: "expansion-de-consciencia",
     title: "Expansión de Consciencia",
-    subtitle: "Taller vivencial",
+    subtitle: "Encuentro vivencial",
     duration: "Por confirmar",
     price: "Consultar",
-    category: "Talleres",
+    category: "Encuentros Grupales",
     description:
-      "Un taller diseñado para ampliar tu percepción de la realidad y abrir nuevas posibilidades de elección consciente en tu vida.",
+      "Un encuentro diseñado para ampliar tu percepción de la realidad y abrir nuevas posibilidades de elección consciente en tu vida.",
     benefits: [
       "Ejercicios de expansión perceptiva",
       "Reflexión guiada en grupo",
-      "Herramientas de integración post-taller",
+      "Herramientas de integración post-encuentro",
+    ],
+  },
+
+  // ── ACADEMIA (formación con niveles / certificación) ─────────────────────
+  {
+    id: "formacion-registros-akashicos",
+    title: "Formación en Registros Akáshicos",
+    subtitle: "Nivel 1, 2 y Maestría",
+    duration: "Por confirmar",
+    price: "Consultar",
+    category: "Academia",
+    description:
+      "Formación espiritual progresiva para aprender a acceder y leer los Registros Akáshicos, desde los fundamentos hasta el nivel de maestría.",
+    benefits: [
+      "Recorrido completo: Nivel 1, Nivel 2 y Maestría",
+      "Herramientas para lecturas propias y de terceros",
+      "Certificación al completar cada nivel",
+    ],
+  },
+  {
+    id: "tarot-y-oraculos-taller",
+    title: "Tarot & Oráculos",
+    subtitle: "Formación grupal",
+    duration: "Por confirmar",
+    price: "Consultar",
+    category: "Academia",
+    description:
+      "Taller formativo para aprender a interpretar el tarot y otros oráculos, desde los arquetipos hasta la lectura intuitiva propia.",
+    benefits: [
+      "Fundamentos simbólicos de los arcanos",
+      "Práctica de lectura en grupo",
+      "Guía para iniciar tu propia práctica",
     ],
   },
   {
@@ -176,7 +179,7 @@ export const services: Service[] = [
     subtitle: "Acompañamiento integral",
     duration: "Por confirmar",
     price: "Consultar",
-    category: "Talleres",
+    category: "Academia",
     description:
       "Un enfoque de coaching que integra herramientas espirituales, energéticas y de desarrollo personal para acompañar tus procesos de cambio.",
     benefits: [
@@ -186,14 +189,14 @@ export const services: Service[] = [
     ],
   },
 
-  // ── RITOS & CEREMONIAS ────────────────────────────────────────────────────
+  // ── RITOS & CEREMONIAS ("Rituales" en el sitio) ──────────────────────────
   {
     id: "ritual-cierre-de-ciclo",
     title: "Ritual de Cierre de Ciclo",
     subtitle: "Ceremonia personalizada",
     duration: "90 min",
     price: "Consultar",
-    category: "Ritos & Ceremonias",
+    category: "Rituales",
     description:
       "Una ceremonia diseñada para honrar el cierre de una etapa —duelo, ruptura, mudanza, transición vital— y abrir espacio consciente a lo nuevo.",
     benefits: [
@@ -203,7 +206,7 @@ export const services: Service[] = [
     ],
   },
 
-  // ── MENTORÍA ───────────────────────────────────────────────────────────────
+  // ── MENTORÍA ───────────────────────────────────────────────────────────
   {
     id: "atelier-prive",
     title: "Atelier Privé: Mentoría Holística",

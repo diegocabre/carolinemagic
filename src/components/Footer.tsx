@@ -42,23 +42,23 @@ export default function Footer() {
                 href="/lecturas"
                 className="text-text-secondary hover:text-primary transition-colors"
               >
-                Lecturas & Sesiones
+                Sesiones Individuales
               </Link>
             </li>
             <li>
               <Link
-                href="/talleres"
+                href="/academia"
                 className="text-text-secondary hover:text-primary transition-colors"
               >
-                Talleres
+                Academia
               </Link>
             </li>
             <li>
               <Link
-                href="/ritos-y-ceremonias"
+                href="/rituales"
                 className="text-text-secondary hover:text-primary transition-colors"
               >
-                Ritos & Ceremonias
+                Rituales
               </Link>
             </li>
             <li>

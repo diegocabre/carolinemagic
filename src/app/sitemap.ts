@@ -7,8 +7,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
     "/lecturas",
-    "/talleres",
-    "/ritos-y-ceremonias",
+    "/encuentros-grupales",
+    "/academia",
+    "/rituales",
     "/galeria-tienda",
     "/sobre-caroline",
   ];
