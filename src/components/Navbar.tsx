@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const navLinks = [
   { name: "Inicio", href: "/" },
-  { name: "Sesiones Individuales", href: "/lecturas" },
+  { name: "Sesiones Individuales", href: "/sesiones" },
   { name: "Encuentros Grupales", href: "/encuentros-grupales" },
   { name: "Academia", href: "/academia" },
   { name: "Rituales", href: "/rituales" },
@@ -71,7 +71,7 @@ export default function Navbar() {
         {/* CTA Desktop */}
         <div className="hidden xl:flex items-center shrink-0">
           <Link
-            href="/lecturas"
+            href="/sesiones"
             className="bg-primary hover:bg-primary-hover text-white shadow-sm hover:shadow-md px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
           >
             RESERVAR SESIÓN
@@ -123,7 +123,7 @@ export default function Navbar() {
 
             <div className="pt-4 border-t border-black/5">
               <Link
-                href="/lecturas"
+                href="/sesiones"
                 onClick={() => setIsOpen(false)}
                 className="block text-center w-full py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary hover:bg-primary-hover text-white shadow-sm"
               >

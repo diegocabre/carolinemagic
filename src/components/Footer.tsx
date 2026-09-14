@@ -39,7 +39,7 @@ export default function Footer() {
           <ul className="space-y-2 text-xs font-medium">
             <li>
               <Link
-                href="/lecturas"
+                href="/sesiones"
                 className="text-text-secondary hover:text-primary transition-colors"
               >
                 Sesiones Individuales

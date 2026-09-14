@@ -6,7 +6,7 @@ const SITE_URL = "https://www.carolinemagic.cl";
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
-    "/lecturas",
+    "/sesiones",
     "/encuentros-grupales",
     "/academia",
     "/rituales",

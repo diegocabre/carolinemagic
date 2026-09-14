@@ -42,7 +42,7 @@ export default function HomePage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               <Link
-                href="/lecturas"
+                href="/sesiones"
                 className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-full text-sm font-semibold shadow-md hover:shadow-lg transition-all text-center hover:scale-105 active:scale-95"
               >
                 Ver Lecturas Disponibles
@@ -203,7 +203,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <Link
-                href="/lecturas"
+                href="/sesiones"
                 className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover transition-colors"
               >
                 <span>Explorar sesiones disponibles</span>
@@ -296,7 +296,7 @@ export default function HomePage() {
             </h2>
           </div>
           <Link
-            href="/lecturas"
+            href="/sesiones"
             className="text-xs uppercase tracking-wider font-semibold text-text-secondary hover:text-primary transition-colors inline-flex items-center gap-2"
           >
             <span>Ver Todas las Lecturas</span>
@@ -334,7 +334,7 @@ export default function HomePage() {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <Link
-                href="/lecturas"
+                href="/sesiones"
                 className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-surface-muted text-secondary border border-secondary/20 px-8 py-4 rounded-full text-xs uppercase tracking-wider font-semibold shadow-xs transition-all"
               >
                 Explorar Más Sesiones

@@ -1,5 +1,5 @@
-import ServiceCard from "@/components/ServiceCard";
-import { services } from "@/data/services";
+import SesionesGrid from "@/components/SesionesGrid";
+import { sesionesIndividuales } from "@/data/sesiones";
 import { FileText, Shield, Sparkles, Video } from "lucide-react";
 
 export default function LecturasPage() {
@@ -9,15 +9,16 @@ export default function LecturasPage() {
       <div className="text-center max-w-3xl mx-auto space-y-4 pt-4">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-soft text-primary text-xs uppercase tracking-widest font-semibold border border-border-accent shadow-xs">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Consultas & Cartografía Álmica</span>
+          <span>Servicios 1 a 1</span>
         </div>
         <h1 className="font-serif text-4xl sm:text-6xl font-bold text-text-primary tracking-tight">
-          Lecturas de Tarot & Sesiones
+          Sesiones Individuales
         </h1>
         <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-2xl mx-auto">
-          Un espacio seguro y confidencial donde las cartas son llaves hacia tu
-          sabiduría oculta. Cada sesión es canalizada en tiempo real adaptándose
-          a tu vibración presente.
+          Todos los servicios personalizados 1 a 1: tarot, mediumnidad,
+          constelaciones, registros akáshicos, trabajo energético y
+          acompañamientos a tu medida. Cada sesión es canalizada en tiempo
+          real, adaptándose a tu vibración presente.
         </p>
       </div>
 
@@ -60,11 +61,9 @@ export default function LecturasPage() {
         </div>
       </div>
 
-      {/* Grid de Servicios */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-        {services.map((service) => (
-          <ServiceCard key={service.id} service={service} />
-        ))}
+      {/* Grid de Sesiones */}
+      <div className="pt-4">
+        <SesionesGrid sesiones={sesionesIndividuales} />
       </div>
     </div>
   );

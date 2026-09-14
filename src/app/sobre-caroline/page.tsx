@@ -315,7 +315,7 @@ export default function SobreCarolinePage() {
               <ArrowUpRight className="w-4 h-4" />
             </a>
             <Link
-              href="/lecturas"
+              href="/sesiones"
               className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-surface-muted text-secondary border border-secondary/20 px-8 py-3.5 rounded-full text-xs uppercase tracking-wider font-semibold shadow-xs transition-all"
             >
               Ver Todas las Lecturas
@@ -335,7 +335,7 @@ export default function SobreCarolinePage() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
           <Link
-            href="/lecturas"
+            href="/sesiones"
             className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-full text-xs uppercase tracking-wider font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
           >
             Explorar Lecturas
