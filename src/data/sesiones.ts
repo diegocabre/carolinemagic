@@ -74,17 +74,6 @@ export const sesionesIndividuales: Sesion[] = [
     precio: "Consultar",
   },
   {
-    id: "facelift-energetico",
-    nombre: "Facelift Energético",
-    descripcionBreve:
-      "Un tratamiento energético facial que armoniza el rostro devolviendo luminosidad y frescura natural.",
-    descripcionLarga:
-      "Trabajo energético facial que combina técnicas de canalización manual y limpieza sutil para liberar tensión acumulada en el rostro. Al equilibrar el flujo energético de la zona, se favorece una apariencia más luminosa, descansada y armónica, como reflejo externo de un estado interno más liviano.",
-    duracion: "45 min",
-    modalidad: "Presencial",
-    precio: "Consultar",
-  },
-  {
     id: "limpieza-energetica-personal",
     nombre: "Limpieza Energética Personal",
     imagen: "/images/sesiones/limpieza.jpeg",
