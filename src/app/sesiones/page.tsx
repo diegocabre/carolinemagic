@@ -1,4 +1,5 @@
 import SesionesGrid from "@/components/SesionesGrid";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { sesionesIndividuales } from "@/data/sesiones";
 import { FileText, Shield, Sparkles, Video } from "lucide-react";
 
@@ -14,11 +15,14 @@ export default function LecturasPage() {
         <h1 className="font-serif text-4xl sm:text-6xl font-bold text-text-primary tracking-tight">
           Sesiones Individuales
         </h1>
+        <p className="font-serif text-lg sm:text-xl text-primary italic">
+          Un espacio para mirar, comprender, liberar y elegir diferente.
+        </p>
         <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-2xl mx-auto">
-          Todos los servicios personalizados 1 a 1: tarot, mediumnidad,
-          constelaciones, registros akáshicos, trabajo energético y
-          acompañamientos a tu medida. Cada sesión es canalizada en tiempo
-          real, adaptándose a tu vibración presente.
+          Cada sesión de Caroline Magic es una experiencia personalizada. No
+          trabajamos desde fórmulas rígidas: elegimos e integramos
+          herramientas de acuerdo con lo que estás viviendo y con aquello que
+          necesitas observar, transformar o potenciar.
         </p>
       </div>
 
@@ -64,6 +68,34 @@ export default function LecturasPage() {
       {/* Grid de Sesiones */}
       <div className="pt-4">
         <SesionesGrid sesiones={sesionesIndividuales} />
+      </div>
+
+      {/* ¿No sabes qué sesión elegir? */}
+      <div className="max-w-2xl mx-auto text-center rounded-3xl bg-gradient-to-br from-white/95 to-primary-soft/40 border border-border-subtle p-10 sm:p-14 shadow-sm space-y-4">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-text-primary">
+          ¿No sabes qué sesión elegir?
+        </h2>
+        <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+          No necesitas saber qué herramienta necesitas antes de llegar.
+          Cuéntanos qué estás viviendo, qué quieres trabajar o qué quieres
+          transformar y te orientaremos hacia la experiencia Caroline Magic
+          que mejor se adapte a tu proceso.
+        </p>
+        <p className="text-sm sm:text-base text-text-secondary italic">
+          No necesitas tener todas las respuestas para comenzar. A veces solo
+          necesitas hacer la pregunta correcta.
+        </p>
+        <div className="pt-2">
+          <a
+            href={getWhatsAppUrl(WHATSAPP_MESSAGES.orientacionSesion)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
+            aria-label="Pedir orientación para elegir sesión por WhatsApp (abre en nueva pestaña)"
+          >
+            Cuéntanos tu proceso
+          </a>
+        </div>
       </div>
     </div>
   );

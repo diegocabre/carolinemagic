@@ -3,7 +3,7 @@
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { Sesion } from "@/data/sesiones";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Sparkles, X } from "lucide-react";
+import { Clock, MapPin, Sparkles, Sprout, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -95,7 +95,7 @@ export default function SesionCard({ sesion }: SesionCardProps) {
 
         <div className="flex flex-col flex-1 p-6">
           <h3 className="font-serif text-xl text-text-primary font-bold group-hover:text-primary transition-colors mb-2">
-            {sesion.nombre}
+            <span aria-hidden="true">{sesion.emoji}</span> {sesion.nombre}
           </h3>
           <p className="text-text-secondary text-sm leading-relaxed mb-4 flex-1">
             {sesion.descripcionBreve}
@@ -173,7 +173,7 @@ export default function SesionCard({ sesion }: SesionCardProps) {
             <div className="p-6 sm:p-8 space-y-6">
               <div>
                 <h2 className="font-serif text-2xl sm:text-3xl text-text-primary font-bold mb-3">
-                  {sesion.nombre}
+                  <span aria-hidden="true">{sesion.emoji}</span> {sesion.nombre}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
@@ -187,9 +187,24 @@ export default function SesionCard({ sesion }: SesionCardProps) {
                 </div>
               </div>
 
-              <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
-                {sesion.descripcionLarga}
-              </p>
+              <div className="space-y-3.5 text-text-secondary text-sm sm:text-base leading-relaxed">
+                {sesion.descripcionLarga.split("\n\n").map((parrafo, i) => (
+                  <p key={i}>{parrafo}</p>
+                ))}
+              </div>
+
+              <div className="rounded-2xl bg-primary-soft/50 border border-primary/15 p-4 sm:p-5">
+                <p className="text-sm sm:text-base text-text-primary leading-relaxed">
+                  <span aria-hidden="true">✨</span>{" "}
+                  <strong className="font-semibold">Ideal para ti si:</strong>{" "}
+                  {sesion.idealPara}
+                </p>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-secondary font-semibold">
+                <Sprout className="w-3.5 h-3.5 text-primary" />
+                Pilar Caroline Magic: {sesion.pilares}
+              </div>
 
               <div className="pt-6 border-t border-border-subtle flex items-center justify-between gap-4 flex-wrap">
                 <div>

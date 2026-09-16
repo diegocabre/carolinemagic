@@ -3,6 +3,7 @@ import ServiceCard from "@/components/ServiceCard";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { services } from "@/data/services";
 import { getDailyCard } from "@/lib/dailyCard";
+import { getFaseLunarActual } from "@/lib/moonPhase";
 import {
   ArrowRight,
   Compass,
@@ -21,6 +22,7 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   const featuredServices = services.slice(0, 3);
   const dailyCard = await getDailyCard();
+  const faseLunar = getFaseLunarActual();
 
   return (
     <div className="space-y-24 md:space-y-36 pb-20 bg-mystic-glow">
@@ -94,7 +96,7 @@ export default async function HomePage() {
             el mazo sagrado de Caroline.
           </p>
         </div>
-        <DailyCard dailyCard={dailyCard} />
+        <DailyCard dailyCard={dailyCard} faseLunar={faseLunar} />
       </section>
 
       {/* 3. LOS 4 PILARES */}

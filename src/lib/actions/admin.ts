@@ -10,6 +10,7 @@ import {
   getDailyCard,
   saveDailyCard,
   uploadDailyCardImage,
+  uploadPortadaImage,
 } from "@/lib/dailyCard";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -61,28 +62,45 @@ export async function saveDailyCardAction(
   const interpretacion = formData.get("interpretacion");
   const titulo = formData.get("titulo");
   const imagen = formData.get("imagen");
+  const portada = formData.get("portada");
 
   if (typeof interpretacion !== "string" || !interpretacion.trim()) {
     return { error: "Escribe la interpretación de hoy." };
   }
 
+  function validarImagen(file: File): string | null {
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      return "La foto debe ser JPG, PNG o WEBP.";
+    }
+    if (file.size > MAX_IMAGE_SIZE_BYTES) {
+      return "La foto no puede pesar más de 8MB.";
+    }
+    return null;
+  }
+
   let imagenUrl: string | undefined;
+  let portadaUrl: string | undefined;
 
   try {
+    const actual = await getDailyCard();
+    portadaUrl = actual?.portadaUrl;
+
     if (imagen instanceof File && imagen.size > 0) {
-      if (!ALLOWED_IMAGE_TYPES.includes(imagen.type)) {
-        return { error: "La foto debe ser JPG, PNG o WEBP." };
-      }
-      if (imagen.size > MAX_IMAGE_SIZE_BYTES) {
-        return { error: "La foto no puede pesar más de 8MB." };
-      }
+      const errorImagen = validarImagen(imagen);
+      if (errorImagen) return { error: errorImagen };
       imagenUrl = await uploadDailyCardImage(imagen);
     } else {
-      imagenUrl = (await getDailyCard())?.imagenUrl;
+      imagenUrl = actual?.imagenUrl;
     }
 
     if (!imagenUrl) {
       return { error: "Debes subir una foto para la sincronicidad de hoy." };
+    }
+
+    if (portada instanceof File && portada.size > 0) {
+      const errorPortada = validarImagen(portada);
+      if (errorPortada) return { error: errorPortada };
+      portadaUrl = await uploadPortadaImage(portada);
     }
 
     await saveDailyCard({
@@ -91,6 +109,7 @@ export async function saveDailyCardAction(
           ? titulo.trim()
           : undefined,
       imagenUrl,
+      portadaUrl,
       interpretacion: interpretacion.trim(),
       actualizadoEn: new Date().toISOString(),
     });

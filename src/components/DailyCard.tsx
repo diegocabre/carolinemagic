@@ -7,10 +7,12 @@ import { useState } from "react";
 
 interface DailyCardProps {
   dailyCard: DailyCardData | null;
+  faseLunar: string;
 }
 
-export default function DailyCard({ dailyCard }: DailyCardProps) {
+export default function DailyCard({ dailyCard, faseLunar }: DailyCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const tieneCortada = Boolean(dailyCard?.portadaUrl);
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -21,7 +23,7 @@ export default function DailyCard({ dailyCard }: DailyCardProps) {
           <span>
             Fase Actual:{" "}
             <strong className="text-text-primary font-semibold">
-              Luna Creciente en Cáncer
+              {faseLunar}
             </strong>
           </span>
         </div>
@@ -38,27 +40,65 @@ export default function DailyCard({ dailyCard }: DailyCardProps) {
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           {/* FRENTE DE LA CARTA (DORSO MÍSTICO CERRADO) */}
-          <div className="absolute inset-0 w-full h-full rounded-2xl bg-white/95 backdrop-blur-md p-6 flex flex-col items-center justify-between backface-hidden border border-border-subtle shadow-md group-hover:border-primary/40 group-hover:shadow-xl transition-all">
-            <div className="w-full flex justify-between items-center text-xs tracking-widest uppercase text-text-muted font-medium">
+          <div
+            className={`absolute inset-0 w-full h-full rounded-2xl p-6 flex flex-col items-center justify-between backface-hidden border shadow-md group-hover:shadow-xl transition-all overflow-hidden ${
+              tieneCortada
+                ? "border-white/20"
+                : "bg-white/95 backdrop-blur-md border-border-subtle group-hover:border-primary/40"
+            }`}
+          >
+            {tieneCortada && (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={dailyCard!.portadaUrl}
+                  alt="Portada de la carta del día"
+                  className="absolute inset-0 w-full h-full object-cover -z-20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/60 -z-10" />
+              </>
+            )}
+
+            <div
+              className={`w-full flex justify-between items-center text-xs tracking-widest uppercase font-medium ${
+                tieneCortada ? "text-white/90" : "text-text-muted"
+              }`}
+            >
               <span>Caroline Magic</span>
               <span>Sincronicidad del Día</span>
             </div>
 
             <div className="flex flex-col items-center justify-center my-auto text-center space-y-4">
-              <div className="w-24 h-24 rounded-full border border-primary/25 bg-primary-soft/60 flex items-center justify-center relative">
-                <div className="absolute inset-2 rounded-full border border-dashed border-primary/30 animate-spin-slow" />
-                <Sparkles className="w-10 h-10 text-primary animate-pulse" />
-              </div>
-              <h4 className="font-serif text-2xl sm:text-3xl text-text-primary font-bold tracking-tight">
+              {!tieneCortada && (
+                <div className="w-24 h-24 rounded-full border border-primary/25 bg-primary-soft/60 flex items-center justify-center relative">
+                  <div className="absolute inset-2 rounded-full border border-dashed border-primary/30 animate-spin-slow" />
+                  <Sparkles className="w-10 h-10 text-primary animate-pulse" />
+                </div>
+              )}
+              <h4
+                className={`font-serif text-2xl sm:text-3xl font-bold tracking-tight ${
+                  tieneCortada
+                    ? "text-white drop-shadow-md"
+                    : "text-text-primary"
+                }`}
+              >
                 Toca para Revelar
               </h4>
-              <p className="text-xs sm:text-sm text-text-secondary max-w-xs leading-relaxed font-normal">
+              <p
+                className={`text-xs sm:text-sm max-w-xs leading-relaxed font-normal ${
+                  tieneCortada ? "text-white/90 drop-shadow-sm" : "text-text-secondary"
+                }`}
+              >
                 Toma una respiración profunda, formula tu intención interna y
                 voltea tu sincronicidad para el día de hoy.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-primary font-semibold tracking-wider uppercase">
+            <div
+              className={`flex items-center gap-2 text-xs font-semibold tracking-wider uppercase ${
+                tieneCortada ? "text-white drop-shadow-sm" : "text-primary"
+              }`}
+            >
               <Eye className="w-4 h-4" />
               <span>Girar Carta</span>
             </div>

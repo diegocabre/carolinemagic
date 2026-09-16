@@ -11,6 +11,57 @@ interface DailyCardAdminFormProps {
 
 const initialState: DailyCardFormState = {};
 
+function ImageUploadField({
+  id,
+  label,
+  helperText,
+  previewUrl,
+  onFileChange,
+  previewAlt,
+}: {
+  id: string;
+  label: string;
+  helperText: string;
+  previewUrl?: string;
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  previewAlt: string;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-xs font-medium text-text-secondary block">
+        {label}
+      </label>
+      <label
+        htmlFor={id}
+        className="relative flex items-center justify-center w-full aspect-video rounded-xl border-2 border-dashed border-border-subtle bg-surface-muted overflow-hidden cursor-pointer hover:border-primary/40 transition-all"
+      >
+        {previewUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={previewUrl}
+            alt={previewAlt}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="flex flex-col items-center gap-2 text-text-muted text-xs">
+            <ImagePlus className="w-6 h-6" />
+            <span>Haz clic para subir una foto</span>
+          </div>
+        )}
+        <input
+          id={id}
+          name={id}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={onFileChange}
+          className="sr-only"
+        />
+      </label>
+      <p className="text-[11px] text-text-muted">{helperText}</p>
+    </div>
+  );
+}
+
 export default function DailyCardAdminForm({
   current,
 }: DailyCardAdminFormProps) {
@@ -21,18 +72,27 @@ export default function DailyCardAdminForm({
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(
     current?.imagenUrl,
   );
+  const [portadaPreviewUrl, setPortadaPreviewUrl] = useState<
+    string | undefined
+  >(current?.portadaUrl);
 
   useEffect(() => {
     return () => {
-      if (previewUrl && previewUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(previewUrl);
-      }
+      if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
+      if (portadaPreviewUrl?.startsWith("blob:"))
+        URL.revokeObjectURL(portadaPreviewUrl);
     };
-  }, [previewUrl]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) setPreviewUrl(URL.createObjectURL(file));
+  }
+
+  function handlePortadaChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) setPortadaPreviewUrl(URL.createObjectURL(file));
   }
 
   return (
@@ -50,41 +110,14 @@ export default function DailyCardAdminForm({
         </p>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-xs font-medium text-text-secondary block">
-          Foto de la sincronicidad
-        </label>
-        <label
-          htmlFor="imagen"
-          className="relative flex items-center justify-center w-full aspect-video rounded-xl border-2 border-dashed border-border-subtle bg-surface-muted overflow-hidden cursor-pointer hover:border-primary/40 transition-all"
-        >
-          {previewUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={previewUrl}
-              alt="Vista previa de la sincronicidad de hoy"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="flex flex-col items-center gap-2 text-text-muted text-xs">
-              <ImagePlus className="w-6 h-6" />
-              <span>Haz clic para subir una foto</span>
-            </div>
-          )}
-          <input
-            id="imagen"
-            name="imagen"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            onChange={handleFileChange}
-            className="sr-only"
-          />
-        </label>
-        <p className="text-[11px] text-text-muted">
-          JPG, PNG o WEBP, máx. 8MB. Si no subes una foto nueva, se mantiene
-          la actual.
-        </p>
-      </div>
+      <ImageUploadField
+        id="imagen"
+        label="Foto de la sincronicidad"
+        helperText="JPG, PNG o WEBP, máx. 8MB. Si no subes una foto nueva, se mantiene la actual."
+        previewUrl={previewUrl}
+        onFileChange={handleFileChange}
+        previewAlt="Vista previa de la sincronicidad de hoy"
+      />
 
       <div className="space-y-1.5">
         <label
@@ -120,6 +153,26 @@ export default function DailyCardAdminForm({
           className="w-full bg-surface-muted border border-border-subtle rounded-xl px-4 py-3 text-sm text-text-primary leading-relaxed focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-y"
         />
       </div>
+
+      <div className="pt-2 border-t border-border-subtle space-y-1">
+        <h3 className="font-serif text-base font-bold text-text-primary pt-4">
+          Portada de la carta
+        </h3>
+        <p className="text-xs text-text-secondary pb-2">
+          Es el frente que ven las visitas antes de voltear ("Toca para
+          Revelar"). No hace falta cambiarla todos los días — súbela una vez
+          y solo actualízala cuando quieras renovar la imagen.
+        </p>
+      </div>
+
+      <ImageUploadField
+        id="portada"
+        label="Foto de portada (opcional)"
+        helperText="JPG, PNG o WEBP, máx. 8MB. Si no subes una foto nueva, se mantiene la actual."
+        previewUrl={portadaPreviewUrl}
+        onFileChange={handlePortadaChange}
+        previewAlt="Vista previa de la portada de la carta"
+      />
 
       {state.error && (
         <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
