@@ -2,6 +2,7 @@ import DailyCard from "@/components/DailyCard";
 import ServiceCard from "@/components/ServiceCard";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { services } from "@/data/services";
+import { getDailyCard } from "@/lib/dailyCard";
 import {
   ArrowRight,
   Compass,
@@ -13,8 +14,13 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HomePage() {
+// La sincronicidad del día se administra desde /admin y debe reflejarse
+// de inmediato: esta página no puede quedar prerenderizada como estática.
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
   const featuredServices = services.slice(0, 3);
+  const dailyCard = await getDailyCard();
 
   return (
     <div className="space-y-24 md:space-y-36 pb-20 bg-mystic-glow">
@@ -88,7 +94,7 @@ export default function HomePage() {
             el mazo sagrado de Caroline.
           </p>
         </div>
-        <DailyCard />
+        <DailyCard dailyCard={dailyCard} />
       </section>
 
       {/* 3. LOS 4 PILARES */}

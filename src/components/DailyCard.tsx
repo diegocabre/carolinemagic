@@ -1,76 +1,16 @@
 "use client";
 
+import { DailyCardData } from "@/lib/dailyCard";
 import { motion } from "framer-motion";
-import { Eye, Moon, RefreshCw, Sparkles } from "lucide-react";
+import { Eye, Moon, Sparkles } from "lucide-react";
 import { useState } from "react";
 
-interface DailyArcana {
-  name: string;
-  number: string;
-  keywords: string[];
-  message: string;
-  symbol: string;
+interface DailyCardProps {
+  dailyCard: DailyCardData | null;
 }
 
-const arcanaList: DailyArcana[] = [
-  {
-    name: "La Estrella",
-    number: "XVII",
-    keywords: ["Esperanza", "Inspiración", "Claridad"],
-    message:
-      "Tus heridas pasadas se convierten hoy en la fuente de tu guía. Confía en el flujo orgánico de tus anhelos más puros.",
-    symbol: "✧",
-  },
-  {
-    name: "La Suma Sacerdotisa",
-    number: "II",
-    keywords: ["Intuición", "Misterio", "Silencio"],
-    message:
-      "La respuesta no está en el ruido exterior. Cruza el velo hacia tu templo interno; tu sabiduría celular ya lo sabe.",
-    symbol: "☽",
-  },
-  {
-    name: "El Mago",
-    number: "I",
-    keywords: ["Manifestación", "Poder", "Recursos"],
-    message:
-      "Tienes en tu mesa todos los elementos para crear tu realidad. La intención alineada a la voluntad disuelve cualquier duda.",
-    symbol: "🜂",
-  },
-  {
-    name: "El Sol",
-    number: "XIX",
-    keywords: ["Vitalidad", "Éxito", "Autenticidad"],
-    message:
-      "La verdad ilumina sin quemar. Es tiempo de mostrarte tal cual eres, sin escudos ni disfraces arquetípicos.",
-    symbol: "🜚",
-  },
-];
-
-// Índice determinado por la fecha, para que "hoy" sea la misma carta durante todo el día
-function getTodayIndex(length: number) {
-  const now = new Date();
-  const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86_400_000,
-  );
-  return dayOfYear % length;
-}
-
-export default function DailyCard() {
+export default function DailyCard({ dailyCard }: DailyCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [cardIndex, setCardIndex] = useState(() =>
-    getTodayIndex(arcanaList.length),
-  );
-
-  const currentCard = arcanaList[cardIndex];
-
-  const handleNextCard = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsFlipped(false);
-    setTimeout(() => {
-      setCardIndex((prev) => (prev + 1) % arcanaList.length);
-    }, 250);
-  };
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -85,19 +25,11 @@ export default function DailyCard() {
             </strong>
           </span>
         </div>
-        <button
-          onClick={handleNextCard}
-          className="flex items-center gap-1.5 text-text-secondary hover:text-primary transition-colors text-[11px] font-medium"
-          title="Revelar otra carta"
-        >
-          <RefreshCw className="w-3.5 h-3.5 text-primary" />
-          <span>Cambiar</span>
-        </button>
       </div>
 
       {/* Contenedor interactivo de carta con Flip 3D */}
       <div
-        className="relative w-full h-[420px] cursor-pointer perspective-1000 group select-none"
+        className="relative w-full h-[480px] sm:h-[520px] cursor-pointer perspective-1000 group select-none"
         onClick={() => setIsFlipped(!isFlipped)}
       >
         <motion.div
@@ -109,7 +41,7 @@ export default function DailyCard() {
           <div className="absolute inset-0 w-full h-full rounded-2xl bg-white/95 backdrop-blur-md p-6 flex flex-col items-center justify-between backface-hidden border border-border-subtle shadow-md group-hover:border-primary/40 group-hover:shadow-xl transition-all">
             <div className="w-full flex justify-between items-center text-xs tracking-widest uppercase text-text-muted font-medium">
               <span>Caroline Magic</span>
-              <span>Arcano del Día</span>
+              <span>Sincronicidad del Día</span>
             </div>
 
             <div className="flex flex-col items-center justify-center my-auto text-center space-y-4">
@@ -132,41 +64,41 @@ export default function DailyCard() {
             </div>
           </div>
 
-          {/* REVERSO DE LA CARTA (ARCANO REVELADO) */}
-          <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-b from-[#FDF5F9] to-primary-soft border-2 border-primary/35 p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-lg">
-            <div className="flex justify-between items-center border-b border-border-subtle pb-3">
-              <span className="font-serif text-base tracking-widest text-primary font-bold">
-                {currentCard.number}
-              </span>
-              <span className="text-xl text-secondary">
-                {currentCard.symbol}
-              </span>
-            </div>
-
-            <div className="text-center py-4 space-y-3">
-              <h3 className="font-serif text-3xl font-bold text-text-primary tracking-tight">
-                {currentCard.name}
-              </h3>
-              <div className="flex justify-center flex-wrap gap-1.5">
-                {currentCard.keywords.map((kw) => (
-                  <span
-                    key={kw}
-                    className="px-3 py-0.5 rounded-full text-[10px] uppercase tracking-wider bg-white text-secondary border border-secondary/15 font-medium shadow-xs"
-                  >
-                    {kw}
-                  </span>
-                ))}
+          {/* REVERSO DE LA CARTA (SINCRONICIDAD CANALIZADA POR CAROLINE) */}
+          <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-b from-[#FDF5F9] to-primary-soft border-2 border-primary/35 shadow-lg backface-hidden rotate-y-180 flex flex-col overflow-hidden">
+            {dailyCard ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={dailyCard.imagenUrl}
+                  alt={dailyCard.titulo || "Sincronicidad del día"}
+                  className="w-full h-[45%] object-cover"
+                />
+                <div className="flex-1 min-h-0 flex flex-col p-5 sm:p-6">
+                  {dailyCard.titulo && (
+                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-text-primary tracking-tight mb-2">
+                      {dailyCard.titulo}
+                    </h3>
+                  )}
+                  <p className="text-sm text-text-primary leading-relaxed italic overflow-y-auto">
+                    &ldquo;{dailyCard.interpretacion}&rdquo;
+                  </p>
+                  <div className="pt-3 mt-auto border-t border-border-subtle text-center">
+                    <span className="text-[11px] text-text-muted uppercase tracking-widest font-medium">
+                      Mensaje canalizado por Caroline
+                    </span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="flex-1 flex flex-col items-center justify-center text-center gap-3 p-8">
+                <Sparkles className="w-8 h-8 text-primary/50" />
+                <p className="text-sm text-text-secondary leading-relaxed max-w-xs">
+                  Caroline aún no ha canalizado la sincronicidad de hoy.
+                  Vuelve un poco más tarde ✨
+                </p>
               </div>
-              <p className="text-sm text-text-primary leading-relaxed italic pt-2 font-normal">
-                &ldquo;{currentCard.message}&rdquo;
-              </p>
-            </div>
-
-            <div className="text-center pt-3 border-t border-border-subtle">
-              <span className="text-[11px] text-text-muted uppercase tracking-widest font-medium">
-                Mensaje canalizado por Caroline
-              </span>
-            </div>
+            )}
           </div>
         </motion.div>
       </div>
