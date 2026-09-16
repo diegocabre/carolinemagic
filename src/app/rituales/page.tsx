@@ -75,7 +75,7 @@ export default function RitualesPage() {
             Escríbenos para conversar sobre lo que necesitas.
           </p>
           <a
-            href={getWhatsAppUrl(WHATSAPP_MESSAGES.default)}
+            href={getWhatsAppUrl(WHATSAPP_MESSAGES.ritualPersonalizado)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
