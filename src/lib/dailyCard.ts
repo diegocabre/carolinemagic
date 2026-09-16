@@ -33,23 +33,11 @@ export async function saveDailyCard(data: DailyCardData): Promise<void> {
   });
 }
 
-async function uploadImage(file: File, prefix: string): Promise<string> {
-  const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const pathname = `admin/${prefix}-${Date.now()}.${extension}`;
-  const blob = await put(pathname, file, {
-    access: "public",
-    contentType: file.type || undefined,
-    addRandomSuffix: true,
-  });
-  return blob.url;
-}
-
-/** Sube la foto de la sincronicidad de hoy y devuelve su URL pública. */
-export async function uploadDailyCardImage(file: File): Promise<string> {
-  return uploadImage(file, "daily-card-image");
-}
-
-/** Sube la imagen de portada (frente de la carta) y devuelve su URL pública. */
-export async function uploadPortadaImage(file: File): Promise<string> {
-  return uploadImage(file, "portada-image");
+/** Host de los blobs públicos de nuestro store — usado para validar URLs recibidas del cliente. */
+export function esUrlDeBlobConfiable(url: string): boolean {
+  try {
+    return new URL(url).hostname.endsWith(".public.blob.vercel-storage.com");
+  } catch {
+    return false;
+  }
 }

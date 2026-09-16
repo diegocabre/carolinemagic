@@ -2,14 +2,26 @@
 
 import { DailyCardFormState, saveDailyCardAction } from "@/lib/actions/admin";
 import { DailyCardData } from "@/lib/dailyCard";
+import { upload } from "@vercel/blob/client";
 import { ImagePlus } from "lucide-react";
-import { useActionState, useEffect, useState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 
 interface DailyCardAdminFormProps {
   current: DailyCardData | null;
 }
 
 const initialState: DailyCardFormState = {};
+
+function rutaBlob(prefix: string, file: File): string {
+  const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  return `admin/${prefix}-${Date.now()}.${extension}`;
+}
 
 function ImageUploadField({
   id,
@@ -18,6 +30,7 @@ function ImageUploadField({
   previewUrl,
   onFileChange,
   previewAlt,
+  inputRef,
 }: {
   id: string;
   label: string;
@@ -25,6 +38,7 @@ function ImageUploadField({
   previewUrl?: string;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   previewAlt: string;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }) {
   return (
     <div className="space-y-1.5">
@@ -50,7 +64,7 @@ function ImageUploadField({
         )}
         <input
           id={id}
-          name={id}
+          ref={inputRef}
           type="file"
           accept="image/jpeg,image/png,image/webp"
           onChange={onFileChange}
@@ -65,10 +79,19 @@ function ImageUploadField({
 export default function DailyCardAdminForm({
   current,
 }: DailyCardAdminFormProps) {
-  const [state, formAction, pending] = useActionState(
+  const [state, formAction] = useActionState(
     saveDailyCardAction,
     initialState,
   );
+  const [isPendingAction, startTransition] = useTransition();
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | undefined>();
+
+  const imagenInputRef = useRef<HTMLInputElement>(null);
+  const portadaInputRef = useRef<HTMLInputElement>(null);
+  const tituloRef = useRef<HTMLInputElement>(null);
+  const interpretacionRef = useRef<HTMLTextAreaElement>(null);
+
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(
     current?.imagenUrl,
   );
@@ -95,9 +118,67 @@ export default function DailyCardAdminForm({
     if (file) setPortadaPreviewUrl(URL.createObjectURL(file));
   }
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setUploadError(undefined);
+
+    const interpretacion = interpretacionRef.current?.value ?? "";
+    if (!interpretacion.trim()) {
+      setUploadError("Escribe la interpretación de hoy.");
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const imagenFile = imagenInputRef.current?.files?.[0];
+      const portadaFile = portadaInputRef.current?.files?.[0];
+
+      let imagenUrl = "";
+      if (imagenFile) {
+        const blob = await upload(
+          rutaBlob("daily-card-image", imagenFile),
+          imagenFile,
+          { access: "public", handleUploadUrl: "/api/admin/blob-upload" },
+        );
+        imagenUrl = blob.url;
+      }
+
+      let portadaUrl = "";
+      if (portadaFile) {
+        const blob = await upload(
+          rutaBlob("portada-image", portadaFile),
+          portadaFile,
+          { access: "public", handleUploadUrl: "/api/admin/blob-upload" },
+        );
+        portadaUrl = blob.url;
+      }
+
+      const formData = new FormData();
+      formData.set("titulo", tituloRef.current?.value ?? "");
+      formData.set("interpretacion", interpretacion);
+      if (imagenUrl) formData.set("imagenUrl", imagenUrl);
+      if (portadaUrl) formData.set("portadaUrl", portadaUrl);
+
+      startTransition(() => {
+        formAction(formData);
+      });
+    } catch (error) {
+      setUploadError(
+        error instanceof Error && error.message
+          ? error.message
+          : "No se pudo subir la imagen. Intenta de nuevo.",
+      );
+    } finally {
+      setIsUploading(false);
+    }
+  }
+
+  const pending = isUploading || isPendingAction;
+  const errorMessage = uploadError || state.error;
+
   return (
     <form
-      action={formAction}
+      onSubmit={handleSubmit}
       className="w-full max-w-xl bg-white/95 border border-border-subtle rounded-2xl p-6 sm:p-8 shadow-sm space-y-6"
     >
       <div>
@@ -117,6 +198,7 @@ export default function DailyCardAdminForm({
         previewUrl={previewUrl}
         onFileChange={handleFileChange}
         previewAlt="Vista previa de la sincronicidad de hoy"
+        inputRef={imagenInputRef}
       />
 
       <div className="space-y-1.5">
@@ -128,7 +210,7 @@ export default function DailyCardAdminForm({
         </label>
         <input
           id="titulo"
-          name="titulo"
+          ref={tituloRef}
           type="text"
           defaultValue={current?.titulo}
           placeholder="Ej: La Estrella"
@@ -145,7 +227,7 @@ export default function DailyCardAdminForm({
         </label>
         <textarea
           id="interpretacion"
-          name="interpretacion"
+          ref={interpretacionRef}
           required
           rows={5}
           defaultValue={current?.interpretacion}
@@ -172,14 +254,15 @@ export default function DailyCardAdminForm({
         previewUrl={portadaPreviewUrl}
         onFileChange={handlePortadaChange}
         previewAlt="Vista previa de la portada de la carta"
+        inputRef={portadaInputRef}
       />
 
-      {state.error && (
+      {errorMessage && (
         <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-          {state.error}
+          {errorMessage}
         </p>
       )}
-      {state.success && (
+      {state.success && !pending && (
         <p className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
           Listo, la sincronicidad de hoy ya está publicada.
         </p>
@@ -190,7 +273,11 @@ export default function DailyCardAdminForm({
         disabled={pending}
         className="w-full py-3 rounded-full text-xs uppercase tracking-wider font-semibold bg-primary hover:bg-primary-hover text-white shadow-md hover:shadow-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {pending ? "Publicando..." : "Publicar sincronicidad de hoy"}
+        {isUploading
+          ? "Subiendo foto..."
+          : pending
+            ? "Publicando..."
+            : "Publicar sincronicidad de hoy"}
       </button>
 
       {current?.actualizadoEn && (
