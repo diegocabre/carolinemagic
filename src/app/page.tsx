@@ -1,7 +1,5 @@
 import DailyCard from "@/components/DailyCard";
-import ServiceCard from "@/components/ServiceCard";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
-import { services } from "@/data/services";
 import { getDailyCard } from "@/lib/dailyCard";
 import { getFaseLunarActual } from "@/lib/moonPhase";
 import {
@@ -20,7 +18,6 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const featuredServices = services.slice(0, 3);
   const dailyCard = await getDailyCard();
   const faseLunar = getFaseLunarActual();
 
@@ -164,103 +161,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. LAS DOS VERTIENTES (ORÁCULO VS ATELIER DE ARTE) */}
-      <section className="max-w-7xl mx-auto px-6">
-        <div className="rounded-3xl border border-border-subtle bg-surface-muted/70 backdrop-blur-xl p-8 md:p-14 overflow-hidden relative shadow-sm">
-          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-            <span className="text-xs uppercase tracking-widest text-primary font-semibold">
-              Dualidad Sagrada
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary">
-              Dos Expresiones, Un Solo Propósito
-            </h2>
-            <p className="text-sm sm:text-base text-text-secondary">
-              Caroline habita la confluencia entre la lectura del mapa cósmico y
-              la manifestación tangible del arte místico.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Vertiente 1 */}
-            <div className="rounded-2xl bg-white/95 border border-border-subtle p-8 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-primary/30 transition-all">
-              <div className="space-y-4 mb-6">
-                <div className="text-xs uppercase tracking-wider text-primary font-bold">
-                  Dimensión Introspectiva
-                </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-text-primary">
-                  El Oráculo de la Consciencia
-                </h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  Lecturas terapéuticas y no predictivas. Cada sesión con
-                  Caroline es un santuario de revelación donde se analiza la
-                  matriz psicológica de los arcanos mayores y menores.
-                </p>
-                <ul className="text-xs text-text-primary space-y-2 pt-2 font-medium">
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">✦</span> Sesiones privadas
-                    sincrónicas por videollamada HD
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">✦</span> Grabación de por
-                    vida y cartografía en PDF
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">✦</span> Integración somática
-                    y arquetípica
-                  </li>
-                </ul>
-              </div>
-              <Link
-                href="/sesiones"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover transition-colors"
-              >
-                <span>Explorar sesiones disponibles</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Vertiente 2 */}
-            <div className="rounded-2xl bg-white/95 border border-border-subtle p-8 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-primary/30 transition-all">
-              <div className="space-y-4 mb-6">
-                <div className="text-xs uppercase tracking-wider text-primary font-bold">
-                  Dimensión Plástica & Alquímica
-                </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-text-primary">
-                  El Taller de Arte Místico
-                </h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  Obras pictóricas originales, barajas ilustradas a mano y
-                  talismanes consagrados. Arte concebido como tecnología viva
-                  para elevar la vibración de tu hogar o altar.
-                </p>
-                <ul className="text-xs text-text-primary space-y-2 pt-2 font-medium">
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">✦</span> Mazos de autor
-                    limitados y numerados
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">✦</span> Cuadros impregnados
-                    con minerales y pan de oro
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-primary">✦</span> Envíos
-                    internacionales con embalaje ritual
-                  </li>
-                </ul>
-              </div>
-              <Link
-                href="/galeria-tienda"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-primary hover:text-primary-hover transition-colors"
-              >
-                <span>Ver catálogo del atelier</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. MANIFIESTO: MÁS QUE UNA MARCA */}
+      {/* 4. MANIFIESTO: MÁS QUE UNA MARCA */}
       <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-soft text-primary text-xs tracking-widest uppercase font-medium border border-border-accent shadow-xs">
           <Sparkles className="w-3.5 h-3.5 text-primary" />
@@ -292,34 +193,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 6. SESIONES DESTACADAS */}
-      <section className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <span className="text-xs uppercase tracking-widest text-primary font-semibold">
-              Apertura de Portales
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary mt-1">
-              Lecturas más Solicitadas
-            </h2>
-          </div>
-          <Link
-            href="/sesiones"
-            className="text-xs uppercase tracking-wider font-semibold text-text-secondary hover:text-primary transition-colors inline-flex items-center gap-2"
-          >
-            <span>Ver Todas las Lecturas</span>
-            <ArrowRight className="w-4 h-4 text-primary" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuredServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </div>
-      </section>
-
-      {/* 7. CALL TO ACTION FINAL */}
+      {/* 5. CALL TO ACTION FINAL */}
       <section className="max-w-5xl mx-auto px-6 text-center">
         <div className="rounded-3xl bg-gradient-to-br from-surface-glow to-primary-soft p-10 md:p-16 border border-primary/30 relative overflow-hidden shadow-sm">
           <div className="relative z-10 space-y-6">
