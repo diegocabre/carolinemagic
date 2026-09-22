@@ -47,15 +47,24 @@ function ImageUploadField({
       </label>
       <label
         htmlFor={id}
-        className="relative flex items-center justify-center w-full aspect-video rounded-xl border-2 border-dashed border-border-subtle bg-surface-muted overflow-hidden cursor-pointer hover:border-primary/40 transition-all"
+        className="relative flex items-center justify-center w-full aspect-[2/1] rounded-xl border-2 border-dashed border-border-subtle bg-surface-muted overflow-hidden cursor-pointer hover:border-primary/40 transition-all"
       >
         {previewUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={previewUrl}
-            alt={previewAlt}
-            className="w-full h-full object-cover"
-          />
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={previewUrl}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl opacity-60"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={previewUrl}
+              alt={previewAlt}
+              className="relative max-w-full max-h-full object-contain"
+            />
+          </>
         ) : (
           <div className="flex flex-col items-center gap-2 text-text-muted text-xs">
             <ImagePlus className="w-6 h-6" />

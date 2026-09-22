@@ -108,12 +108,21 @@ export default function DailyCard({ dailyCard, faseLunar }: DailyCardProps) {
           <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-b from-[#FDF5F9] to-primary-soft border-2 border-primary/35 shadow-lg backface-hidden rotate-y-180 flex flex-col overflow-hidden">
             {dailyCard ? (
               <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={dailyCard.imagenUrl}
-                  alt={dailyCard.titulo || "Sincronicidad del día"}
-                  className="w-full h-[45%] object-cover"
-                />
+                <div className="relative w-full h-[45%] overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={dailyCard.imagenUrl}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl opacity-70"
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={dailyCard.imagenUrl}
+                    alt={dailyCard.titulo || "Sincronicidad del día"}
+                    className="relative w-full h-full object-contain"
+                  />
+                </div>
                 <div className="flex-1 min-h-0 flex flex-col p-5 sm:p-6">
                   {dailyCard.titulo && (
                     <h3 className="font-serif text-xl sm:text-2xl font-bold text-text-primary tracking-tight mb-2">
