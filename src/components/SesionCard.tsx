@@ -7,8 +7,12 @@ import { Clock, MapPin, Sparkles, Sprout, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+export type TipoSesion = "sesion" | "encuentro";
+
 interface SesionCardProps {
   sesion: Sesion;
+  /** Define el mensaje de WhatsApp al reservar. */
+  tipo?: TipoSesion;
 }
 
 function ImagenSesion({
@@ -43,14 +47,21 @@ function ImagenSesion({
 
 function ReservarButton({
   sesion,
+  tipo,
   className,
 }: {
   sesion: Sesion;
+  tipo: TipoSesion;
   className: string;
 }) {
+  const mensaje =
+    tipo === "encuentro"
+      ? WHATSAPP_MESSAGES.encuentro(sesion.nombre)
+      : WHATSAPP_MESSAGES.sesion(sesion.nombre);
+
   return (
     <a
-      href={getWhatsAppUrl(WHATSAPP_MESSAGES.sesion(sesion.nombre))}
+      href={getWhatsAppUrl(mensaje)}
       target="_blank"
       rel="noopener noreferrer"
       className={className}
@@ -61,7 +72,10 @@ function ReservarButton({
   );
 }
 
-export default function SesionCard({ sesion }: SesionCardProps) {
+export default function SesionCard({
+  sesion,
+  tipo = "sesion",
+}: SesionCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -132,6 +146,7 @@ export default function SesionCard({ sesion }: SesionCardProps) {
               </button>
               <ReservarButton
                 sesion={sesion}
+                tipo={tipo}
                 className="px-4 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold bg-primary hover:bg-primary-hover text-white shadow-xs hover:shadow-md transition-all whitespace-nowrap"
               />
             </div>
@@ -193,18 +208,46 @@ export default function SesionCard({ sesion }: SesionCardProps) {
                 ))}
               </div>
 
-              <div className="rounded-2xl bg-primary-soft/50 border border-primary/15 p-4 sm:p-5">
-                <p className="text-sm sm:text-base text-text-primary leading-relaxed">
-                  <span aria-hidden="true">✨</span>{" "}
-                  <strong className="font-semibold">Ideal para ti si:</strong>{" "}
-                  {sesion.idealPara}
-                </p>
-              </div>
+              {sesion.detalles && sesion.detalles.length > 0 && (
+                <dl className="grid gap-2.5 sm:grid-cols-2">
+                  {sesion.detalles.map((detalle) => (
+                    <div
+                      key={detalle.etiqueta}
+                      className="rounded-xl bg-surface-muted border border-secondary/15 px-4 py-3"
+                    >
+                      <dt className="text-[10px] uppercase tracking-wider text-text-muted">
+                        {detalle.etiqueta}
+                      </dt>
+                      <dd className="text-sm text-text-primary font-medium">
+                        {detalle.valor}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
 
-              <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-secondary font-semibold">
-                <Sprout className="w-3.5 h-3.5 text-primary" />
-                Pilar Caroline Magic: {sesion.pilares}
-              </div>
+              {sesion.cierre && (
+                <p className="font-serif text-lg sm:text-xl text-primary italic text-center">
+                  {sesion.cierre} <span aria-hidden="true">✨</span>
+                </p>
+              )}
+
+              {sesion.idealPara && (
+                <div className="rounded-2xl bg-primary-soft/50 border border-primary/15 p-4 sm:p-5">
+                  <p className="text-sm sm:text-base text-text-primary leading-relaxed">
+                    <span aria-hidden="true">✨</span>{" "}
+                    <strong className="font-semibold">Ideal para ti si:</strong>{" "}
+                    {sesion.idealPara}
+                  </p>
+                </div>
+              )}
+
+              {sesion.pilares && (
+                <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-secondary font-semibold">
+                  <Sprout className="w-3.5 h-3.5 text-primary" />
+                  Pilar Caroline Magic: {sesion.pilares}
+                </div>
+              )}
 
               <div className="pt-6 border-t border-border-subtle flex items-center justify-between gap-4 flex-wrap">
                 <div>
@@ -218,6 +261,7 @@ export default function SesionCard({ sesion }: SesionCardProps) {
 
                 <ReservarButton
                   sesion={sesion}
+                  tipo={tipo}
                   className="inline-flex items-center px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold bg-primary hover:bg-primary-hover text-white shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95"
                 />
               </div>

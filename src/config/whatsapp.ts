@@ -47,6 +47,8 @@ export const WHATSAPP_MESSAGES = {
     `Hola, quiero ver precios y agendar la lectura: ${serviceTitle}`,
   sesion: (nombreSesion: string) =>
     `Hola, quiero reservar la sesión: ${nombreSesion}`,
+  encuentro: (nombreEncuentro: string) =>
+    `Hola, quiero reservar un cupo en el encuentro: ${nombreEncuentro}`,
   product: (productName: string) =>
     `Hola, me interesa consultar disponibilidad para adquirir: ${productName}`,
 };
