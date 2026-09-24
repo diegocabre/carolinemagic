@@ -2,7 +2,7 @@ export interface Sesion {
   id: string;
   nombre: string;
   emoji: string;
-  /** Ruta dentro de public/images (sesiones/, familiares/ o academia/). Si no existe aún la foto, se omite y la tarjeta muestra un ícono de reemplazo. */
+  /** Ruta dentro de public/images (sesiones/, familiares/, academia/ o rituales/). Si no existe aún la foto, se omite y la tarjeta muestra un ícono de reemplazo. */
   imagen?: string;
   /** Frase gancho, se muestra en la tarjeta. */
   descripcionBreve: string;
@@ -18,7 +18,7 @@ export interface Sesion {
   cierre?: string;
   /** Sub-programas que agrupa la tarjeta (ej: los cursos autogestionados), se listan en el modal. */
   items?: { nombre: string; descripcion: string; enfoque?: string }[];
-  duracion: string;
+  duracion?: string;
   modalidad?: string;
   precio: string;
   destacado?: boolean;
@@ -343,5 +343,88 @@ export const programasAcademia: Sesion[] = [
     cierre: "21 días. Una intención. Una nueva forma de elegir.",
     duracion: "21 días",
     precio: "Consultar",
+  },
+];
+
+const INCLUYE_RITUAL = {
+  etiqueta: "Recibes",
+  valor:
+    "Ritual realizado especialmente para ti + video del proceso + informe de lectura del ritual + recomendaciones posteriores + audios de regalo cuando corresponda",
+};
+
+export const rituales: Sesion[] = [
+  {
+    id: "limpieza-y-proteccion",
+    nombre: "Limpieza & Protección",
+    emoji: "🖤",
+    imagen: "/images/rituales/limpiezayproteccion.jpeg",
+    descripcionBreve:
+      "Para momentos en los que sientes carga, estancamiento o necesitas realizar un cierre energético.",
+    descripcionLarga:
+      "Un ritual para momentos en los que sientes carga, estancamiento o necesitas realizar un cierre energético.\n\nPuede integrar limpieza, corte de lazos y protección, según lo que tu proceso necesite.",
+    detalles: [INCLUYE_RITUAL],
+    precio: "Consultar",
+  },
+  {
+    id: "amor-y-vinculos",
+    nombre: "Amor & Vínculos",
+    emoji: "❤️",
+    descripcionBreve:
+      "Apertura al amor, armonización, amor propio, cierre de ciclos y nuevas elecciones afectivas.",
+    descripcionLarga:
+      "Rituales enfocados en la energía de los vínculos: apertura al amor, armonización, amor propio, cierre de ciclos y nuevas elecciones afectivas.\n\nTrabajamos sobre tu energía y tus elecciones, nunca como control sobre la voluntad de otra persona.",
+    detalles: [INCLUYE_RITUAL],
+    precio: "Consultar",
+  },
+  {
+    id: "abundancia-y-abre-caminos",
+    nombre: "Abundancia & Abre Caminos",
+    emoji: "☀️",
+    descripcionBreve:
+      "Intención, movimiento y apertura hacia nuevas posibilidades.",
+    descripcionLarga:
+      "Un ritual para trabajar intención, movimiento, proyectos, dinero, oportunidades y apertura hacia nuevas posibilidades.",
+    detalles: [INCLUYE_RITUAL],
+    precio: "Consultar",
+  },
+  {
+    id: "salud-y-bienestar",
+    nombre: "Salud & Bienestar",
+    emoji: "🌿",
+    descripcionBreve:
+      "Rituales simbólicos de armonización, calma, autocuidado y bienestar energético.",
+    descripcionLarga:
+      "Rituales simbólicos de armonización, calma, autocuidado y bienestar energético.\n\nSon prácticas complementarias y no sustituyen la atención, el diagnóstico ni el tratamiento médico o psicológico.",
+    detalles: [
+      INCLUYE_RITUAL,
+      {
+        etiqueta: "Importante",
+        valor: "Práctica complementaria · no sustituye atención médica",
+      },
+    ],
+    precio: "Consultar",
+  },
+  {
+    id: "hogares-y-negocios",
+    nombre: "Hogares & Negocios",
+    emoji: "🏠",
+    descripcionBreve:
+      "Limpieza y armonización energética de hogares, emprendimientos y negocios.",
+    descripcionLarga:
+      "Limpieza y armonización energética de espacios, hogares, emprendimientos y negocios, con rituales adaptados al objetivo del lugar.",
+    detalles: [INCLUYE_RITUAL],
+    precio: "Consultar",
+  },
+  {
+    id: "ritual-personalizado",
+    nombre: "Ritual Personalizado",
+    emoji: "✨",
+    descripcionBreve:
+      "Nos cuentas qué estás viviendo y diseñamos un ritual específicamente para ese proceso.",
+    descripcionLarga:
+      "La opción más Caroline Magic.\n\nNos cuentas qué estás viviendo y qué quieres transformar, y diseñamos un ritual específicamente para ese proceso.",
+    detalles: [INCLUYE_RITUAL],
+    precio: "Consultar",
+    destacado: true,
   },
 ];

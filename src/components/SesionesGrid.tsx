@@ -31,6 +31,11 @@ const TEXTOS: Record<
     todas: "Todos los programas",
     vacio: "No encontramos programas para este filtro.",
   },
+  ritual: {
+    filtro: "Filtrar por categoría de ritual",
+    todas: "Todos los rituales",
+    vacio: "No encontramos rituales para este filtro.",
+  },
 };
 
 export default function SesionesGrid({

@@ -64,23 +64,6 @@ export const services: Service[] = [
     ],
   },
 
-  // ── RITOS & CEREMONIAS ("Rituales" en el sitio) ──────────────────────────
-  {
-    id: "ritual-cierre-de-ciclo",
-    title: "Ritual de Cierre de Ciclo",
-    subtitle: "Ceremonia personalizada",
-    duration: "90 min",
-    price: "Consultar",
-    category: "Rituales",
-    description:
-      "Una ceremonia diseñada para honrar el cierre de una etapa —duelo, ruptura, mudanza, transición vital— y abrir espacio consciente a lo nuevo.",
-    benefits: [
-      "Diseño ritual a medida según tu proceso",
-      "Elementos simbólicos y consagración de objetos personales",
-      "Acompañamiento antes y después de la ceremonia",
-    ],
-  },
-
   // ── MENTORÍA ───────────────────────────────────────────────────────────
   {
     id: "atelier-prive",

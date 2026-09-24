@@ -7,7 +7,7 @@ import { Clock, MapPin, Sparkles, Sprout, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export type TipoSesion = "sesion" | "encuentro" | "academia";
+export type TipoSesion = "sesion" | "encuentro" | "academia" | "ritual";
 
 interface SesionCardProps {
   sesion: Sesion;
@@ -27,21 +27,33 @@ function ImagenSesion({
   if (!sesion.imagen) {
     return (
       <div
-        className={`flex items-center justify-center bg-primary-soft/60 ${className}`}
+        className={`absolute inset-0 flex items-center justify-center bg-primary-soft/60 ${className ?? ""}`}
       >
         <Sparkles className="w-10 h-10 text-primary/50" />
       </div>
     );
   }
 
+  // Las imágenes son flyers con texto: se muestran completas (contain) y el
+  // espacio sobrante se rellena con la misma imagen desenfocada.
   return (
-    <Image
-      src={sesion.imagen}
-      alt={sesion.nombre}
-      fill
-      sizes={sizes}
-      className={`object-cover ${className}`}
-    />
+    <div className={`absolute inset-0 overflow-hidden bg-primary-soft/60 ${className ?? ""}`}>
+      <Image
+        src={sesion.imagen}
+        alt=""
+        aria-hidden="true"
+        fill
+        sizes={sizes}
+        className="object-cover scale-110 blur-2xl opacity-70"
+      />
+      <Image
+        src={sesion.imagen}
+        alt={sesion.nombre}
+        fill
+        sizes={sizes}
+        className="object-contain object-center"
+      />
+    </div>
   );
 }
 
@@ -59,8 +71,15 @@ function ReservarButton({
       ? WHATSAPP_MESSAGES.encuentro(sesion.nombre)
       : tipo === "academia"
         ? WHATSAPP_MESSAGES.academia(sesion.nombre)
-        : WHATSAPP_MESSAGES.sesion(sesion.nombre);
-  const texto = tipo === "academia" ? "Inscribirme" : "Reservar";
+        : tipo === "ritual"
+          ? WHATSAPP_MESSAGES.ritual(sesion.nombre)
+          : WHATSAPP_MESSAGES.sesion(sesion.nombre);
+  const texto =
+    tipo === "academia"
+      ? "Inscribirme"
+      : tipo === "ritual"
+        ? "Solicitar"
+        : "Reservar";
 
   return (
     <a
@@ -106,7 +125,7 @@ export default function SesionCard({
           </span>
         )}
 
-        <div className="relative w-full aspect-[4/3]">
+        <div className="relative w-full aspect-[4/5]">
           <ImagenSesion sesion={sesion} sizes="(max-width: 768px) 100vw, 33vw" />
         </div>
 
@@ -119,10 +138,12 @@ export default function SesionCard({
           </p>
 
           <div className="flex flex-wrap items-center gap-2 mb-5">
-            <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
-              <Clock className="w-3.5 h-3.5 text-primary" />
-              {sesion.duracion}
-            </span>
+            {sesion.duracion && (
+              <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
+                <Clock className="w-3.5 h-3.5 text-primary" />
+                {sesion.duracion}
+              </span>
+            )}
             {sesion.modalidad && (
               <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
                 <MapPin className="w-3.5 h-3.5 text-primary" />
@@ -186,7 +207,7 @@ export default function SesionCard({
               <X className="w-4.5 h-4.5" />
             </button>
 
-            <div className="relative w-full aspect-[16/9] rounded-t-3xl overflow-hidden">
+            <div className="relative w-full h-[60vh] max-h-[640px] rounded-t-3xl overflow-hidden">
               <ImagenSesion sesion={sesion} sizes="(max-width: 768px) 100vw, 672px" />
             </div>
 
@@ -196,10 +217,12 @@ export default function SesionCard({
                   <span aria-hidden="true">{sesion.emoji}</span> {sesion.nombre}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
-                    <Clock className="w-3.5 h-3.5 text-primary" />
-                    {sesion.duracion}
-                  </span>
+                  {sesion.duracion && (
+                    <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
+                      <Clock className="w-3.5 h-3.5 text-primary" />
+                      {sesion.duracion}
+                    </span>
+                  )}
                   {sesion.modalidad && (
                     <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
                       <MapPin className="w-3.5 h-3.5 text-primary" />
