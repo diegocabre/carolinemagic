@@ -7,7 +7,7 @@ import { Clock, MapPin, Sparkles, Sprout, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export type TipoSesion = "sesion" | "encuentro";
+export type TipoSesion = "sesion" | "encuentro" | "academia";
 
 interface SesionCardProps {
   sesion: Sesion;
@@ -57,7 +57,10 @@ function ReservarButton({
   const mensaje =
     tipo === "encuentro"
       ? WHATSAPP_MESSAGES.encuentro(sesion.nombre)
-      : WHATSAPP_MESSAGES.sesion(sesion.nombre);
+      : tipo === "academia"
+        ? WHATSAPP_MESSAGES.academia(sesion.nombre)
+        : WHATSAPP_MESSAGES.sesion(sesion.nombre);
+  const texto = tipo === "academia" ? "Inscribirme" : "Reservar";
 
   return (
     <a
@@ -65,9 +68,9 @@ function ReservarButton({
       target="_blank"
       rel="noopener noreferrer"
       className={className}
-      aria-label={`Reservar ${sesion.nombre} por WhatsApp (abre en nueva pestaña)`}
+      aria-label={`${texto}: ${sesion.nombre} por WhatsApp (abre en nueva pestaña)`}
     >
-      Reservar
+      {texto}
     </a>
   );
 }
@@ -120,18 +123,20 @@ export default function SesionCard({
               <Clock className="w-3.5 h-3.5 text-primary" />
               {sesion.duracion}
             </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
-              <MapPin className="w-3.5 h-3.5 text-primary" />
-              {sesion.modalidad}
-            </span>
+            {sesion.modalidad && (
+              <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
+                <MapPin className="w-3.5 h-3.5 text-primary" />
+                {sesion.modalidad}
+              </span>
+            )}
           </div>
 
-          <div className="pt-4 border-t border-border-subtle flex items-center justify-between gap-3">
+          <div className="pt-4 border-t border-border-subtle flex flex-wrap items-center justify-between gap-3">
             <div>
               <span className="text-[10px] uppercase tracking-wider text-text-muted block">
                 Inversión
               </span>
-              <span className="text-lg font-bold font-serif text-text-primary">
+              <span className="text-lg font-bold font-serif text-text-primary whitespace-nowrap">
                 {sesion.precio}
               </span>
             </div>
@@ -195,10 +200,12 @@ export default function SesionCard({
                     <Clock className="w-3.5 h-3.5 text-primary" />
                     {sesion.duracion}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
-                    <MapPin className="w-3.5 h-3.5 text-primary" />
-                    {sesion.modalidad}
-                  </span>
+                  {sesion.modalidad && (
+                    <span className="inline-flex items-center gap-1.5 bg-surface-muted text-secondary border border-secondary/15 px-3 py-1 rounded-full text-xs font-medium">
+                      <MapPin className="w-3.5 h-3.5 text-primary" />
+                      {sesion.modalidad}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -207,6 +214,29 @@ export default function SesionCard({
                   <p key={i}>{parrafo}</p>
                 ))}
               </div>
+
+              {sesion.items && sesion.items.length > 0 && (
+                <ul className="space-y-3">
+                  {sesion.items.map((item) => (
+                    <li
+                      key={item.nombre}
+                      className="rounded-2xl border border-border-subtle bg-white p-4 sm:p-5 space-y-1.5"
+                    >
+                      <h3 className="font-serif text-lg text-text-primary font-bold">
+                        {item.nombre}
+                      </h3>
+                      <p className="text-sm text-text-secondary leading-relaxed">
+                        {item.descripcion}
+                      </p>
+                      {item.enfoque && (
+                        <p className="text-[11px] uppercase tracking-widest text-secondary font-semibold pt-1">
+                          Enfoque: {item.enfoque}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               {sesion.detalles && sesion.detalles.length > 0 && (
                 <dl className="grid gap-2.5 sm:grid-cols-2">

@@ -2,7 +2,7 @@ export interface Sesion {
   id: string;
   nombre: string;
   emoji: string;
-  /** Ruta dentro de public/images (sesiones/ o familiares/). Si no existe aún la foto, se omite y la tarjeta muestra un ícono de reemplazo. */
+  /** Ruta dentro de public/images (sesiones/, familiares/ o academia/). Si no existe aún la foto, se omite y la tarjeta muestra un ícono de reemplazo. */
   imagen?: string;
   /** Frase gancho, se muestra en la tarjeta. */
   descripcionBreve: string;
@@ -16,8 +16,10 @@ export interface Sesion {
   detalles?: { etiqueta: string; valor: string }[];
   /** Frase de cierre destacada en el modal. */
   cierre?: string;
+  /** Sub-programas que agrupa la tarjeta (ej: los cursos autogestionados), se listan en el modal. */
+  items?: { nombre: string; descripcion: string; enfoque?: string }[];
   duracion: string;
-  modalidad: string;
+  modalidad?: string;
   precio: string;
   destacado?: boolean;
 }
@@ -199,6 +201,147 @@ export const encuentrosGrupales: Sesion[] = [
     cierre: "Tu intuición ya habla. Es momento de aprender a escucharla.",
     duracion: "90 min",
     modalidad: "Online y presencial · Grupal",
+    precio: "Consultar",
+  },
+];
+
+export const programasAcademia: Sesion[] = [
+  {
+    id: "formacion-tarot-rider",
+    nombre: "Formación Tarot Rider",
+    emoji: "🃏",
+    imagen: "/images/academia/tarotrider.jpeg",
+    descripcionBreve:
+      "Aprende a leer, interpretar y conectar con el Tarot Rider desde una mirada intuitiva, simbólica y consciente.",
+    descripcionLarga:
+      "Una formación completa para aprender a leer, interpretar y conectar con el Tarot Rider desde una mirada intuitiva, simbólica y consciente.\n\nDurante 8 clases recorreremos los Arcanos Mayores y Menores, sus símbolos, energías y mensajes, aprendiendo a construir lecturas claras y a desarrollar una forma propia de interpretar las cartas.\n\nLa propuesta combina teoría + práctica + intuición + canalización, para que no solo memorices significados, sino que aprendas a dialogar con el Tarot y confiar en tu propia percepción.\n\nTrabajaremos tiradas, formulación de preguntas, interpretación de combinaciones, práctica de lecturas y herramientas para utilizar el Tarot como instrumento de orientación y autoconocimiento.\n\nNo necesitas experiencia previa.",
+    detalles: [
+      { etiqueta: "Duración", valor: "8 clases · 1 clase semanal" },
+      { etiqueta: "Duración por clase", valor: "2 horas" },
+      { etiqueta: "Carga total", valor: "16 horas" },
+      {
+        etiqueta: "Incluye",
+        valor: "Material de estudio en PDF y acompañamiento durante la formación",
+      },
+    ],
+    cierre:
+      "Aprende las cartas. Despierta tu intuición. Crea tu propia forma de leer el Tarot.",
+    duracion: "8 clases",
+    modalidad: "Online y presencial",
+    precio: "$90.000 CLP",
+  },
+  {
+    id: "formacion-constelaciones-familiares-magicas",
+    nombre: "Formación en Constelaciones Familiares Mágicas",
+    emoji: "🌳",
+    imagen: "/images/academia/constelacionesfamiliares.jpeg",
+    descripcionBreve:
+      "Una formación integral de 10 meses para comprender y facilitar procesos desde la mirada sistémica.",
+    descripcionLarga:
+      "Una formación integral de 10 meses para aprender a comprender y facilitar procesos desde la mirada sistémica, incorporando el sello intuitivo, simbólico y espiritual de Caroline Magic.\n\nA lo largo de 10 módulos recorreremos las bases de las Constelaciones Familiares, órdenes y dinámicas sistémicas, vínculos, ancestros, lealtades y patrones transgeneracionales, movimiento sistémico y herramientas para acompañar procesos individuales y grupales.\n\nLa formación incorpora además el enfoque Caroline Magic: intuición, canalización como práctica espiritual complementaria, trabajo simbólico, Tarot/oráculo y ritual sistémico, siempre diferenciando estas herramientas de los fundamentos propios de las Constelaciones Familiares.\n\nNo es solo teoría. La propuesta incluye prácticas durante el proceso formativo, para integrar progresivamente las herramientas y desarrollar una manera propia, responsable y consciente de acompañar.",
+    detalles: [
+      { etiqueta: "Programa", valor: "10 módulos · 1 módulo mensual" },
+      { etiqueta: "Forma de pago", valor: "10 cuotas de $45.000 CLP" },
+      {
+        etiqueta: "Incluye",
+        valor:
+          "Clases teórico-prácticas · prácticas · material PDF · manual completo de formación",
+      },
+    ],
+    cierre: "Mira el origen. Comprende el sistema. Abre nuevos movimientos.",
+    duracion: "10 meses",
+    modalidad: "Presencial",
+    precio: "$450.000 CLP",
+  },
+  {
+    id: "formacion-magos-y-magas-nivel-1",
+    nombre: "Formación Magos & Magas · Nivel 1",
+    emoji: "🪄",
+    imagen: "/images/academia/magosymagas.jpeg",
+    descripcionBreve:
+      "Reconoce, explora y desarrolla tu propia sensibilidad energética, intuitiva y espiritual.",
+    descripcionLarga:
+      "Una formación vivencial para comenzar a reconocer, explorar y desarrollar tu propia sensibilidad energética, intuitiva y espiritual, incorporando herramientas que puedas llevar a tu vida cotidiana.\n\nDurante 8 clases combinamos consciencia, energía, intuición, percepción, canalización, ritual y práctica, desde el enfoque mágico y espiritual de Caroline Magic.\n\nLa propuesta no busca que sigas una única manera de conectar, sino que descubras cómo funciona tu propia percepción, aprendas a confiar en ella y construyas una caja de herramientas que tenga sentido para ti.\n\nUn recorrido para pasar de “¿tendré un don?” a comenzar a conocer, practicar y habitar tu propia magia.\n\nNo necesitas experiencia previa.",
+    detalles: [
+      { etiqueta: "Frecuencia", valor: "1 clase semanal" },
+      { etiqueta: "Duración por clase", valor: "2 horas" },
+      { etiqueta: "Carga total", valor: "16 horas" },
+      {
+        etiqueta: "Forma de pago",
+        valor: "Pago completo de $90.000 o 2 pagos de $45.000 CLP",
+      },
+      {
+        etiqueta: "Incluye",
+        valor: "Material PDF + ejercicios y prácticas durante la formación",
+      },
+    ],
+    cierre:
+      "Tu magia no comienza cuando aprendes algo nuevo. Comienza cuando reconoces lo que ya estaba en ti.",
+    duracion: "8 clases",
+    modalidad: "Presencial u online",
+    precio: "$90.000 CLP",
+  },
+  {
+    id: "cursos-autogestionados",
+    nombre: "Cursos & Talleres Autogestionados",
+    emoji: "📚",
+    imagen: "/images/academia/autogestionados.jpeg",
+    descripcionBreve:
+      "Experiencias para realizar a tu propio ritmo, sin horarios ni clases en vivo.",
+    descripcionLarga:
+      "Son experiencias creadas para realizar a tu propio ritmo, sin horarios ni clases en vivo.\n\nAl comprar el curso recibes la clase/contenido grabado + material PDF, para acceder al aprendizaje de Caroline Magic desde cualquier lugar.",
+    items: [
+      {
+        nombre: "Limpieza Energética Multidimensional",
+        descripcion:
+          "Herramientas para aprender a limpiar, armonizar y proteger energéticamente personas y espacios desde el enfoque Caroline Magic.",
+      },
+      {
+        nombre: "Despierta tu Intuición",
+        descripcion:
+          "Una experiencia para explorar tu percepción, reconocer cómo se manifiesta tu intuición y comenzar a confiar en la información que recibes.",
+      },
+      {
+        nombre: "Conecta con tu Oráculo",
+        descripcion:
+          "Un taller práctico para aprender a crear vínculo con tu oráculo, interpretar sus símbolos y desarrollar una lectura cada vez más intuitiva.",
+      },
+    ],
+    duracion: "A tu ritmo",
+    modalidad: "Clase grabada + material PDF",
+    precio: "Consultar",
+  },
+  {
+    id: "programas-21-dias",
+    nombre: "Programas de 21 Días",
+    emoji: "🌀",
+    imagen: "/images/academia/programa21dias.jpeg",
+    descripcionBreve:
+      "21 días consecutivos para trabajar sobre un área específica de tu vida.",
+    descripcionLarga:
+      "Una experiencia de transformación para trabajar durante 21 días consecutivos sobre un área específica de tu vida.\n\nCada programa propone un recorrido progresivo con herramientas de consciencia, preguntas expansivas, ejercicios, prácticas energéticas, reflexión y propuestas de integración, para salir del piloto automático y comenzar a crear nuevas elecciones.",
+    items: [
+      {
+        nombre: "21 Días · Pareja Ideal",
+        descripcion:
+          "Un recorrido para revisar cómo estás creando tus vínculos, reconocer patrones, creencias y elecciones repetitivas y comenzar a conectar con la relación que verdaderamente deseas construir. Trabajaremos amor propio, claridad en los vínculos, merecimiento, disponibilidad para recibir, elección consciente y la energía de la pareja que quieres atraer y crear.",
+        enfoque: "Vínculos · amor propio · patrones · elección · pareja ideal",
+      },
+      {
+        nombre: "21 Días · Abundancia",
+        descripcion:
+          "Un proceso para transformar tu relación con el dinero, el recibir y la abundancia. Durante los 21 días trabajaremos creencias y puntos de vista limitantes, capacidad de recibir, valoración personal, posibilidades, elección y creación, incorporando preguntas y herramientas expansivas. El objetivo no es prometer un resultado económico específico, sino desarrollar una relación más consciente y activa con tus decisiones y posibilidades.",
+        enfoque: "Dinero · recibir · merecimiento · posibilidades · creación",
+      },
+      {
+        nombre: "21 Días · Expansión de Consciencia",
+        descripcion:
+          "Un viaje de 21 días para comenzar a cuestionar lo automático, ampliar tu percepción y abrir nuevas posibilidades. A través de preguntas, ejercicios de observación, prácticas de consciencia e intuición, iremos identificando juicios, creencias y estructuras que pueden estar condicionando tus elecciones.",
+        enfoque: "Consciencia · claridad · intuición · elección · expansión",
+      },
+    ],
+    cierre: "21 días. Una intención. Una nueva forma de elegir.",
+    duracion: "21 días",
     precio: "Consultar",
   },
 ];

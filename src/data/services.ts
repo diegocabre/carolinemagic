@@ -9,7 +9,6 @@ export interface Service {
     | "Sombra & Arquetipos"
     | "Vínculos"
     | "Mentoría"
-    | "Academia"
     | "Encuentros Grupales"
     | "Rituales";
   description: string;
@@ -62,53 +61,6 @@ export const services: Service[] = [
       "Esquema de compatibilidad energética y comunicacional",
       "Causas raíz de fricciones kármicas",
       "Estrategias conscientes para la armonía vincular",
-    ],
-  },
-
-  // ── ACADEMIA (formación con niveles / certificación) ─────────────────────
-  {
-    id: "formacion-registros-akashicos",
-    title: "Formación en Registros Akáshicos",
-    subtitle: "Nivel 1, 2 y Maestría",
-    duration: "Por confirmar",
-    price: "Consultar",
-    category: "Academia",
-    description:
-      "Formación espiritual progresiva para aprender a acceder y leer los Registros Akáshicos, desde los fundamentos hasta el nivel de maestría.",
-    benefits: [
-      "Recorrido completo: Nivel 1, Nivel 2 y Maestría",
-      "Herramientas para lecturas propias y de terceros",
-      "Certificación al completar cada nivel",
-    ],
-  },
-  {
-    id: "tarot-y-oraculos-taller",
-    title: "Tarot & Oráculos",
-    subtitle: "Formación grupal",
-    duration: "Por confirmar",
-    price: "Consultar",
-    category: "Academia",
-    description:
-      "Taller formativo para aprender a interpretar el tarot y otros oráculos, desde los arquetipos hasta la lectura intuitiva propia.",
-    benefits: [
-      "Fundamentos simbólicos de los arcanos",
-      "Práctica de lectura en grupo",
-      "Guía para iniciar tu propia práctica",
-    ],
-  },
-  {
-    id: "coaching-holistico",
-    title: "Coaching Holístico",
-    subtitle: "Acompañamiento integral",
-    duration: "Por confirmar",
-    price: "Consultar",
-    category: "Academia",
-    description:
-      "Un enfoque de coaching que integra herramientas espirituales, energéticas y de desarrollo personal para acompañar tus procesos de cambio.",
-    benefits: [
-      "Sesiones estructuradas de acompañamiento",
-      "Integración de herramientas holísticas",
-      "Seguimiento de objetivos personales",
     ],
   },
 
