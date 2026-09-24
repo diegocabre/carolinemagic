@@ -69,35 +69,41 @@ export default function CarruselMedia({ items }: CarruselMediaProps) {
           const posicion = POSICIONES[d] ?? "scale-50 opacity-0 z-0";
 
           return (
+            // Riel de ancho cero centrado: la tarjeta se centra sobre él
+            // tenga el ancho que tenga (las fotos son más anchas que los videos).
             <div
               key={item.src}
-              className={`absolute top-0 left-1/2 -ml-[124px] sm:-ml-[158px] w-[248px] sm:w-[316px] aspect-[9/16] rounded-3xl overflow-hidden bg-black border border-border-subtle shadow-xl transition-all duration-500 ease-out ${posicion} ${esActivo ? "" : "cursor-pointer"}`}
-              onClick={esActivo ? undefined : () => setActivo(i)}
-              aria-hidden={!esActivo}
+              className="absolute inset-y-3 left-1/2 w-0 flex justify-center"
             >
-              {item.tipo === "imagen" ? (
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  sizes="316px"
-                  className="object-cover"
-                />
-              ) : (
-                <video
-                  ref={(el) => {
-                    videosRef.current[i] = el;
-                  }}
-                  src={item.src}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  controls={esActivo}
-                  aria-label={item.alt}
-                  className={`w-full h-full object-cover ${esActivo ? "" : "pointer-events-none"}`}
-                />
-              )}
+              <div
+                className={`relative h-full shrink-0 ${item.tipo === "imagen" ? "aspect-[3/4]" : "aspect-[9/16]"} rounded-3xl overflow-hidden bg-black border border-border-subtle shadow-xl transition-all duration-500 ease-out ${posicion} ${esActivo ? "" : "cursor-pointer"}`}
+                onClick={esActivo ? undefined : () => setActivo(i)}
+                aria-hidden={!esActivo}
+              >
+                {item.tipo === "imagen" ? (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="420px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <video
+                    ref={(el) => {
+                      videosRef.current[i] = el;
+                    }}
+                    src={item.src}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    controls={esActivo}
+                    aria-label={item.alt}
+                    className={`w-full h-full object-cover ${esActivo ? "" : "pointer-events-none"}`}
+                  />
+                )}
+              </div>
             </div>
           );
         })}
