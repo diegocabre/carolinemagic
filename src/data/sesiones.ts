@@ -349,7 +349,7 @@ export const programasAcademia: Sesion[] = [
 const INCLUYE_RITUAL = {
   etiqueta: "Recibes",
   valor:
-    "Ritual realizado especialmente para ti + video del proceso + informe de lectura del ritual + recomendaciones posteriores + audios de regalo cuando corresponda",
+    "Video del ritual + informe personalizado de lo observado + recomendaciones posteriores + audio/mensaje de integración, según el trabajo realizado",
 };
 
 export const rituales: Sesion[] = [
@@ -369,6 +369,7 @@ export const rituales: Sesion[] = [
     id: "amor-y-vinculos",
     nombre: "Amor & Vínculos",
     emoji: "❤️",
+    imagen: "/images/rituales/amor.jpeg",
     descripcionBreve:
       "Apertura al amor, armonización, amor propio, cierre de ciclos y nuevas elecciones afectivas.",
     descripcionLarga:
@@ -380,6 +381,7 @@ export const rituales: Sesion[] = [
     id: "abundancia-y-abre-caminos",
     nombre: "Abundancia & Abre Caminos",
     emoji: "☀️",
+    imagen: "/images/rituales/abundancia.jpeg",
     descripcionBreve:
       "Intención, movimiento y apertura hacia nuevas posibilidades.",
     descripcionLarga:
@@ -391,6 +393,7 @@ export const rituales: Sesion[] = [
     id: "salud-y-bienestar",
     nombre: "Salud & Bienestar",
     emoji: "🌿",
+    imagen: "/images/rituales/salud.jpeg",
     descripcionBreve:
       "Rituales simbólicos de armonización, calma, autocuidado y bienestar energético.",
     descripcionLarga:
@@ -408,6 +411,7 @@ export const rituales: Sesion[] = [
     id: "hogares-y-negocios",
     nombre: "Hogares & Negocios",
     emoji: "🏠",
+    imagen: "/images/rituales/hogares.jpeg",
     descripcionBreve:
       "Limpieza y armonización energética de hogares, emprendimientos y negocios.",
     descripcionLarga:
@@ -419,6 +423,7 @@ export const rituales: Sesion[] = [
     id: "ritual-personalizado",
     nombre: "Ritual Personalizado",
     emoji: "✨",
+    imagen: "/images/rituales/personalizados.jpeg",
     descripcionBreve:
       "Nos cuentas qué estás viviendo y diseñamos un ritual específicamente para ese proceso.",
     descripcionLarga:

@@ -2,14 +2,16 @@ import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { rituales } from "@/data/sesiones";
 import { FileText, Flame, Sparkles, Video } from "lucide-react";
+import Image from "next/image";
 
 const RECIBES = [
-  "Ritual realizado especialmente para ti",
-  "Video del proceso",
-  "Informe de lectura del ritual",
+  "Video del ritual",
+  "Informe personalizado de lo observado",
   "Recomendaciones posteriores",
-  "Audios de regalo cuando corresponda",
+  "Audio/mensaje de integración",
 ];
+
+const VIDEOS = [1, 2, 3, 4].map((n) => `/images/rituales/ritual${n}vid.mp4`);
 
 export default function RitualesPage() {
   return (
@@ -75,10 +77,54 @@ export default function RitualesPage() {
         <SesionesGrid sesiones={rituales} tipo="ritual" />
       </div>
 
+      {/* Cómo trabajamos los rituales */}
+      <section className="space-y-10">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-text-primary">
+            ¿Cómo trabajamos los rituales?
+          </h2>
+          <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+            Cada ritual Caroline Magic se crea de manera personalizada según tu
+            intención y el proceso que estás atravesando.
+          </p>
+          <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+            Integramos magia ancestral y simbolismo ritual con herramientas de
+            Access Consciousness® como proceso de acceso a la consciencia y
+            tecnología energética moderna, además de canalización y velomancia,
+            observando el comportamiento de las velas como una lectura
+            simbólica del proceso.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-border-subtle shadow-sm">
+            <Image
+              src="/images/rituales/ritualexp.jpeg"
+              alt="Encuentro Caroline Magic alrededor de una mesa con cartas de Tarot"
+              fill
+              sizes="(max-width: 1024px) 50vw, 20vw"
+              className="object-cover"
+            />
+          </div>
+          {VIDEOS.map((src, i) => (
+            <video
+              key={src}
+              src={src}
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              aria-label={`Video de ritual ${i + 1}`}
+              className="w-full aspect-[9/16] object-cover rounded-2xl border border-border-subtle shadow-sm bg-black"
+            />
+          ))}
+        </div>
+      </section>
+
       {/* Qué recibes + ritual personalizado */}
       <div className="max-w-2xl mx-auto text-center rounded-3xl bg-gradient-to-br from-white/95 to-primary-soft/40 border border-border-subtle p-10 sm:p-14 shadow-sm space-y-5">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-text-primary">
-          ¿Qué recibes?
+          <span aria-hidden="true">✨</span> ¿Qué recibes?
         </h2>
         <ul className="flex flex-wrap justify-center gap-2">
           {RECIBES.map((item) => (
@@ -90,9 +136,13 @@ export default function RitualesPage() {
             </li>
           ))}
         </ul>
+        <p className="text-xs text-text-muted">Según el trabajo realizado.</p>
+        <p className="font-serif text-lg sm:text-xl text-primary italic">
+          Magia ancestral + consciencia + energía + intención.
+        </p>
         <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
-          ¿No sabes qué ritual elegir? Cuéntanos qué estás viviendo y qué
-          quieres transformar, y diseñamos uno para tu proceso.
+          Un ritual no se realiza en serie: se crea para ti y para aquello que
+          deseas transformar.
         </p>
         <div className="pt-1">
           <a
