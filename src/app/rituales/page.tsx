@@ -1,8 +1,8 @@
+import CarruselMedia, { MediaItem } from "@/components/CarruselMedia";
 import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { rituales } from "@/data/sesiones";
 import { FileText, Flame, Sparkles, Video } from "lucide-react";
-import Image from "next/image";
 
 const RECIBES = [
   "Video del ritual",
@@ -11,7 +11,18 @@ const RECIBES = [
   "Audio/mensaje de integración",
 ];
 
-const VIDEOS = [1, 2, 3, 4].map((n) => `/images/rituales/ritual${n}vid.mp4`);
+const GALERIA: MediaItem[] = [
+  {
+    tipo: "imagen",
+    src: "/images/rituales/ritualexp.jpeg",
+    alt: "Encuentro Caroline Magic alrededor de una mesa con cartas de Tarot",
+  },
+  ...[1, 2, 3, 4].map((n) => ({
+    tipo: "video" as const,
+    src: `/images/rituales/ritual${n}vid.mp4`,
+    alt: `Video de ritual ${n}`,
+  })),
+];
 
 export default function RitualesPage() {
   return (
@@ -96,29 +107,7 @@ export default function RitualesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-          <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-border-subtle shadow-sm">
-            <Image
-              src="/images/rituales/ritualexp.jpeg"
-              alt="Encuentro Caroline Magic alrededor de una mesa con cartas de Tarot"
-              fill
-              sizes="(max-width: 1024px) 50vw, 20vw"
-              className="object-cover"
-            />
-          </div>
-          {VIDEOS.map((src, i) => (
-            <video
-              key={src}
-              src={src}
-              controls
-              muted
-              playsInline
-              preload="metadata"
-              aria-label={`Video de ritual ${i + 1}`}
-              className="w-full aspect-[9/16] object-cover rounded-2xl border border-border-subtle shadow-sm bg-black"
-            />
-          ))}
-        </div>
+        <CarruselMedia items={GALERIA} />
       </section>
 
       {/* Qué recibes + ritual personalizado */}
