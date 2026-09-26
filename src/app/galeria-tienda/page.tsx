@@ -1,95 +1,243 @@
+import SerieEpisodios, { Episodio } from "@/components/SerieEpisodios";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
-import { products } from "@/data/products";
-import { Package, ShieldCheck, ShoppingBag, Sparkles } from "lucide-react";
+import { colecciones } from "@/data/products";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+
+const VIDEOS = "/images/galeria/videos";
+
+const EPISODIOS: Episodio[] = [
+  { titulo: "Primer episodio", src: `${VIDEOS}/episodio1.mp4`, duracion: "1:14" },
+  { titulo: "Segundo episodio", src: `${VIDEOS}/episodio2.mp4`, duracion: "1:17" },
+  { titulo: "Tercer episodio", src: `${VIDEOS}/episodio3.mp4`, duracion: "1:15" },
+  { titulo: "Cuarto episodio", src: `${VIDEOS}/episodio4.mp4`, duracion: "1:32" },
+];
+
+const VIVENCIAS = [
+  {
+    titulo: "Proceso del arte",
+    texto: "Del lienzo en blanco a la obra: cómo nace cada pieza.",
+    src: `${VIDEOS}/procesodelarte.mp4`,
+  },
+  {
+    titulo: "María Mulambo",
+    texto: "Una obra y su historia, contada desde el taller.",
+    src: `${VIDEOS}/mariamulambo.mp4`,
+  },
+];
 
 export default function GaleriaTiendaPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 space-y-16 bg-mystic-glow">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4 pt-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-soft text-primary text-xs uppercase tracking-widest font-semibold border border-border-accent shadow-xs">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Atelier de Arte Místico</span>
-        </div>
-        <h1 className="font-serif text-4xl sm:text-6xl font-bold text-text-primary tracking-tight">
-          Galería & Tienda Esotérica
-        </h1>
-        <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-2xl mx-auto">
-          Obras pictóricas originales, barajas de autor consagradas y talismanes
-          protectores. Arte concebido como tecnología sagrada para sintonizar tu
-          hogar y altar personal.
+    <div className="bg-mystic-glow">
+      {/* Header editorial */}
+      <header className="max-w-7xl mx-auto px-6 pt-20 pb-14 sm:pt-28 sm:pb-20">
+        <p className="text-[11px] uppercase tracking-[0.35em] text-primary font-semibold">
+          Atelier Caroline Magic
         </p>
-      </div>
+        <div className="mt-6 grid lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-16 items-end">
+          <h1 className="font-serif text-5xl sm:text-7xl font-bold text-text-primary tracking-tight leading-[0.95]">
+            Galería
+            <span className="block italic font-normal text-primary">
+              &amp; Tienda
+            </span>
+          </h1>
+          <p className="text-sm sm:text-base text-text-secondary leading-relaxed max-w-md">
+            Arte, oráculos y objetos rituales creados a mano. Piezas pensadas
+            para acompañar tu altar, tu hogar y tus prácticas personales.
+          </p>
+        </div>
 
-      {/* Características del Taller */}
-      <div className="flex flex-wrap justify-center gap-8 text-xs text-text-secondary">
-        <div className="flex items-center gap-2">
-          <Package className="w-4 h-4 text-primary" />
-          <span>Envíos seguros a todo el mundo</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span>Piezas consagradas bajo lunas específicas</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-primary" />
-          <span>Certificado de autenticidad firmado</span>
-        </div>
-      </div>
+        {/* Índice de colecciones */}
+        <nav
+          aria-label="Colecciones"
+          className="mt-14 border-t border-text-primary/15 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+        >
+          {colecciones.map((c, i) => (
+            <a
+              key={c.id}
+              href={`#${c.id}`}
+              className="group flex items-baseline gap-3 py-4 pr-4 border-b border-text-primary/10 text-text-secondary hover:text-primary transition-colors"
+            >
+              <span className="font-serif text-xs text-text-muted tabular-nums">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="text-sm font-medium">{c.nombre}</span>
+            </a>
+          ))}
+        </nav>
+      </header>
 
-      {/* Catálogo de Productos */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="rounded-2xl bg-white/95 border border-border-subtle p-7 flex flex-col justify-between shadow-xs hover:shadow-xl hover:border-primary/35 transition-all duration-300 group"
-          >
-            <div>
-              {/* Imagen/Placeholder Místico */}
-              <div className="aspect-[4/5] rounded-xl bg-surface-muted flex flex-col items-center justify-center mb-6 relative overflow-hidden border border-border-subtle group-hover:border-primary/20 transition-all">
-                <div className="w-16 h-16 rounded-full border border-dashed border-primary/30 bg-white/60 flex items-center justify-center relative">
-                  <Sparkles className="w-8 h-8 text-primary group-hover:scale-125 transition-transform" />
+      {/* Colecciones: filas editoriales alternadas */}
+      <div className="max-w-7xl mx-auto px-6 pb-24">
+        {colecciones.map((c, i) => {
+          const numero = String(i + 1).padStart(2, "0");
+          const invertida = i % 2 === 1;
+
+          return (
+            <section
+              key={c.id}
+              id={c.id}
+              aria-labelledby={`${c.id}-titulo`}
+              className="scroll-mt-24 grid md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center py-16 sm:py-20 border-t border-text-primary/10 first:border-t-0"
+            >
+              {/* Foto */}
+              <div className={`relative ${invertida ? "md:order-2" : ""}`}>
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-gradient-to-br from-surface-container via-primary-soft to-surface-soft">
+                  {c.imagen ? (
+                    <Image
+                      src={c.imagen}
+                      alt={c.nombre}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                      <span
+                        className="text-6xl sm:text-7xl opacity-80"
+                        aria-hidden="true"
+                      >
+                        {c.emoji}
+                      </span>
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-secondary-accent">
+                        Fotografía próximamente
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <span className="text-[10px] text-text-muted uppercase tracking-wider mt-4 font-semibold">
-                  {product.category}
+                {/* Marco desplazado */}
+                <div
+                  aria-hidden="true"
+                  className={`hidden sm:block absolute -z-10 inset-0 border border-primary/30 rounded-[2px] ${invertida ? "-translate-x-5 translate-y-5" : "translate-x-5 translate-y-5"}`}
+                />
+                <span
+                  aria-hidden="true"
+                  className={`absolute -top-8 sm:-top-10 font-serif italic text-7xl sm:text-8xl text-primary/15 select-none ${invertida ? "right-2" : "left-2"}`}
+                >
+                  {numero}
                 </span>
-
-                {product.badge && (
-                  <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold bg-primary text-white shadow-xs">
-                    {product.badge}
-                  </span>
-                )}
               </div>
 
-              <span className="text-[10px] uppercase tracking-wider text-secondary-accent font-semibold">
-                {product.category}
-              </span>
-              <h3 className="font-serif text-2xl font-bold text-text-primary group-hover:text-primary transition-colors mt-1 mb-2">
-                {product.name}
-              </h3>
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-6 font-normal">
-                {product.description}
-              </p>
-            </div>
+              {/* Texto */}
+              <div className={invertida ? "md:order-1" : ""}>
+                <p className="text-[11px] uppercase tracking-[0.3em] text-text-muted">
+                  Colección {numero}
+                </p>
+                <h2
+                  id={`${c.id}-titulo`}
+                  className="mt-3 font-serif text-4xl sm:text-5xl font-bold text-text-primary tracking-tight"
+                >
+                  {c.nombre}
+                </h2>
+                <p className="mt-4 font-serif italic text-lg text-primary">
+                  {c.bajada}
+                </p>
 
-            <div className="pt-5 border-t border-border-subtle flex items-center justify-between">
-              <span className="text-2xl font-bold font-serif text-text-primary">
-                {product.price}
-              </span>
-              <a
-                href={getWhatsAppUrl(WHATSAPP_MESSAGES.product(product.name))}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Consultar disponibilidad para adquirir ${product.name} por WhatsApp`}
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold bg-surface-muted hover:bg-primary hover:text-white text-secondary border border-secondary/15 transition-all active:scale-95 group/btn shadow-xs hover:shadow-md"
+                <ul className="mt-8 border-t border-text-primary/15">
+                  {c.items.map((item) => {
+                    const [titulo, detalle] = item.split(" — ");
+                    return (
+                      <li
+                        key={item}
+                        className="py-3.5 border-b border-text-primary/10 flex gap-4"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 w-1.5 h-1.5 rotate-45 bg-primary/60 shrink-0"
+                        />
+                        <span className="text-sm sm:text-[15px] text-text-primary">
+                          {titulo}
+                          {detalle && (
+                            <span className="block text-xs sm:text-sm text-text-secondary mt-0.5">
+                              {detalle}
+                            </span>
+                          )}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <a
+                  href={getWhatsAppUrl(WHATSAPP_MESSAGES.product(c.nombre))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Consultar por ${c.nombre} en WhatsApp (abre en nueva pestaña)`}
+                  className="group mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-text-primary hover:text-primary transition-colors"
+                >
+                  <span className="border-b border-current pb-1">
+                    Consultar disponibilidad
+                  </span>
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      {/* Vivencias: bloque oscuro */}
+      <section
+        aria-labelledby="vivencias-titulo"
+        className="relative overflow-hidden bg-text-primary text-white"
+      >
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(154,46,101,0.45),transparent_55%),radial-gradient(circle_at_90%_100%,rgba(82,59,104,0.6),transparent_50%)]"
+        />
+        <div className="relative max-w-7xl mx-auto px-6 py-20 sm:py-28 space-y-24">
+          <div className="grid lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-16 items-end">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.35em] text-primary-soft/80 font-semibold">
+                Vivencias &amp; más
+              </p>
+              <h2
+                id="vivencias-titulo"
+                className="mt-5 font-serif text-4xl sm:text-6xl font-bold tracking-tight leading-[0.95]"
               >
-                <ShoppingBag className="w-3.5 h-3.5 text-primary group-hover/btn:text-white" />
-                <span>Adquirir</span>
-              </a>
+                Hablando
+                <span className="block italic font-normal text-primary-soft">
+                  con mis obras
+                </span>
+              </h2>
+            </div>
+            <p className="text-sm sm:text-base text-white/65 leading-relaxed max-w-md">
+              Una serie de cuatro episodios donde Caroline se sienta frente a
+              sus piezas y cuenta lo que cada una tiene para decir.
+            </p>
+          </div>
+
+          <SerieEpisodios serie="Hablando con mis obras" episodios={EPISODIOS} />
+
+          <div className="space-y-10">
+            <h3 className="font-serif text-2xl sm:text-3xl border-t border-white/15 pt-10">
+              Desde el taller
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-8 max-w-3xl">
+              {VIVENCIAS.map((v) => (
+                <figure key={v.src} className="space-y-4">
+                  <div className="aspect-[9/16] max-h-[560px] mx-auto overflow-hidden rounded-[1.5rem] bg-black ring-1 ring-white/15">
+                    <video
+                      src={`${v.src}#t=0.5`}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      aria-label={v.titulo}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <figcaption>
+                    <span className="block font-serif text-xl">{v.titulo}</span>
+                    <span className="block text-sm text-white/55 mt-1">
+                      {v.texto}
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

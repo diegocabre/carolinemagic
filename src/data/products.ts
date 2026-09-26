@@ -1,42 +1,83 @@
-export interface Product {
+/**
+ * Colecciones de la Galería & Tienda. Cuando lleguen las fotos, deja el
+ * archivo en /public/images/galeria/ y completa `imagen` (ej:
+ * "/images/galeria/arte.jpeg"). Mientras no haya foto se muestra un
+ * marcador elegante con el número de la colección.
+ */
+export interface Coleccion {
   id: string;
-  name: string;
-  category: "Barajas de Autor" | "Obras Originales" | "Talismanes";
-  price: string;
-  description: string;
-  badge?: string;
-  imageAlt: string;
+  nombre: string;
+  emoji: string;
+  bajada: string;
+  items: string[];
+  imagen?: string;
 }
 
-export const products: Product[] = [
+export const colecciones: Coleccion[] = [
   {
-    id: "oraculo-velo-violeta",
-    name: "El Oráculo del Velo Violeta",
-    category: "Barajas de Autor",
-    price: "$58 USD",
-    badge: "Edición Limitada",
-    description:
-      "Mazo de 44 cartas impreso en papel de algodón de 400g con bordes laminados en magenta holográfico y libro guía encuadernado en tela.",
-    imageAlt: "Baraja de autor con tonalidades amatista y magenta",
+    id: "arte",
+    nombre: "Arte Caroline Magic",
+    emoji: "🎨",
+    bajada: "Para todas tus creaciones artísticas.",
+    items: [
+      "Obras Originales — cuadros y piezas únicas",
+      "Arte Canalizado — obras creadas desde procesos intuitivos y espirituales",
+      "Mini Obras — pequeños formatos para altares, espacios personales y regalos",
+      "Arte Digital — piezas digitales y obras personalizadas cuando estén disponibles",
+    ],
   },
   {
-    id: "obra-emperatriz-cosmica",
-    name: "La Emperatriz Cósmica (Óleo & Pan de Oro)",
-    category: "Obras Originales",
-    price: "$420 USD",
-    badge: "Pieza Única",
-    description:
-      "Pintura canalizada de 60x80cm. Pigmentos orgánicos, amatista pulverizada y hojas de oro de 24k sobre lienzo de lino curado.",
-    imageAlt: "Pintura mística con la figura de la Emperatriz cósmica",
+    id: "tarot-oraculos",
+    nombre: "Tarot & Oráculos",
+    emoji: "🔮",
+    bajada:
+      "Una categoría propia, porque es parte fuerte del universo creativo Caroline Magic.",
+    items: [
+      "Oráculos Caroline Magic",
+      "Tarot Caroline Magic",
+      "Ediciones especiales",
+      "Sets y complementos para lectura",
+    ],
   },
   {
-    id: "talisman-obsidiana-sagrada",
-    name: "Talismán de Obsidiana Dorada & Cobre Alquímico",
-    category: "Talismanes",
-    price: "$95 USD",
-    badge: "Consagrado",
-    description:
-      "Amuleto protector forjado a mano durante luna llena. Canaliza la energía de enraizamiento y protección psíquica profunda.",
-    imageAlt: "Talismán de piedra obsidiana engarzada a mano",
+    id: "tienda-ritual",
+    nombre: "Tienda Ritual",
+    emoji: "🕯️",
+    bajada: "Productos físicos creados para acompañar prácticas personales.",
+    items: [
+      "Velas rituales",
+      "Baños rituales",
+      "Sahumerios e inciensos",
+      "Hierbas y preparados",
+      "Cristales / piedras",
+      "Kits rituales",
+    ],
+  },
+  {
+    id: "box",
+    nombre: "Box Caroline Magic",
+    emoji: "🎁",
+    bajada:
+      "Productos que combinan varias piezas y funcionan muy bien también como regalo.",
+    items: [
+      "Box Rituales",
+      "Box por intención",
+      "Box de limpieza",
+      "Box abundancia / abre caminos",
+      "Box amor propio y vínculos",
+      "Ediciones especiales y estacionales",
+    ],
+  },
+  {
+    id: "objetos-con-arte",
+    nombre: "Objetos con Arte",
+    emoji: "🧉",
+    bajada: "La parte más artesanal del trabajo de Caroline.",
+    items: [
+      "Mates pintados a mano",
+      "Objetos decorativos",
+      "Piezas intervenidas",
+      "Ediciones únicas Caroline Magic",
+    ],
   },
 ];
