@@ -20,6 +20,9 @@ export interface Coleccion {
 
 const ARTE = "/images/galeria/arte";
 const TAROT = "/images/galeria/tarotyoraculo";
+const TIENDA = "/images/galeria/tienda";
+const BOX = "/images/galeria/box";
+const OBJETOS = "/images/galeria/objetosconarte";
 
 export const colecciones: Coleccion[] = [
   {
@@ -74,6 +77,12 @@ export const colecciones: Coleccion[] = [
       "Cristales / piedras",
       "Kits rituales",
     ],
+    fotos: [
+      { src: `${TIENDA}/velas-rituales.jpeg`, titulo: "Velas Rituales" },
+      { src: `${TIENDA}/banos-rituales.jpeg`, titulo: "Baños Rituales" },
+      { src: `${TIENDA}/sahumerios-inciensos.jpeg`, titulo: "Sahumerios e Inciensos" },
+      { src: `${TIENDA}/hierbas-preparados.jpeg`, titulo: "Hierbas y Preparados" },
+    ],
   },
   {
     id: "box",
@@ -89,6 +98,10 @@ export const colecciones: Coleccion[] = [
       "Box amor propio y vínculos",
       "Ediciones especiales y estacionales",
     ],
+    fotos: [
+      { src: `${BOX}/boxs-rituales.jpeg`, titulo: "Box Rituales" },
+      { src: `${BOX}/box-tarot.jpeg`, titulo: "Box Tarot" },
+    ],
   },
   {
     id: "objetos-con-arte",
@@ -100,6 +113,10 @@ export const colecciones: Coleccion[] = [
       "Objetos decorativos",
       "Piezas intervenidas",
       "Ediciones únicas Caroline Magic",
+    ],
+    fotos: [
+      { src: `${OBJETOS}/mates-artesanales.jpeg`, titulo: "Mates Artesanales" },
+      { src: `${OBJETOS}/objetos-decorativos.jpeg`, titulo: "Objetos Decorativos" },
     ],
   },
 ];
