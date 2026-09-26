@@ -1,8 +1,8 @@
 import SerieEpisodios, { Episodio } from "@/components/SerieEpisodios";
+import VisorColeccion from "@/components/VisorColeccion";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { colecciones } from "@/data/products";
 import { ArrowUpRight } from "lucide-react";
-import Image from "next/image";
 
 const VIDEOS = "/images/galeria/videos";
 
@@ -83,14 +83,8 @@ export default function GaleriaTiendaPage() {
               {/* Foto */}
               <div className={`relative ${invertida ? "md:order-2" : ""}`}>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[2px] bg-gradient-to-br from-surface-container via-primary-soft to-surface-soft">
-                  {c.imagen ? (
-                    <Image
-                      src={c.imagen}
-                      alt={c.nombre}
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-[1.03]"
-                    />
+                  {c.fotos?.length ? (
+                    <VisorColeccion fotos={c.fotos} nombre={c.nombre} />
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                       <span
@@ -112,7 +106,7 @@ export default function GaleriaTiendaPage() {
                 />
                 <span
                   aria-hidden="true"
-                  className={`absolute -top-8 sm:-top-10 font-serif italic text-7xl sm:text-8xl text-primary/15 select-none ${invertida ? "right-2" : "left-2"}`}
+                  className={`absolute z-10 -top-8 sm:-top-10 font-serif italic text-7xl sm:text-8xl text-primary/15 select-none ${invertida ? "right-2" : "left-2"}`}
                 >
                   {numero}
                 </span>

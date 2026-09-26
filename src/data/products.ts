@@ -1,17 +1,25 @@
 /**
- * Colecciones de la Galería & Tienda. Cuando lleguen las fotos, deja el
- * archivo en /public/images/galeria/ y completa `imagen` (ej:
- * "/images/galeria/arte.jpeg"). Mientras no haya foto se muestra un
- * marcador elegante con el número de la colección.
+ * Colecciones de la Galería & Tienda. Las fotos viven en
+ * /public/images/galeria/<carpeta>/ y se listan en `fotos`: si hay varias,
+ * rotan solas. Mientras no haya fotos se muestra un marcador elegante con
+ * el emoji de la colección.
  */
+export interface FotoColeccion {
+  src: string;
+  titulo: string;
+}
+
 export interface Coleccion {
   id: string;
   nombre: string;
   emoji: string;
   bajada: string;
   items: string[];
-  imagen?: string;
+  fotos?: FotoColeccion[];
 }
+
+const ARTE = "/images/galeria/arte";
+const TAROT = "/images/galeria/tarotyoraculo";
 
 export const colecciones: Coleccion[] = [
   {
@@ -25,6 +33,12 @@ export const colecciones: Coleccion[] = [
       "Mini Obras — pequeños formatos para altares, espacios personales y regalos",
       "Arte Digital — piezas digitales y obras personalizadas cuando estén disponibles",
     ],
+    fotos: [
+      { src: `${ARTE}/obras-originales.jpeg`, titulo: "Obras Originales" },
+      { src: `${ARTE}/arte-canalizado.jpeg`, titulo: "Arte Canalizado" },
+      { src: `${ARTE}/mini-obras.jpeg`, titulo: "Mini Obras" },
+      { src: `${ARTE}/arte-digital.jpeg`, titulo: "Arte Digital" },
+    ],
   },
   {
     id: "tarot-oraculos",
@@ -37,6 +51,14 @@ export const colecciones: Coleccion[] = [
       "Tarot Caroline Magic",
       "Ediciones especiales",
       "Sets y complementos para lectura",
+    ],
+    fotos: [
+      { src: `${TAROT}/tarots.jpeg`, titulo: "Tarots Caroline Magic" },
+      { src: `${TAROT}/lenormand.jpeg`, titulo: "Tarot Lenormand" },
+      { src: `${TAROT}/guias.jpeg`, titulo: "Oráculo Guías Espirituales" },
+      { src: `${TAROT}/constelaciones.jpeg`, titulo: "Oráculo Constelaciones Mágicas" },
+      { src: `${TAROT}/mensajes.jpeg`, titulo: "Oráculo Mensajes del Universo" },
+      { src: `${TAROT}/mensajes-cuadrada.jpeg`, titulo: "Oráculo Mensajes del Universo" },
     ],
   },
   {
