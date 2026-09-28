@@ -28,7 +28,7 @@ export default function WhatsAppButton() {
         </span>
         <div className="flex flex-col">
           <span className="text-xs font-serif font-bold text-text-primary leading-tight">
-            Consulta con Selene
+            Consulta con Hécate
           </span>
           <span className="text-[10px] text-text-muted tracking-wide font-sans">
             Guía & Soporte Místico
@@ -41,7 +41,7 @@ export default function WhatsAppButton() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Consulta con Selene vía WhatsApp (abre en nueva pestaña)"
+        aria-label="Consulta con Hécate vía WhatsApp (abre en nueva pestaña)"
         aria-describedby="whatsapp-tooltip"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -58,7 +58,7 @@ export default function WhatsAppButton() {
         {/* Pequeña insignia de misticismo */}
         <span
           className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold shadow-sm border border-white"
-          title="Caroline Magic"
+          title="Hécate Magic"
           aria-hidden="true"
         >
           ✦
