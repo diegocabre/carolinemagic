@@ -7,8 +7,12 @@ import {
   verifyAdminCredentials,
 } from "@/lib/adminAuth";
 import { getDailyCard, saveDailyCard } from "@/lib/dailyCard";
-import { actualizarEstado } from "@/lib/derechos/registro";
-import { ESTADOS_SOLICITUD, type EstadoSolicitud } from "@/lib/derechos/schema";
+import { actualizarEstado, crearRegistro } from "@/lib/derechos/registro";
+import {
+  esCanalSolicitud,
+  esEstadoSolicitud,
+  esTipoSolicitud,
+} from "@/lib/derechos/schema";
 import { clientIp, isSameOrigin } from "@/lib/security/origin";
 import {
   consultarLimite,
@@ -207,8 +211,61 @@ export async function actualizarEstadoSolicitudAction(formData: FormData): Promi
   const id = formData.get("id");
   const estado = formData.get("estado");
   if (typeof id !== "string" || !/^SOL-\d{8}-[0-9A-F]{6}$/.test(id)) return;
-  if (typeof estado !== "string" || !(estado in ESTADOS_SOLICITUD)) return;
+  if (typeof estado !== "string" || !esEstadoSolicitud(estado)) return;
 
-  await actualizarEstado(id, estado as EstadoSolicitud);
+  await actualizarEstado(id, estado);
   revalidatePath("/admin");
+}
+
+export interface RegistrarSolicitudState {
+  error?: string;
+  id?: string;
+}
+
+const DIA_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Registra una solicitud de derechos recibida por WhatsApp, correo u otro
+ * canal. Solo guarda tipo, canal y fecha (sin datos personales).
+ */
+export async function registrarSolicitudAction(
+  _prev: RegistrarSolicitudState,
+  formData: FormData,
+): Promise<RegistrarSolicitudState> {
+  if (!isSameOrigin(await headers())) return { error: ERROR_ORIGEN };
+  if (!(await hasValidAdminSession())) {
+    return { error: "Tu sesión expiró. Vuelve a iniciar sesión." };
+  }
+
+  const tipo = formData.get("tipo");
+  const canal = formData.get("canal");
+  const fecha = formData.get("recibidaEn");
+  if (typeof tipo !== "string" || !esTipoSolicitud(tipo)) {
+    return { error: "Elige el tipo de solicitud." };
+  }
+  if (typeof canal !== "string" || !esCanalSolicitud(canal)) {
+    return { error: "Elige el canal por el que llegó." };
+  }
+  if (typeof fecha !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    return { error: "Indica la fecha en que se recibió." };
+  }
+  // Mediodía en Chile, para que la fecha no cambie por zona horaria.
+  const recibidaEn = new Date(`${fecha}T12:00:00-04:00`);
+  const ahora = Date.now();
+  if (
+    Number.isNaN(recibidaEn.getTime()) ||
+    recibidaEn.getTime() > ahora + DIA_MS ||
+    recibidaEn.getTime() < ahora - 365 * DIA_MS
+  ) {
+    return { error: "La fecha debe ser de los últimos 12 meses." };
+  }
+
+  try {
+    const registro = await crearRegistro(tipo, canal, recibidaEn);
+    revalidatePath("/admin");
+    return { id: registro.id };
+  } catch (error) {
+    console.error("[admin] No se pudo registrar la solicitud:", error);
+    return { error: "No se pudo guardar. Revisa la conexión con Upstash." };
+  }
 }

@@ -14,8 +14,8 @@ Revisión de cumplimiento: **trimestral** (primer lunes de enero, abril, julio y
 | Contadores de rate limit (IP/correo con hash) | Upstash | ≤ 1 hora | TTL de @upstash/ratelimit | Sí |
 | Preferencia de cookies `cm_consent` | Navegador | 180 días | Expira la cookie | Sí |
 | Datos de Microsoft Clarity | Microsoft | ≈30 días grabaciones; hasta 13 meses agregados (según Microsoft) | Microsoft | Sí |
-| Registro mínimo de solicitudes de derechos (id, tipo, fechas, estado) | Upstash | 3 años desde la última actualización (propuesta) | TTL de Redis | Sí |
-| Correos de solicitudes de derechos | Bandeja de privacidad | 2 años desde el cierre (propuesta) | Borrado manual en revisión trimestral | No |
+| Registro mínimo de solicitudes de derechos (id, tipo, canal, fechas, estado) | Upstash | 3 años desde la última actualización (propuesta) | TTL de Redis | Sí |
+| Mensajes de solicitudes de derechos | WhatsApp / bandeja de privacidad | 2 años desde el cierre (propuesta) | Borrado manual en revisión trimestral | No |
 | Conversaciones de WhatsApp | Teléfono / WhatsApp | 12 meses desde el último contacto (propuesta) | Borrar chat (y copias de seguridad de WhatsApp en Google Drive/iCloud) | No |
 | Grabaciones de sesiones | TODO(diego) | Copia propia: 30 días después de entregada (propuesta) | Borrado definitivo (incluida papelera y nube) | No |
 | Mapas PDF y notas de sesión | TODO(diego) | Propuesta: 12 meses o lo que dure el proceso con el cliente | Borrado definitivo | No |

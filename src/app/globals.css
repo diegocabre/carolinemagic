@@ -168,6 +168,15 @@ body {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+.legal-prose a.legal-boton {
+  text-decoration: none;
+}
+.legal-prose a.legal-boton.text-white {
+  color: #fff;
+}
+.legal-prose a.legal-boton.text-secondary {
+  color: var(--color-secondary);
+}
 .legal-prose table {
   width: 100%;
   border-collapse: collapse;

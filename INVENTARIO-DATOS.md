@@ -52,7 +52,7 @@ Leyenda — **Sale de Chile**: Sí = el dato se almacena o procesa fuera de Chil
 | W6 | Cookie de sesión admin `cm_admin_session` (correo del admin, id de sesión, expiración, firma HMAC) | Navegador de Caroline | Mantener la sesión del panel | Estrictamente necesaria | Navegador; id de sesión en Upstash Redis (tras esta rama) | Upstash (encargado) | 12 h deslizantes, máx. 3 días (tras esta rama; antes 7 días) | Sí (según región de Upstash) |
 | W7 | IP + correo intentado en el login (para rate limit) | `/admin/login` (tras esta rama) | Prevenir fuerza bruta | Interés legítimo (seguridad) | Upstash Redis, claves con hash | Upstash (encargado) | ≤ 1 hora (TTL) | Según región de Upstash |
 | W8 | Fotos y texto de la "Sincronicidad del día" | `/admin` → `/api/admin/blob-upload` | Publicar contenido | No son datos de visitantes. Son contenido de Caroline. **Riesgo:** si una foto muestra a terceros o metadatos EXIF (GPS) | Vercel Blob (público) | Vercel; cualquier visitante | Hasta que se reemplace/elimine | Sí |
-| W9 | Formulario de derechos (`/derechos-datos`, **nuevo en esta rama**): tipo de solicitud, nombre, correo, teléfono opcional, detalle | Formulario | Atender derechos del titular y acreditar plazos | Obligación legal | Correo del responsable (vía Resend) + registro mínimo **sin datos de contacto** en Upstash (id, fecha, tipo, estado) | Resend (encargado), Upstash (encargado) | Ver `docs/cumplimiento/POLITICA-RETENCION.md` | Sí |
+| W9 | Solicitudes de derechos (**nuevo**): llegan por WhatsApp o correo, no hay formulario | `/derechos-datos` enlaza a WhatsApp y `mailto:` | Atender derechos del titular y acreditar plazos | Obligación legal | Conversación original (WhatsApp/correo) + registro mínimo **sin datos de contacto** en Upstash (id, fecha, tipo, canal, estado), creado a mano en `/admin` | Meta (WhatsApp), proveedor de correo, Upstash (encargado) | Ver `docs/cumplimiento/POLITICA-RETENCION.md` | Sí |
 | W10 | Preferencia de cookies `cm_consent` (**nuevo**) | Banner de cookies | Recordar la elección | Estrictamente necesaria | Navegador | Nadie | 180 días | No |
 
 ### 2.2 Fuera del sitio, pero parte del servicio (el sitio dirige a estos canales)
@@ -82,7 +82,7 @@ situación familiar, duelos.
 | Mensajes predefinidos de WhatsApp | **Sí, indirectamente.** El texto `"Hola, quiero solicitar un ritual de: Salud & Bienestar"` o `"Amor & Vínculos"` revela un interés en salud/vida afectiva. Viaja en la URL a `wa.me` y luego queda en la conversación. | Medio. Recomendación: usar un texto neutro para rituales/sesiones de temas sensibles (p. ej. "quiero información sobre un ritual") y que la persona decida cuánto contar. **No se cambió el copy comercial sin consultarte.** |
 | `orientacionSesion`: "Quiero contarles qué estoy viviendo" | Invita a compartir el motivo por WhatsApp | Alto en el canal WhatsApp (fuera del sitio). |
 | Microsoft Clarity | Graba la sesión de navegación: qué servicios mira la persona (p. ej. "Salud & Bienestar", "Pareja Ideal"). Si hubiera campos de texto, podría capturarlos. | Alto antes de esta rama (sin consentimiento). Mitigado: solo carga con consentimiento, nunca en `/admin` ni `/derechos-datos`, y el formulario se marca con `data-clarity-mask`. Configurar enmascaramiento "Strict" en el panel de Clarity (acción manual). |
-| Formulario `/derechos-datos` (nuevo) | El campo "detalle" podría recibir datos sensibles | Bajo/medio. El formulario pide explícitamente no incluir datos de salud ni documentos. |
+| Solicitudes de derechos (WhatsApp/correo) | El sitio no recibe el contenido; la persona podría incluir datos sensibles en su mensaje | Bajo. La página pide no enviar datos de salud ni documentos. |
 | Zoom, grabaciones, PDF (fuera del sitio) | No | **Alto**: es donde más datos sensibles se tratan. |
 
 **Principio adoptado:** el sitio **no solicita** datos sensibles. Lo que la persona decida contar por WhatsApp o en sesión
@@ -90,7 +90,7 @@ queda bajo su decisión, se trata con confidencialidad y solo para prestar el se
 
 ## 4. Menores de edad
 
-- El sitio no verifica edad en ningún punto (no hay formularios, salvo el nuevo de derechos).
+- El sitio no verifica edad en ningún punto (no hay formularios públicos).
 - Un menor puede tocar un botón de WhatsApp y escribir. El contenido (tarot, rituales de amor/salud, constelaciones) no está dirigido a menores.
 - Mitigaciones: Términos y Política declaran que el servicio es para mayores de 18 años y que un menor requiere autorización de sus representantes;
   recomendación operacional: preguntar la edad al agendar por WhatsApp y no atender a menores sin autorización (acción manual).
@@ -111,6 +111,6 @@ queda bajo su decisión, se trata con confidencialidad y solo para prestar el se
 
 `ADMIN_EMAIL`, `ADMIN_PASSWORD` (deprecada en esta rama), `ADMIN_PASSWORD_HASH` (nueva), `ADMIN_AUTH_SECRET`,
 `NEXT_PUBLIC_WHATSAPP_NUMBER`, `BLOB_READ_WRITE_TOKEN` (la usa `@vercel/blob` implícitamente),
-`UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `RESEND_API_KEY`, `LEGAL_EMAIL_FROM` (nuevas).
+`UPSTASH_REDIS_REST_URL`/`UPSTASH_REDIS_REST_TOKEN` o `KV_REST_API_URL`/`KV_REST_API_TOKEN` (nuevas; la base de Upstash se comparte con otro proyecto y las claves llevan prefijo `cm:`).
 
 Historial de git: `git log --all --full-history -- '.env*'` no devuelve commits → **ningún archivo `.env*` se ha subido nunca**.

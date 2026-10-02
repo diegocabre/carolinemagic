@@ -117,10 +117,10 @@ export default function PrivacidadPage() {
             <td>Cuando pagas un servicio por transferencia u otro medio.</td>
           </tr>
           <tr>
-            <td>Nombre, correo, teléfono y detalle de tu solicitud.</td>
+            <td>Nombre, contacto y detalle de tu solicitud de derechos.</td>
             <td>
-              Cuando usas el formulario de{" "}
-              <Link href="/derechos-datos">ejercicio de derechos</Link>.
+              Cuando nos escribes para{" "}
+              <Link href="/derechos-datos">ejercer tus derechos</Link>.
             </td>
           </tr>
         </tbody>
@@ -232,11 +232,6 @@ export default function PrivacidadPage() {
             <td>Según la región contratada</td>
           </tr>
           <tr>
-            <td>Resend Inc.</td>
-            <td>Envío de correos del formulario de derechos.</td>
-            <td>Estados Unidos</td>
-          </tr>
-          <tr>
             <td>Microsoft Corporation (Clarity)</td>
             <td>Analítica del sitio, solo si la aceptas.</td>
             <td>Estados Unidos</td>
@@ -282,9 +277,10 @@ export default function PrivacidadPage() {
         </li>
         <li>Datos de pago y boletas: 6 años, por obligaciones tributarias.</li>
         <li>
-          Solicitudes de derechos: el correo con tu solicitud, 2 años; el
-          registro mínimo (fecha, tipo y estado, sin tus datos de contacto),
-          3 años, para acreditar que respondimos a tiempo.
+          Solicitudes de derechos: el mensaje con tu solicitud, 2 años desde
+          que la cerramos; el registro mínimo (fecha, tipo, canal y estado, sin
+          tus datos de contacto), 3 años, para acreditar que respondimos a
+          tiempo.
         </li>
       </ul>
 
@@ -300,9 +296,9 @@ export default function PrivacidadPage() {
         <li><strong>Retirar tu consentimiento</strong> cuando sea la base del tratamiento, sin afectar lo hecho antes.</li>
       </ul>
       <p>
-        Para ejercerlos, usa el{" "}
-        <Link href="/derechos-datos">formulario de derechos</Link> o escríbenos
-        a <CorreoLegal valor={LEGAL.emailPrivacidad} />. Podemos pedirte
+        Para ejercerlos, escríbenos por WhatsApp o a{" "}
+        <CorreoLegal valor={LEGAL.emailPrivacidad} />. En{" "}
+        <Link href="/derechos-datos">esta página</Link> te explicamos cómo. Podemos pedirte
         información razonable para confirmar tu identidad.
       </p>
       <p>

@@ -43,6 +43,8 @@ export const WHATSAPP_MESSAGES = {
     "Hola, quiero diseñar un ritual o ceremonia personalizada con Caroline.",
   orientacionSesion:
     "Hola, no sé qué sesión de Caroline Magic elegir. Quiero contarles qué estoy viviendo para que me orienten.",
+  derechosDatos:
+    "Hola, quiero ejercer mis derechos sobre mis datos personales. Tipo de solicitud (acceso, corrección, eliminación u otra): ",
   service: (serviceTitle: string) =>
     `Hola, quiero ver precios y agendar la lectura: ${serviceTitle}`,
   sesion: (nombreSesion: string) =>

@@ -3,13 +3,13 @@ import crypto from "node:crypto";
 
 /**
  * Almacén clave-valor para datos de seguridad de vida corta (sesiones admin,
- * contadores de intentos y registro mínimo de solicitudes de derechos).
+ * contadores de intentos) y el registro mínimo de solicitudes de derechos.
  *
  * - Con UPSTASH_REDIS_REST_URL/TOKEN (o KV_REST_API_URL/TOKEN, los nombres
  *   que usa la integración de Vercel) → Upstash Redis.
  * - En desarrollo sin esas variables → memoria del proceso (con aviso).
  * - En producción sin esas variables → `null`: quien lo use debe fallar de
- *   forma segura (rechazar el login, no aceptar el formulario, etc.).
+ *   forma segura (rechazar el login, no registrar solicitudes, etc.).
  *
  * La base de Upstash se comparte con otro proyecto: todas las claves llevan
  * el prefijo `KEY_PREFIX` para que nunca choquen.

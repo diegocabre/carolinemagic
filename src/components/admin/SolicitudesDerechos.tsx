@@ -1,6 +1,11 @@
+import RegistrarSolicitudForm from "@/components/admin/RegistrarSolicitudForm";
 import { actualizarEstadoSolicitudAction } from "@/lib/actions/admin";
 import { listarRegistros, type RegistroSolicitud } from "@/lib/derechos/registro";
-import { ESTADOS_SOLICITUD, TIPOS_SOLICITUD } from "@/lib/derechos/schema";
+import {
+  CANALES_SOLICITUD,
+  ESTADOS_SOLICITUD,
+  TIPOS_SOLICITUD,
+} from "@/lib/derechos/schema";
 
 function fecha(iso: string): string {
   return new Date(iso).toLocaleDateString("es-CL", { timeZone: "America/Santiago" });
@@ -12,7 +17,7 @@ function cerrada(r: RegistroSolicitud): boolean {
 
 /**
  * Registro de solicitudes de derechos (sin datos personales: el detalle está
- * en el correo de privacidad, buscando por el número de solicitud).
+ * en la conversación de WhatsApp o el correo original).
  */
 export default async function SolicitudesDerechos() {
   let registros: RegistroSolicitud[] = [];
@@ -31,10 +36,13 @@ export default async function SolicitudesDerechos() {
           Solicitudes de derechos
         </h2>
         <p className="text-xs text-text-secondary">
-          Busca el detalle en el correo de privacidad con el número de
-          solicitud. Actualiza el estado al responder para acreditar plazos.
+          Cuando alguien pida acceder, corregir o borrar sus datos (por
+          WhatsApp o correo), regístralo aquí: el panel calcula el plazo de
+          respuesta. Actualiza el estado al responder.
         </p>
       </div>
+
+      <RegistrarSolicitudForm />
 
       {error && (
         <p className="text-xs text-red-600">No se pudo leer el registro (revisa Upstash).</p>
@@ -55,7 +63,8 @@ export default async function SolicitudesDerechos() {
                 </span>
               </div>
               <p className="text-text-secondary">
-                {TIPOS_SOLICITUD[r.tipo]} · recibida {fecha(r.recibidaEn)}
+                {TIPOS_SOLICITUD[r.tipo]} · {CANALES_SOLICITUD[r.canal] ?? "—"} ·
+                recibida {fecha(r.recibidaEn)}
               </p>
               <form action={actualizarEstadoSolicitudAction} className="flex gap-2">
                 <input type="hidden" name="id" value={r.id} />

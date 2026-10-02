@@ -7,18 +7,18 @@
 
 **Responsable del protocolo:** TODO(diego): nombre, teléfono, correo.
 **Suplente:** TODO(diego).
-**Soporte técnico:** TODO(diego): quién tiene acceso a Vercel, Upstash, Resend, GitHub.
+**Soporte técnico:** TODO(diego): quién tiene acceso a Vercel, Upstash, GitHub.
 
 ---
 
 ## 1. Detección (hora 0)
 
 Qué cuenta como incidente: acceso no autorizado, pérdida, robo, divulgación o alteración de datos personales. Por ejemplo:
-- Alguien entró al panel admin o a Vercel/GitHub/Upstash/Resend sin autorización.
-- Se filtró un secreto (`ADMIN_AUTH_SECRET`, `BLOB_READ_WRITE_TOKEN`, `UPSTASH_*`, `RESEND_API_KEY`).
+- Alguien entró al panel admin o a Vercel/GitHub/Upstash sin autorización.
+- Se filtró un secreto (`ADMIN_AUTH_SECRET`, `BLOB_READ_WRITE_TOKEN`, `KV_REST_API_TOKEN`). **La base de Upstash se comparte con otro proyecto: si se filtra su token, rotarlo y actualizarlo en ambos.**
 - Robo o pérdida del teléfono con las conversaciones de WhatsApp o del computador con grabaciones.
 - Se envió por error una grabación o un PDF a otra persona.
-- Un proveedor (Vercel, Meta, Zoom, Microsoft, Resend, Upstash) avisa de una brecha.
+- Un proveedor (Vercel, Meta, Zoom, Microsoft, Upstash) avisa de una brecha.
 
 **Acción:** anotar de inmediato en el registro de incidentes (sección 6) la hora, quién lo detectó y qué se observó. No borrar evidencia.
 
@@ -27,8 +27,8 @@ Qué cuenta como incidente: acceso no autorizado, pérdida, robo, divulgación o
 - [ ] Rotar secretos afectados en Vercel y redeploy:
   - `ADMIN_AUTH_SECRET` (invalida todas las sesiones del panel).
   - Nueva clave: `npm run admin:hash` → `ADMIN_PASSWORD_HASH`.
-  - `BLOB_READ_WRITE_TOKEN`, `UPSTASH_REDIS_REST_TOKEN`, `RESEND_API_KEY` desde cada proveedor.
-- [ ] Cambiar contraseñas y activar 2FA en Vercel, GitHub, Upstash, Resend, Meta/WhatsApp, Zoom, correo.
+  - `BLOB_READ_WRITE_TOKEN` y el token de Upstash desde cada proveedor.
+- [ ] Cambiar contraseñas y activar 2FA en Vercel, GitHub, Upstash, Meta/WhatsApp, Zoom, correo.
 - [ ] Cerrar sesiones activas en WhatsApp Web / dispositivos vinculados.
 - [ ] Si un archivo público en Blob expuso datos: eliminarlo.
 - [ ] Teléfono perdido: borrado remoto, bloqueo de la SIM, recuperar WhatsApp en otro equipo.

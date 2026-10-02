@@ -14,12 +14,11 @@
 | Política de Privacidad | `src/app/privacidad/page.tsx` | Sí | Datos del responsable; lista real de proveedores (Zoom, almacenamiento de grabaciones, banco); plazos de conservación; si se graban sesiones y cómo se entregan |
 | Política de Cookies | `src/app/cookies/page.tsx` | Sí | Mantener o no Microsoft Clarity |
 | Términos y Condiciones | `src/app/terminos/page.tsx` | Sí | Proceso de reserva y pago; **política de cancelación y reprogramación** (hoy con valores `[TODO]`); régimen tributario (IVA / boleta de honorarios); medios de pago; retracto |
-| Página de derechos + formulario | `src/app/derechos-datos/page.tsx`, `src/components/legal/DerechosForm.tsx` | Sí | Procedimiento de verificación de identidad; plazos |
+| Página de derechos (canales WhatsApp y correo, sin formulario) | `src/app/derechos-datos/page.tsx` | Sí | Procedimiento de verificación de identidad; plazos |
 | Página de seguridad | `src/app/seguridad/page.tsx` | Sí | Plazo de acuse (5 días hábiles) |
 | Aviso junto a WhatsApp | `src/components/legal/AvisoWhatsApp.tsx`, `src/components/WhatsAppButton.tsx` | Sí | — |
 | Banner de cookies | `src/components/consent/ConsentBanner.tsx` | Sí | — |
 | Casillas de consentimiento | `src/components/legal/ConsentCheckbox.tsx` | Sí | Textos de finalidad de futuros formularios |
-| Correos de acuse | `src/lib/derechos/email.ts` | Sí (correo) | — |
 | Documentos internos | `docs/cumplimiento/*.md` | No | Responsable de privacidad y de incidentes; plazos |
 
 Datos del responsable centralizados en `src/config/legal.ts` (hoy con `TODO(diego)`; `next build` lo advierte).
@@ -32,8 +31,8 @@ Datos del responsable centralizados en `src/config/legal.ts` (hoy con `TODO(dieg
 3. **Datos sensibles:** el motivo de consulta (salud, vida afectiva, creencias) llega por WhatsApp o en sesión. ¿Basta con el principio "no los pedimos; si los compartes, es tu decisión" o se requiere un **consentimiento expreso y por escrito** antes de la sesión? ¿Cómo documentarlo de forma práctica (p. ej. mensaje de WhatsApp con aceptación)?
 4. **Grabaciones de sesiones:** ¿qué consentimiento se necesita para grabar y conservar el audio? ¿Plazo razonable de conservación?
 5. **Plazos de respuesta** a solicitudes de derechos bajo la Ley 21.719 (el sitio dice 30 días corridos prorrogables una vez por 30). ¿Correcto? ¿Y mientras rige la Ley 19.628?
-6. **Verificación de identidad:** ¿es razonable el procedimiento propuesto (escribir desde el mismo WhatsApp/correo; no pedir cédula por el sitio)?
-7. **Transferencias internacionales** (Vercel, Microsoft, Meta, Zoom, Resend, Upstash — EE. UU.): ¿qué mecanismo exige la Ley 21.719 (cláusulas tipo de la Agencia, consentimiento, garantías del proveedor)? ¿Bastan los DPA estándar?
+6. **Verificación de identidad:** ¿es razonable el procedimiento propuesto (escribir desde el mismo WhatsApp/correo; no pedir cédula por el sitio)? ¿Basta WhatsApp/correo como canal de ejercicio de derechos, sin formulario web?
+7. **Transferencias internacionales** (Vercel, Microsoft, Meta, Zoom, Upstash — EE. UU.): ¿qué mecanismo exige la Ley 21.719 (cláusulas tipo de la Agencia, consentimiento, garantías del proveedor)? ¿Bastan los DPA estándar?
 8. **Notificación de brechas:** plazos y contenido mínimo para la Agencia y los titulares (ver `PROTOCOLO-BRECHAS-SEGURIDAD.md`).
 9. ¿Debe designarse un **delegado de protección de datos** o basta con una persona de contacto?
 10. **Menores:** ¿es suficiente declarar que el servicio es para mayores de 18 y exigir autorización del representante? ¿Cómo acreditarla?

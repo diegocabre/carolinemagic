@@ -1,6 +1,6 @@
 # Guía de privacidad para desarrollar en Caroline Magic
 
-Lista corta para cualquier cambio que toque datos personales. Si dudas, pregunta antes de publicar.
+Lista corta para cualquier cambio que toque datos personales. Si dudas, pregunta antes de publicar. Para enviar correos desde un formulario habría que sumar un proveedor (p. ej. Resend) y declararlo en la política.
 
 ## 1. Antes de agregar un formulario (reservas, newsletter, contacto…)
 
@@ -16,8 +16,8 @@ Lista corta para cualquier cambio que toque datos personales. Si dudas, pregunta
   ```
   - **Nunca premarcada.** Una casilla por finalidad (no mezclar "términos + newsletter").
   - En el servidor valida con `z.literal("on")` y guarda **fecha + versión de la política** (`VERSIONES_LEGALES[0].version`) como prueba del consentimiento.
-- [ ] Valida todo en el servidor con **zod** (ver `src/lib/derechos/schema.ts`): largo máximo, formato y limpieza de caracteres de control. Lee solo los campos esperados del `FormData`.
-- [ ] **Rate limit** con `registrarIntento()` (`src/lib/security/rateLimit.ts`) y campo trampa (`sitioWeb`) contra bots.
+- [ ] Valida todo en el servidor (se recomienda **zod**; hoy no está instalado porque no hay formularios públicos): largo máximo, formato y limpieza de caracteres de control. Lee solo los campos esperados del `FormData`.
+- [ ] **Rate limit** con `registrarIntento()` (`src/lib/security/rateLimit.ts`, agrega una regla en `REGLAS`) y un campo trampa oculto contra bots.
 - [ ] Verifica el origen con `isSameOrigin(await headers())` en la server action.
 - [ ] Agrega `data-clarity-mask="true"` al `<form>`.
 - [ ] Si la ruta no debe tener analítica, agrégala a `RUTAS_SIN_ANALITICA` (`src/lib/consent.ts`).
@@ -54,6 +54,6 @@ Lista corta para cualquier cambio que toque datos personales. Si dudas, pregunta
 | Sincronicidad del día (título, texto, URLs) | `saveDailyCardAction` | Sesión, origen, largo máximo, URL de nuestro store Blob en `admin/`, firma binaria real de la imagen |
 | Token de subida a Blob | `/api/admin/blob-upload` | Sesión, origen, tamaño del cuerpo, solo evento `generate-client-token`, ruta con UUID y extensión en lista blanca, tipos y tamaño máximos |
 | Estado de solicitudes | `actualizarEstadoSolicitudAction` | Sesión, origen, id con formato fijo, estado en lista cerrada |
-| Formulario de derechos | `enviarSolicitudDerechosAction` | zod, campos permitidos, rate limit, honeypot, origen |
+| Registro manual de solicitudes | `registrarSolicitudAction` | Sesión, origen, tipo y canal en lista cerrada, fecha de los últimos 12 meses |
 | Query params | — | **El sitio no lee query params** en ninguna página (verificado). |
 | Mensajes de WhatsApp | `getWhatsAppUrl` | Texto fijo del código + `encodeURIComponent`; número solo dígitos |

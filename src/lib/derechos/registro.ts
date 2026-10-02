@@ -1,13 +1,14 @@
 import { PLAZO_PRORROGA_DIAS, PLAZO_RESPUESTA_DIAS } from "@/config/legal";
-import { kvDelete, kvGet, kvKeys, kvSet } from "@/lib/security/store";
+import { kvGet, kvKeys, kvSet } from "@/lib/security/store";
 import crypto from "node:crypto";
-import type { EstadoSolicitud, TipoSolicitud } from "./schema";
+import type { CanalSolicitud, EstadoSolicitud, TipoSolicitud } from "./schema";
 
 /**
  * Registro mínimo de solicitudes de derechos, para acreditar plazos de
- * respuesta. Por minimización NO guarda nombre, correo ni detalle: esos datos
- * viven solo en el correo enviado al responsable. Se guarda en el mismo
- * Upstash Redis que ya usa el rate limit (no se agrega otra base de datos).
+ * respuesta. Las solicitudes llegan por WhatsApp o correo y Caroline las
+ * registra desde /admin. Por minimización NO guarda nombre, correo ni
+ * detalle: esos datos quedan solo en la conversación original (se busca por
+ * fecha y canal). Se guarda en el mismo Upstash Redis que usa el rate limit.
  *
  * Conservación: 3 años (TTL). Ver docs/cumplimiento/POLITICA-RETENCION.md.
  */
@@ -20,6 +21,7 @@ export interface RegistroSolicitud {
   id: string;
   tipo: TipoSolicitud;
   estado: EstadoSolicitud;
+  canal: CanalSolicitud;
   recibidaEn: string;
   venceEn: string;
   actualizadaEn: string;
@@ -30,22 +32,24 @@ function nuevoId(fecha: Date): string {
   return `SOL-${yyyymmdd}-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
 }
 
-export async function crearRegistro(tipo: TipoSolicitud): Promise<RegistroSolicitud> {
+/** El plazo corre desde que la solicitud se RECIBIÓ, no desde que se registra. */
+export async function crearRegistro(
+  tipo: TipoSolicitud,
+  canal: CanalSolicitud,
+  recibidaEn: Date,
+): Promise<RegistroSolicitud> {
   const ahora = new Date();
   const registro: RegistroSolicitud = {
-    id: nuevoId(ahora),
+    id: nuevoId(recibidaEn),
     tipo,
+    canal,
     estado: "recibida",
-    recibidaEn: ahora.toISOString(),
-    venceEn: new Date(ahora.getTime() + PLAZO_RESPUESTA_DIAS * DIA_MS).toISOString(),
+    recibidaEn: recibidaEn.toISOString(),
+    venceEn: new Date(recibidaEn.getTime() + PLAZO_RESPUESTA_DIAS * DIA_MS).toISOString(),
     actualizadaEn: ahora.toISOString(),
   };
   await kvSet(`${PREFIJO}${registro.id}`, JSON.stringify(registro), TTL_SEGUNDOS);
   return registro;
-}
-
-export async function eliminarRegistro(id: string): Promise<void> {
-  await kvDelete(`${PREFIJO}${id}`);
 }
 
 export async function listarRegistros(): Promise<RegistroSolicitud[]> {

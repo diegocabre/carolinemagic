@@ -115,7 +115,7 @@ export default function CookiesPage() {
         Si aceptas, usamos Microsoft Clarity para entender cómo se usa el
         sitio (mapas de calor y grabaciones de la navegación) y mejorarlo.
         Clarity oculta el texto que escribes en formularios y nunca se activa
-        en el panel de administración ni en el formulario de derechos. Los
+        en el panel de administración ni en la página de derechos. Los
         datos se procesan en Estados Unidos. Más información en la{" "}
         <a href="https://privacy.microsoft.com/es-es/privacystatement" target="_blank" rel="noopener noreferrer">
           declaración de privacidad de Microsoft

@@ -22,8 +22,6 @@ export const REGLAS = {
   loginFallido: { limite: 5, ventanaSegundos: 15 * 60 },
   /** Intentos fallidos de login por IP (cualquier correo): 20 por hora. */
   loginIp: { limite: 20, ventanaSegundos: 60 * 60 },
-  /** Envíos del formulario de derechos por IP: 3 por hora. */
-  derechos: { limite: 3, ventanaSegundos: 60 * 60 },
 } as const;
 
 export type NombreRegla = keyof typeof REGLAS;
