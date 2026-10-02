@@ -1,3 +1,4 @@
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { sesionesIndividuales } from "@/data/sesiones";
@@ -95,6 +96,7 @@ export default function LecturasPage() {
           >
             Cuéntanos tu proceso
           </a>
+          <AvisoWhatsApp className="mt-3 text-center" />
         </div>
       </div>
     </div>

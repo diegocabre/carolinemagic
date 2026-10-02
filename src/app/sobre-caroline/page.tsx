@@ -1,3 +1,4 @@
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import {
   Activity,
@@ -321,6 +322,7 @@ export default function SobreCarolinePage() {
               Ver Todas las Lecturas
             </Link>
           </div>
+          <AvisoWhatsApp className="text-center" />
         </div>
       </section>
 

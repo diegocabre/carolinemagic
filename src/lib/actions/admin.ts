@@ -6,39 +6,103 @@ import {
   hasValidAdminSession,
   verifyAdminCredentials,
 } from "@/lib/adminAuth";
+import { getDailyCard, saveDailyCard } from "@/lib/dailyCard";
+import { actualizarEstado, crearRegistro } from "@/lib/derechos/registro";
 import {
-  esUrlDeBlobConfiable,
-  getDailyCard,
-  saveDailyCard,
-} from "@/lib/dailyCard";
+  esCanalSolicitud,
+  esEstadoSolicitud,
+  esTipoSolicitud,
+} from "@/lib/derechos/schema";
+import { clientIp, isSameOrigin } from "@/lib/security/origin";
+import {
+  consultarLimite,
+  minutosParaReintentar,
+  registrarIntento,
+  reiniciarLimite,
+} from "@/lib/security/rateLimit";
+import {
+  esUrlDeBlobPropia,
+  verificarImagenSubida,
+} from "@/lib/security/uploads";
+import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export interface LoginState {
   error?: string;
 }
 
+const MAX_EMAIL = 254;
+const MAX_PASSWORD = 256;
+const MAX_TITULO = 120;
+const MAX_INTERPRETACION = 5000;
+
+const ERROR_ORIGEN = "Solicitud no válida. Recarga la página e inténtalo de nuevo.";
+
 export async function loginAction(
   _prevState: LoginState,
   formData: FormData,
 ): Promise<LoginState> {
-  const email = String(formData.get("email") || "").trim();
-  const password = String(formData.get("password") || "");
+  const h = await headers();
+  if (!isSameOrigin(h)) return { error: ERROR_ORIGEN };
+
+  const emailRaw = formData.get("email");
+  const passwordRaw = formData.get("password");
+  const email = typeof emailRaw === "string" ? emailRaw.trim().toLowerCase() : "";
+  const password = typeof passwordRaw === "string" ? passwordRaw : "";
 
   if (!email || !password) {
     return { error: "Ingresa tu correo y tu clave." };
   }
-
-  if (!verifyAdminCredentials(email, password)) {
+  if (email.length > MAX_EMAIL || password.length > MAX_PASSWORD) {
     return { error: "Correo o clave incorrectos." };
   }
 
-  await createAdminSession(email);
+  const ip = clientIp(h);
+  const claveIpCorreo = `${ip}|${email}`;
+
+  // 1. ¿Está bloqueado? (no consume intentos)
+  const [porCorreo, porIp] = await Promise.all([
+    consultarLimite("loginFallido", claveIpCorreo),
+    consultarLimite("loginIp", ip),
+  ]);
+  if (porCorreo.estado === "no_disponible" || porIp.estado === "no_disponible") {
+    console.error("[admin] Login rechazado: rate limit no disponible.");
+    return { error: "El acceso está temporalmente deshabilitado. Intenta más tarde." };
+  }
+  const bloqueo = [porCorreo, porIp].find((e) => e.estado === "bloqueado");
+  if (bloqueo && bloqueo.estado === "bloqueado") {
+    return {
+      error: `Demasiados intentos fallidos. Intenta de nuevo en ${minutosParaReintentar(bloqueo.reintentarEnSegundos)} min.`,
+    };
+  }
+
+  // 2. Verificar credenciales
+  if (!(await verifyAdminCredentials(email, password))) {
+    await Promise.all([
+      registrarIntento("loginFallido", claveIpCorreo),
+      registrarIntento("loginIp", ip),
+    ]);
+    return { error: "Correo o clave incorrectos." };
+  }
+
+  // 3. Éxito: limpia contadores y emite una sesión nueva (rotación).
+  await reiniciarLimite("loginFallido", claveIpCorreo);
+  try {
+    await createAdminSession(email);
+  } catch (error) {
+    console.error("[admin] No se pudo crear la sesión:", error);
+    return { error: "El acceso está temporalmente deshabilitado. Intenta más tarde." };
+  }
   redirect("/admin");
 }
 
 export async function logoutAction(): Promise<void> {
-  await destroyAdminSession();
+  // El cierre de sesión siempre procede, pero solo desde el propio sitio.
+  if (isSameOrigin(await headers())) {
+    await destroyAdminSession();
+  }
   redirect("/admin/login");
 }
 
@@ -47,16 +111,23 @@ export interface DailyCardFormState {
   success?: boolean;
 }
 
+async function descartarBlob(url: string): Promise<void> {
+  await del(url).catch((error: unknown) => {
+    console.error("[admin] No se pudo eliminar un archivo rechazado:", error);
+  });
+}
+
 /**
  * Recibe las URLs de las imágenes (ya subidas directo a Blob desde el
  * navegador, ver /api/admin/blob-upload) junto con el texto, y guarda el
- * registro del día. No procesa archivos: el cuerpo de esta acción es
- * siempre liviano.
+ * registro del día. Antes de publicar verifica que las imágenes nuevas sean
+ * de nuestro store y que su contenido real sea JPEG, PNG o WEBP.
  */
 export async function saveDailyCardAction(
   _prevState: DailyCardFormState,
   formData: FormData,
 ): Promise<DailyCardFormState> {
+  if (!isSameOrigin(await headers())) return { error: ERROR_ORIGEN };
   if (!(await hasValidAdminSession())) {
     return { error: "Tu sesión expiró. Vuelve a iniciar sesión." };
   }
@@ -68,6 +139,28 @@ export async function saveDailyCardAction(
 
   if (typeof interpretacion !== "string" || !interpretacion.trim()) {
     return { error: "Escribe la interpretación de hoy." };
+  }
+  if (interpretacion.length > MAX_INTERPRETACION) {
+    return { error: `La interpretación no puede superar ${MAX_INTERPRETACION} caracteres.` };
+  }
+  if (typeof titulo === "string" && titulo.length > MAX_TITULO) {
+    return { error: `El título no puede superar ${MAX_TITULO} caracteres.` };
+  }
+
+  const nuevas = [imagenUrlInput, portadaUrlInput].filter(
+    (v): v is string => typeof v === "string" && v.length > 0,
+  );
+
+  for (const url of nuevas) {
+    if (!esUrlDeBlobPropia(url)) {
+      return { error: "La imagen no se subió correctamente. Intenta de nuevo." };
+    }
+  }
+  for (const url of nuevas) {
+    if (!(await verificarImagenSubida(url))) {
+      await Promise.all(nuevas.map(descartarBlob));
+      return { error: "El archivo no es una imagen JPG, PNG o WEBP válida." };
+    }
   }
 
   try {
@@ -84,9 +177,6 @@ export async function saveDailyCardAction(
 
     if (!imagenUrl) {
       return { error: "Debes subir una foto para la sincronicidad de hoy." };
-    }
-    if (!esUrlDeBlobConfiable(imagenUrl) || (portadaUrl && !esUrlDeBlobConfiable(portadaUrl))) {
-      return { error: "La imagen no se subió correctamente. Intenta de nuevo." };
     }
 
     await saveDailyCard({
@@ -111,4 +201,71 @@ export async function saveDailyCardAction(
   revalidatePath("/admin");
 
   return { success: true };
+}
+
+/** Cambia el estado de una solicitud de derechos (registro mínimo, sin datos personales). */
+export async function actualizarEstadoSolicitudAction(formData: FormData): Promise<void> {
+  if (!isSameOrigin(await headers())) return;
+  if (!(await hasValidAdminSession())) redirect("/admin/login");
+
+  const id = formData.get("id");
+  const estado = formData.get("estado");
+  if (typeof id !== "string" || !/^SOL-\d{8}-[0-9A-F]{6}$/.test(id)) return;
+  if (typeof estado !== "string" || !esEstadoSolicitud(estado)) return;
+
+  await actualizarEstado(id, estado);
+  revalidatePath("/admin");
+}
+
+export interface RegistrarSolicitudState {
+  error?: string;
+  id?: string;
+}
+
+const DIA_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Registra una solicitud de derechos recibida por WhatsApp, correo u otro
+ * canal. Solo guarda tipo, canal y fecha (sin datos personales).
+ */
+export async function registrarSolicitudAction(
+  _prev: RegistrarSolicitudState,
+  formData: FormData,
+): Promise<RegistrarSolicitudState> {
+  if (!isSameOrigin(await headers())) return { error: ERROR_ORIGEN };
+  if (!(await hasValidAdminSession())) {
+    return { error: "Tu sesión expiró. Vuelve a iniciar sesión." };
+  }
+
+  const tipo = formData.get("tipo");
+  const canal = formData.get("canal");
+  const fecha = formData.get("recibidaEn");
+  if (typeof tipo !== "string" || !esTipoSolicitud(tipo)) {
+    return { error: "Elige el tipo de solicitud." };
+  }
+  if (typeof canal !== "string" || !esCanalSolicitud(canal)) {
+    return { error: "Elige el canal por el que llegó." };
+  }
+  if (typeof fecha !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    return { error: "Indica la fecha en que se recibió." };
+  }
+  // Mediodía en Chile, para que la fecha no cambie por zona horaria.
+  const recibidaEn = new Date(`${fecha}T12:00:00-04:00`);
+  const ahora = Date.now();
+  if (
+    Number.isNaN(recibidaEn.getTime()) ||
+    recibidaEn.getTime() > ahora + DIA_MS ||
+    recibidaEn.getTime() < ahora - 365 * DIA_MS
+  ) {
+    return { error: "La fecha debe ser de los últimos 12 meses." };
+  }
+
+  try {
+    const registro = await crearRegistro(tipo, canal, recibidaEn);
+    revalidatePath("/admin");
+    return { id: registro.id };
+  } catch (error) {
+    console.error("[admin] No se pudo registrar la solicitud:", error);
+    return { error: "No se pudo guardar. Revisa la conexión con Upstash." };
+  }
 }

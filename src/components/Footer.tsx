@@ -1,8 +1,18 @@
+import BotonPreferenciasCookies from "@/components/consent/BotonPreferenciasCookies";
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 
 const INSTAGRAM_URL = "https://www.instagram.com/carolinemagic.cl/";
+
+const LEGAL_LINKS = [
+  { name: "Política de Privacidad", href: "/privacidad" },
+  { name: "Política de Cookies", href: "/cookies" },
+  { name: "Términos y Condiciones", href: "/terminos" },
+  { name: "Derechos sobre tus datos", href: "/derechos-datos" },
+  { name: "Seguridad", href: "/seguridad" },
+];
 
 export default function Footer() {
   return (
@@ -80,17 +90,27 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Legal & Ética */}
+        {/* Legal & Confianza */}
         <div className="space-y-3">
           <h4 className="text-xs uppercase tracking-wider text-secondary font-bold">
-            Ética & Confianza
+            Legal & Confianza
           </h4>
-          <ul className="space-y-2 text-xs text-text-secondary font-normal">
-            <li>Privacidad y Secreto de Sesión 100% garantizado</li>
-            <li>Enfoque evolutivo no determinista</li>
-            <li>Términos del Servicio Esotérico</li>
-            <li>Política de Devolución & Cancelación</li>
+          <ul className="space-y-2 text-xs font-medium">
+            {LEGAL_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-text-secondary hover:text-primary transition-colors"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <BotonPreferenciasCookies className="text-text-secondary hover:text-primary transition-colors text-left" />
+            </li>
           </ul>
+          <AvisoWhatsApp className="pt-1" />
         </div>
 
         {/* Comunidad en Instagram (reemplaza newsletter no funcional) */}

@@ -1,3 +1,4 @@
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { programasAcademia } from "@/data/sesiones";
@@ -85,6 +86,7 @@ export default function AcademiaPage() {
           >
             Avísenme de las próximas formaciones
           </a>
+          <AvisoWhatsApp className="mt-3 text-center" />
         </div>
       </div>
     </div>

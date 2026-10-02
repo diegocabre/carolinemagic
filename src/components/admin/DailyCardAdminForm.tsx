@@ -18,9 +18,57 @@ interface DailyCardAdminFormProps {
 
 const initialState: DailyCardFormState = {};
 
+const EXTENSION_POR_TIPO: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+const TAMANO_MAXIMO_BYTES = 8 * 1024 * 1024;
+const LADO_MAXIMO_PX = 2400;
+
+/** Nombre aleatorio; la extensión sale del tipo, nunca del nombre original. */
 function rutaBlob(prefix: string, file: File): string {
-  const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  return `admin/${prefix}-${Date.now()}.${extension}`;
+  const extension = EXTENSION_POR_TIPO[file.type];
+  if (!extension) throw new Error("Solo se aceptan imágenes JPG, PNG o WEBP.");
+  return `admin/${prefix}-${crypto.randomUUID()}.${extension}`;
+}
+
+/**
+ * Vuelve a codificar la imagen en el navegador. Esto elimina los metadatos
+ * EXIF (incluida la ubicación GPS que guardan muchos celulares) y limita el
+ * tamaño. Si el navegador no lo soporta, se sube el archivo original.
+ */
+async function limpiarMetadatos(file: File): Promise<File> {
+  if (typeof createImageBitmap !== "function" || typeof OffscreenCanvas !== "function") {
+    return file;
+  }
+  try {
+    const bitmap = await createImageBitmap(file);
+    const escala = Math.min(1, LADO_MAXIMO_PX / Math.max(bitmap.width, bitmap.height));
+    const ancho = Math.round(bitmap.width * escala);
+    const alto = Math.round(bitmap.height * escala);
+    const canvas = new OffscreenCanvas(ancho, alto);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+    ctx.drawImage(bitmap, 0, 0, ancho, alto);
+    bitmap.close();
+    const tipo = file.type === "image/png" ? "image/png" : "image/jpeg";
+    const blob = await canvas.convertToBlob({ type: tipo, quality: 0.9 });
+    return new File([blob], file.name, { type: tipo });
+  } catch {
+    return file;
+  }
+}
+
+async function prepararArchivo(file: File): Promise<File> {
+  if (!EXTENSION_POR_TIPO[file.type]) {
+    throw new Error("Solo se aceptan imágenes JPG, PNG o WEBP.");
+  }
+  const limpio = await limpiarMetadatos(file);
+  if (limpio.size > TAMANO_MAXIMO_BYTES) {
+    throw new Error("La imagen supera los 8MB.");
+  }
+  return limpio;
 }
 
 function ImageUploadField({
@@ -139,8 +187,14 @@ export default function DailyCardAdminForm({
 
     setIsUploading(true);
     try {
-      const imagenFile = imagenInputRef.current?.files?.[0];
-      const portadaFile = portadaInputRef.current?.files?.[0];
+      const imagenOriginal = imagenInputRef.current?.files?.[0];
+      const portadaOriginal = portadaInputRef.current?.files?.[0];
+      const imagenFile = imagenOriginal
+        ? await prepararArchivo(imagenOriginal)
+        : undefined;
+      const portadaFile = portadaOriginal
+        ? await prepararArchivo(portadaOriginal)
+        : undefined;
 
       let imagenUrl = "";
       if (imagenFile) {
@@ -188,6 +242,7 @@ export default function DailyCardAdminForm({
   return (
     <form
       onSubmit={handleSubmit}
+      data-clarity-mask="true"
       className="w-full max-w-xl bg-white/95 border border-border-subtle rounded-2xl p-6 sm:p-8 shadow-sm space-y-6"
     >
       <div>
@@ -250,8 +305,8 @@ export default function DailyCardAdminForm({
           Portada de la carta
         </h3>
         <p className="text-xs text-text-secondary pb-2">
-          Es el frente que ven las visitas antes de voltear ("Toca para
-          Revelar"). No hace falta cambiarla todos los días — súbela una vez
+          Es el frente que ven las visitas antes de voltear (&ldquo;Toca para
+          Revelar&rdquo;). No hace falta cambiarla todos los días — súbela una vez
           y solo actualízala cuando quieras renovar la imagen.
         </p>
       </div>

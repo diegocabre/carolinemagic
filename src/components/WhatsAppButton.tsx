@@ -33,6 +33,10 @@ export default function WhatsAppButton() {
           <span className="text-[10px] text-text-muted tracking-wide font-sans">
             Guía & Soporte Místico
           </span>
+          <span className="mt-1 max-w-[200px] text-[9.5px] leading-snug text-text-muted font-sans">
+            Al escribirnos por WhatsApp, tus datos se tratan según nuestra
+            Política de Privacidad y la de WhatsApp/Meta.
+          </span>
         </div>
       </div>
 

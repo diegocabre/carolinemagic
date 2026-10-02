@@ -1,3 +1,4 @@
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import DailyCard from "@/components/DailyCard";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { getDailyCard } from "@/lib/dailyCard";
@@ -222,6 +223,7 @@ export default async function HomePage() {
                 Explorar Más Sesiones
               </Link>
             </div>
+            <AvisoWhatsApp className="text-center" />
           </div>
         </div>
       </section>

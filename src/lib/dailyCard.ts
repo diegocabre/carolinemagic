@@ -32,12 +32,3 @@ export async function saveDailyCard(data: DailyCardData): Promise<void> {
     cacheControlMaxAge: 60,
   });
 }
-
-/** Host de los blobs públicos de nuestro store — usado para validar URLs recibidas del cliente. */
-export function esUrlDeBlobConfiable(url: string): boolean {
-  try {
-    return new URL(url).hostname.endsWith(".public.blob.vercel-storage.com");
-  } catch {
-    return false;
-  }
-}
