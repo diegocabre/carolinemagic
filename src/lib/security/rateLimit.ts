@@ -2,6 +2,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import {
   getRedis,
   hashIdentificador,
+  KEY_PREFIX,
   puedeUsarMemoria,
 } from "./store";
 
@@ -43,7 +44,7 @@ function limitador(nombre: NombreRegla): Ratelimit | null {
     rl = new Ratelimit({
       redis,
       limiter: Ratelimit.slidingWindow(limite, `${ventanaSegundos} s`),
-      prefix: `rl:${nombre}`,
+      prefix: `${KEY_PREFIX}rl:${nombre}`,
       analytics: false,
     });
     limitadores.set(nombre, rl);

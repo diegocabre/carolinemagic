@@ -5,11 +5,21 @@ import crypto from "node:crypto";
  * Almacén clave-valor para datos de seguridad de vida corta (sesiones admin,
  * contadores de intentos y registro mínimo de solicitudes de derechos).
  *
- * - Con UPSTASH_REDIS_REST_URL y UPSTASH_REDIS_REST_TOKEN → Upstash Redis.
+ * - Con UPSTASH_REDIS_REST_URL/TOKEN (o KV_REST_API_URL/TOKEN, los nombres
+ *   que usa la integración de Vercel) → Upstash Redis.
  * - En desarrollo sin esas variables → memoria del proceso (con aviso).
  * - En producción sin esas variables → `null`: quien lo use debe fallar de
  *   forma segura (rechazar el login, no aceptar el formulario, etc.).
+ *
+ * La base de Upstash se comparte con otro proyecto: todas las claves llevan
+ * el prefijo `KEY_PREFIX` para que nunca choquen.
  */
+
+export const KEY_PREFIX = "cm:";
+
+function conPrefijo(clave: string): string {
+  return `${KEY_PREFIX}${clave}`;
+}
 
 let redisClient: Redis | null | undefined;
 let avisoMostrado = false;
@@ -20,8 +30,9 @@ export function isProduction(): boolean {
 
 export function getRedis(): Redis | null {
   if (redisClient !== undefined) return redisClient;
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
   redisClient = url && token ? new Redis({ url, token }) : null;
   return redisClient;
 }
@@ -32,7 +43,7 @@ export function puedeUsarMemoria(): boolean {
   if (!avisoMostrado) {
     avisoMostrado = true;
     console.warn(
-      "[seguridad] UPSTASH_REDIS_REST_URL/TOKEN no configurados: usando almacén en memoria (solo desarrollo).",
+      "[seguridad] UPSTASH_REDIS_REST_URL/TOKEN (o KV_REST_API_URL/TOKEN) no configurados: usando almacén en memoria (solo desarrollo).",
     );
   }
   return true;
@@ -41,7 +52,7 @@ export function puedeUsarMemoria(): boolean {
 export class StoreUnavailableError extends Error {
   constructor() {
     super(
-      "Almacén de seguridad no configurado (faltan UPSTASH_REDIS_REST_URL/TOKEN).",
+      "Almacén de seguridad no configurado (faltan UPSTASH_REDIS_REST_URL/TOKEN o KV_REST_API_URL/TOKEN).",
     );
     this.name = "StoreUnavailableError";
   }
@@ -71,6 +82,7 @@ export async function kvSet(
   valor: string,
   ttlSegundos: number,
 ): Promise<void> {
+  clave = conPrefijo(clave);
   const redis = getRedis();
   if (redis) {
     await redis.set(clave, valor, { ex: ttlSegundos });
@@ -81,6 +93,7 @@ export async function kvSet(
 }
 
 export async function kvGet(clave: string): Promise<string | null> {
+  clave = conPrefijo(clave);
   const redis = getRedis();
   if (redis) {
     const valor = await redis.get<string | number | object>(clave);
@@ -98,6 +111,7 @@ export async function kvGet(clave: string): Promise<string | null> {
 }
 
 export async function kvDelete(clave: string): Promise<void> {
+  clave = conPrefijo(clave);
   const redis = getRedis();
   if (redis) {
     await redis.del(clave);
@@ -107,8 +121,13 @@ export async function kvDelete(clave: string): Promise<void> {
   memoria().delete(clave);
 }
 
-/** Lista las claves con un prefijo (solo para volúmenes pequeños). */
+/**
+ * Lista las claves con un prefijo (solo para volúmenes pequeños). Devuelve
+ * las claves SIN `KEY_PREFIX`, listas para pasarlas a kvGet/kvDelete.
+ */
 export async function kvKeys(prefijo: string): Promise<string[]> {
+  const sinPrefijo = (clave: string) => clave.slice(KEY_PREFIX.length);
+  prefijo = conPrefijo(prefijo);
   const redis = getRedis();
   if (redis) {
     const claves: string[] = [];
@@ -121,13 +140,13 @@ export async function kvKeys(prefijo: string): Promise<string[]> {
       claves.push(...lote);
       cursor = siguiente;
     } while (String(cursor) !== "0");
-    return claves;
+    return claves.map(sinPrefijo);
   }
   if (!puedeUsarMemoria()) throw new StoreUnavailableError();
   const ahora = Date.now();
   return [...memoria().entries()]
     .filter(([clave, e]) => clave.startsWith(prefijo) && e.expiraEn > ahora)
-    .map(([clave]) => clave);
+    .map(([clave]) => sinPrefijo(clave));
 }
 
 /**
