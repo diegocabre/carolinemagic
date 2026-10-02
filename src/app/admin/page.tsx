@@ -1,4 +1,5 @@
 import DailyCardAdminForm from "@/components/admin/DailyCardAdminForm";
+import SolicitudesDerechos from "@/components/admin/SolicitudesDerechos";
 import { logoutAction } from "@/lib/actions/admin";
 import { hasValidAdminSession } from "@/lib/adminAuth";
 import { getDailyCard } from "@/lib/dailyCard";
@@ -25,6 +26,8 @@ export default async function AdminPage() {
       </form>
 
       <DailyCardAdminForm current={current} />
+
+      <SolicitudesDerechos />
     </div>
   );
 }
