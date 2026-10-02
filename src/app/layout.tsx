@@ -1,9 +1,10 @@
+import ConsentBanner from "@/components/consent/ConsentBanner";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -58,11 +59,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Leer los encabezados hace que todas las páginas se rendericen por
+  // petición: es requisito para que Next.js aplique el nonce de la CSP
+  // (ver src/proxy.ts) a sus scripts. Las páginas estáticas no tendrían nonce.
+  await headers();
+
   return (
     <html lang="es" className={`${playfair.variable} ${plusJakarta.variable}`}>
       <body className="min-h-screen bg-background text-text-primary antialiased flex flex-col font-sans selection:bg-primary selection:text-white">
@@ -78,14 +84,8 @@ export default function RootLayout({
         <Footer />
         <WhatsAppButton />
 
-        {/* Microsoft Clarity: mapas de calor y grabaciones de sesión */}
-        <Script id="microsoft-clarity" strategy="afterInteractive">
-          {`(function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", "yo4s9z4h9e");`}
-        </Script>
+        {/* Banner de cookies: Microsoft Clarity solo se carga tras aceptar. */}
+        <ConsentBanner />
       </body>
     </html>
   );

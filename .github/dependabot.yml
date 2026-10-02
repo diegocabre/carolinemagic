@@ -1,0 +1,19 @@
+# Revisa semanalmente dependencias de npm y de GitHub Actions.
+# Las actualizaciones menores y de parche se agrupan en un solo PR.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "America/Santiago"
+    open-pull-requests-limit: 5
+    groups:
+      menores-y-parches:
+        update-types: ["minor", "patch"]
+    labels: ["dependencias"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
