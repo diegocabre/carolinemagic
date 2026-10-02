@@ -24,26 +24,48 @@ let avisoClavePlana = false;
  * ADMIN_PASSWORD en texto plano, con un aviso en los logs.
  * TODO(diego): crear ADMIN_PASSWORD_HASH en Vercel y borrar ADMIN_PASSWORD.
  */
+/**
+ * Limpia errores típicos al pegar el valor en Vercel: espacios, comillas o
+ * el nombre de la variable incluido ("ADMIN_PASSWORD_HASH=scrypt:...").
+ */
+function normalizarHash(valor: string): string {
+  return valor
+    .trim()
+    .replace(/^ADMIN_PASSWORD_HASH\s*=\s*/, "")
+    .replace(/^["']|["']$/g, "")
+    .trim();
+}
+
+/** Registra el motivo de un login fallido, sin datos sensibles. */
+function logFallo(motivo: string): void {
+  console.warn(`[admin] Login fallido: ${motivo}`);
+}
+
 export async function verifyAdminCredentials(
   email: string,
   password: string,
 ): Promise<boolean> {
   const adminEmail = (process.env.ADMIN_EMAIL ?? "").trim().toLowerCase();
-  const passwordHash = process.env.ADMIN_PASSWORD_HASH ?? "";
+  const passwordHash = normalizarHash(process.env.ADMIN_PASSWORD_HASH ?? "");
   const legacyPassword = process.env.ADMIN_PASSWORD ?? "";
-  if (!adminEmail) return false;
+  if (!adminEmail) {
+    logFallo("ADMIN_EMAIL no está configurado en este entorno.");
+    return false;
+  }
 
   const emailOk = timingSafeEqualStrings(email.trim().toLowerCase(), adminEmail);
 
   if (passwordHash) {
     if (!isValidPasswordHash(passwordHash)) {
-      console.error(
-        "[admin] ADMIN_PASSWORD_HASH tiene un formato inválido. Genera uno nuevo con `npm run admin:hash`.",
+      logFallo(
+        "ADMIN_PASSWORD_HASH tiene un formato inválido (debe empezar con 'scrypt:32768:8:1:'). Genera uno nuevo con `npm run admin:hash`.",
       );
       return false;
     }
     // Siempre se calcula el hash para no revelar por tiempos si el correo existe.
     const passwordOk = await verifyPassword(password, passwordHash);
+    if (!emailOk) logFallo("el correo no coincide con ADMIN_EMAIL.");
+    else if (!passwordOk) logFallo("la clave no coincide con ADMIN_PASSWORD_HASH.");
     return emailOk && passwordOk;
   }
 
@@ -55,9 +77,13 @@ export async function verifyAdminCredentials(
       );
     }
     await burnPasswordCheck(password);
-    return emailOk && timingSafeEqualStrings(password, legacyPassword);
+    const passwordOk = timingSafeEqualStrings(password, legacyPassword);
+    if (!emailOk) logFallo("el correo no coincide con ADMIN_EMAIL.");
+    else if (!passwordOk) logFallo("la clave no coincide con ADMIN_PASSWORD.");
+    return emailOk && passwordOk;
   }
 
+  logFallo("no hay ADMIN_PASSWORD_HASH (ni ADMIN_PASSWORD) en este entorno.");
   return false;
 }
 
