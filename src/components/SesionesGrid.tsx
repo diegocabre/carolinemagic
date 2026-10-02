@@ -1,5 +1,6 @@
 "use client";
 
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import SesionCard, { TipoSesion } from "@/components/SesionCard";
 import { Sesion } from "@/data/sesiones";
 import { ListFilter } from "lucide-react";
@@ -85,6 +86,7 @@ export default function SesionesGrid({
           {textos.vacio}
         </p>
       )}
+      <AvisoWhatsApp className="text-center" />
     </div>
   );
 }

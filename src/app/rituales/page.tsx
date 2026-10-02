@@ -1,3 +1,4 @@
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import CarruselMedia, { MediaItem } from "@/components/CarruselMedia";
 import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
@@ -143,6 +144,7 @@ export default function RitualesPage() {
           >
             Diseñar mi ritual
           </a>
+          <AvisoWhatsApp className="mt-3 text-center" />
         </div>
       </div>
     </div>

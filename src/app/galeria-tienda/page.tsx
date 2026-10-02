@@ -1,3 +1,4 @@
+import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
 import SerieEpisodios, { Episodio } from "@/components/SerieEpisodios";
 import VisorColeccion from "@/components/VisorColeccion";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
@@ -164,6 +165,7 @@ export default function GaleriaTiendaPage() {
                   </span>
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
+                <AvisoWhatsApp className="mt-3" />
               </div>
             </section>
           );
