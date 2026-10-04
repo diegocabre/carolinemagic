@@ -2,6 +2,7 @@ import ConsentBanner from "@/components/consent/ConsentBanner";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
@@ -86,6 +87,7 @@ export default async function RootLayout({
 
         {/* Banner de cookies: Microsoft Clarity solo se carga tras aceptar. */}
         <ConsentBanner />
+        <Analytics />
       </body>
     </html>
   );
