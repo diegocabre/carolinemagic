@@ -13,7 +13,7 @@ Sitio web oficial de Caroline Magic: tarot, arte, rituales, encuentros y academi
 ![Node](https://img.shields.io/badge/Node.js-%E2%89%A520.9-339933?logo=nodedotjs&logoColor=white)
 ![Licencia](https://img.shields.io/badge/licencia-propietaria-red)
 
-[Demo](#-demo) · [Instalación](#-instalación-paso-a-paso) · [Configuración](#%EF%B8%8F-configuración-env) · [Roadmap](#%EF%B8%8F-roadmap)
+[Sitio web](https://www.carolinemagic.cl) · [Demo](#-demo) · [Instalación](#-instalación-paso-a-paso) · [Configuración](#%EF%B8%8F-configuración-env) · [Roadmap](#%EF%B8%8F-roadmap)
 
 </div>
 
@@ -32,7 +32,7 @@ Este proyecto resuelve eso con:
 
 ## 🌐 Demo
 
-- Sitio en producción: **[PENDIENTE]** — `src/config/legal.ts` declara `https://www.carolinemagic.cl`, confirmar si ya está publicado.
+Sitio en producción: **[www.carolinemagic.cl](https://www.carolinemagic.cl)**
 
 ## ✨ Características principales
 
@@ -308,7 +308,7 @@ El código, los textos, las imágenes y la marca Caroline Magic son de uso exclu
 
 ## 👤 Autoría
 
-- **Desarrollo:** [PENDIENTE] — [@diegocabre](https://github.com/diegocabre)
+- **Desarrollo:** Diego Cabré — [@diegocabre](https://github.com/diegocabre)
 - **Marca y contenidos:** Caroline Magic
 
 <div align="center">
