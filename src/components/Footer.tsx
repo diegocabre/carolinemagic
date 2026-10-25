@@ -136,10 +136,33 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-border-subtle flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-text-muted">
-        <p>
-          © {new Date().getFullYear()} Caroline Magic. Todos los derechos
-          reservados.
-        </p>
+        <div className="space-y-1 text-center md:text-left">
+          <p>
+            © {new Date().getFullYear()} Caroline Magic. Todos los derechos
+            reservados.
+          </p>
+          {/* text-secondary: text-muted no alcanza AA sobre este fondo */}
+          <p className="text-text-secondary">
+            Desarrollado por{" "}
+            <a
+              href="https://diegocabre.vercel.app"
+              target="_blank"
+              rel="nofollow noopener"
+              className="whitespace-nowrap hover:text-primary transition-colors"
+            >
+              Diego Cabré<span className="sr-only"> (abre en otra pestaña)</span>
+            </a>{" "}
+            ·{" "}
+            <a
+              href="https://www.solucionesdys.cl"
+              target="_blank"
+              rel="nofollow noopener"
+              className="whitespace-nowrap hover:text-primary transition-colors"
+            >
+              Soluciones DyS<span className="sr-only"> (abre en otra pestaña)</span>
+            </a>
+          </p>
+        </div>
         <div className="flex items-center gap-5 text-text-secondary">
           <a
             href={INSTAGRAM_URL}
