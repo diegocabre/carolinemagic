@@ -3,6 +3,14 @@ import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { encuentrosGrupales } from "@/data/sesiones";
 import { Heart, MapPin, Users } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Encuentros Grupales",
+  description:
+    "Espacios colectivos de Caroline Magic para mirar tu historia, despertar tu intuición, celebrar los ciclos y vivir la magia en comunidad.",
+  alternates: { canonical: "/encuentros-grupales" },
+};
 
 export default function EncuentrosGrupalesPage() {
   return (

@@ -1,4 +1,5 @@
 import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
+import type { Metadata } from "next";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import {
   Activity,
@@ -16,6 +17,13 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: { absolute: "Sobre Caroline Magic" },
+  description:
+    "Un espacio donde el arte, la consciencia, el Tarot y el desarrollo personal convergen para que recuerdes tu poder de transformar tu realidad.",
+  alternates: { canonical: "/sobre-caroline" },
+};
 
 export default function SobreCarolinePage() {
   const pilares = [

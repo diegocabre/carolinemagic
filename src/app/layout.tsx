@@ -43,7 +43,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_CL",
-    url: SITE_URL,
     siteName: "Caroline Magic",
     title: "Caroline Magic | Tarot Evolutivo, Talleres y Arte Místico",
     description:
@@ -56,7 +55,6 @@ export const metadata: Metadata = {
     description: "Tarot evolutivo, talleres, rituales y arte místico.",
     images: ["/images/og-cover.jpeg"],
   },
-  alternates: { canonical: "/" },
 };
 
 export default async function RootLayout({

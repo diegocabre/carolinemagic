@@ -11,8 +11,23 @@ import {
   HeartHandshake,
   Sparkles,
 } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+// Solo datos ya públicos: la dirección sigue pendiente en src/config/legal.ts.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Caroline Magic",
+  url: "https://www.carolinemagic.cl",
+  logo: "https://www.carolinemagic.cl/images/logo.jpg",
+  sameAs: ["https://www.instagram.com/carolinemagic.cl/"],
+  description:
+    "Lecturas de tarot evolutivo, talleres grupales, rituales y arte esotérico.",
+};
 
 // La sincronicidad del día se administra desde /admin y debe reflejarse
 // de inmediato: esta página no puede quedar prerenderizada como estática.
@@ -24,6 +39,13 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-24 md:space-y-36 pb-20 bg-mystic-glow">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+
       {/* 1. HERO SECTION */}
       <section className="relative pt-12 sm:pt-20 md:pt-28 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">

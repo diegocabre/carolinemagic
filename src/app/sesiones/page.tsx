@@ -3,6 +3,14 @@ import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { sesionesIndividuales } from "@/data/sesiones";
 import { FileText, Shield, Sparkles, Video } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sesiones Individuales",
+  description:
+    "Sesiones 1 a 1 con Caroline Magic: una experiencia personalizada para mirar, comprender, liberar y elegir diferente. Agenda por WhatsApp.",
+  alternates: { canonical: "/sesiones" },
+};
 
 export default function LecturasPage() {
   return (

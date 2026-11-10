@@ -1,4 +1,5 @@
 import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
+import type { Metadata } from "next";
 import SerieEpisodios, { Episodio } from "@/components/SerieEpisodios";
 import VisorColeccion from "@/components/VisorColeccion";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
@@ -26,6 +27,13 @@ const VIVENCIAS = [
     src: `${VIDEOS}/mariamulambo.mp4`,
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Galería y Tienda",
+  description:
+    "Arte, oráculos y objetos rituales creados a mano por Caroline Magic, pensados para acompañar tu altar, tu hogar y tus prácticas personales.",
+  alternates: { canonical: "/galeria-tienda" },
+};
 
 export default function GaleriaTiendaPage() {
   return (

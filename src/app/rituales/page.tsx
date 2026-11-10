@@ -1,4 +1,5 @@
 import AvisoWhatsApp from "@/components/legal/AvisoWhatsApp";
+import type { Metadata } from "next";
 import CarruselMedia, { MediaItem } from "@/components/CarruselMedia";
 import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
@@ -24,6 +25,13 @@ const GALERIA: MediaItem[] = [
     alt: `Video de ritual ${n}`,
   })),
 ];
+
+export const metadata: Metadata = {
+  title: "Rituales Personalizados",
+  description:
+    "Rituales personalizados de Caroline Magic para acompañar procesos de cambio, cierre, apertura e intención, preparados de manera individual.",
+  alternates: { canonical: "/rituales" },
+};
 
 export default function RitualesPage() {
   return (

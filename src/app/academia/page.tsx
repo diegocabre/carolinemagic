@@ -3,6 +3,14 @@ import SesionesGrid from "@/components/SesionesGrid";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "@/config/whatsapp";
 import { programasAcademia } from "@/data/sesiones";
 import { FileText, GraduationCap, MapPin, Sparkles } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Formaciones y Cursos",
+  description:
+    "Formaciones, cursos autogestionados y programas de 21 días para aprender las herramientas de Caroline Magic y crear tu forma de leer y acompañar.",
+  alternates: { canonical: "/academia" },
+};
 
 export default function AcademiaPage() {
   return (
